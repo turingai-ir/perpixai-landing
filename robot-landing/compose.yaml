@@ -13,12 +13,9 @@ services:
       args:
         PNPM_VERSION: ${PNPM_VERSION:-11.4.0}
         PACKAGE_REGISTRY: ${PACKAGE_REGISTRY:-https://registry.npmmirror.com}
-        VITE_AUTH_URL: ${VITE_AUTH_URL}
+        VITE_PERPIX_APP_URL: ${VITE_PERPIX_APP_URL}
         VITE_PHONE_PARAM: ${VITE_PHONE_PARAM}
         VITE_PHONE_FORMAT: ${VITE_PHONE_FORMAT}
-        VITE_PREVIEW: ${VITE_PREVIEW}
-    ports:
-      - "${ROBOT_LANDING_PORT:-5176}:5176"
     read_only: true
     tmpfs:
       - /tmp:size=16m,mode=1777
@@ -33,7 +30,7 @@ services:
     cpus: "0.20"
     healthcheck:
       test:
-        ["CMD-SHELL", "wget -qO- http://127.0.0.1:5176/healthz | grep -q ok"]
+        ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz | grep -q ok"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -41,27 +38,6 @@ services:
     logging: *default-logging
     restart: unless-stopped
     pull_policy: build
-    networks:
-      - perpix
-
-  robot-landing-dev:
-    image: robot-landing:dev
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: dev
-      args:
-        PNPM_VERSION: ${PNPM_VERSION:-11.4.0}
-        PACKAGE_REGISTRY: ${PACKAGE_REGISTRY:-https://registry.npmmirror.com}
-    ports:
-      - "${ROBOT_LANDING_PORT:-5176}:5176"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    profiles:
-      - dev
     networks:
       - perpix
 

@@ -40,15 +40,13 @@ COPY . .
 
 ENV NODE_ENV=production
 
-ARG VITE_AUTH_URL
+ARG VITE_PERPIX_APP_URL
 ARG VITE_PHONE_PARAM
 ARG VITE_PHONE_FORMAT
-ARG VITE_PREVIEW
 
-ENV VITE_AUTH_URL=${VITE_AUTH_URL} \
+ENV VITE_PERPIX_APP_URL=${VITE_PERPIX_APP_URL} \
     VITE_PHONE_PARAM=${VITE_PHONE_PARAM} \
     VITE_PHONE_FORMAT=${VITE_PHONE_FORMAT} \
-    VITE_PREVIEW=${VITE_PREVIEW}
 
 RUN pnpm build
 
@@ -61,7 +59,7 @@ WORKDIR /usr/share/nginx/html
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder --chown=nginx:nginx /app/dist .
 
-EXPOSE 5176 8080
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
 
