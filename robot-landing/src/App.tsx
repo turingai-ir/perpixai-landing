@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
@@ -31,14 +33,18 @@ const loadImage = (src: string) =>
   })
 
 /** What the first scene needs before the gate opens: the 3D chunk, fonts, Pixo's first lines. */
-const firstScene = Promise.all([
-  import('@/stage/Stage').catch(() => null),
-  document.fonts?.ready,
-  loadImage(asset('brand/pixo.webp')),
-  ...['intro-1', 'intro-2', 'greet-1', 'greet-2', 'greet-3'].map((id) =>
-    fetch(`${config.voiceDir}/${id}.mp3`).catch(() => null),
-  ),
-])
+const firstScene = () =>
+  Promise.all([
+    import('@/stage/Stage').catch(() => null),
+    document.fonts?.ready,
+    loadImage(asset('brand/pixo.webp')),
+    ...['intro-1', 'intro-2', 'greet-1', 'greet-2', 'greet-3'].map((id) =>
+      fetch(`${config.voiceDir}/${id}.mp3`).catch(() => null),
+    ),
+  ])
+
+/** Started at module load in the browser (as before), never during server pre-rendering. */
+const firstSceneReady: Promise<unknown> = typeof window === 'undefined' ? new Promise(() => {}) : firstScene()
 
 export function App() {
   const api = useRef<HeroApi | null>(null)
@@ -128,10 +134,11 @@ export function App() {
       <a href="#more" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2">
         رفتن به محتوا
       </a>
-      <Preloader key={`pre-${run}`} ready={firstScene} onEnter={enter} />
+      <Preloader key={`pre-${run}`} ready={firstSceneReady} onEnter={enter} />
       <FilmFx />
       <Header onSignup={() => signup('header')} onRestart={restart} />
       <main>
+        <h1 className="sr-only">پرپیکس — ساخت تصویر و ویدیو با هوش مصنوعی از یک جمله</h1>
         <Hero key={`hero-${run}`} entered={entered} onReady={(a) => (api.current = a)} />
         <Film />
         <Reel onMake={(demo) => signup('reel', { demo })} />

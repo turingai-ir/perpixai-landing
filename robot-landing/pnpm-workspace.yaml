@@ -1,0 +1,3 @@
+# Static export never uses next/image optimisation, so skip sharp and its per-platform binaries.
+ignoredOptionalDependencies:
+  - sharp

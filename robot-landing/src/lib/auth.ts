@@ -22,7 +22,7 @@ function overrides() {
     param: param && /^[A-Za-z_][\w.-]{0,31}$/.test(param) ? param : null,
     format: format && FORMATS.includes(format) ? format : null,
     // Previews run in a sandboxed frame that cannot navigate away, so they always show the hand-off.
-    debug: q.get('authDebug') === '1' || import.meta.env.VITE_PREVIEW === '1',
+    debug: q.get('authDebug') === '1' || process.env.NEXT_PUBLIC_PREVIEW === '1',
   }
 }
 

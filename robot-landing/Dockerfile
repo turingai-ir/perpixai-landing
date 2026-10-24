@@ -20,7 +20,7 @@ RUN corepack enable && \
     corepack prepare "pnpm@${PNPM_VERSION}" --activate || \
     npm install --global "pnpm@${PNPM_VERSION}"
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=robot-landing-pnpm-store,target=/pnpm/store \
     pnpm config set store-dir /pnpm/store && \
     pnpm config set registry "${PACKAGE_REGISTRY}" && \
@@ -31,7 +31,7 @@ FROM base AS dev
 COPY . .
 ENV NODE_ENV=development
 EXPOSE 5176
-CMD ["pnpm", "dev", "--host"]
+CMD ["pnpm", "dev", "-H", "0.0.0.0"]
 
 # Production build stage
 FROM base AS builder
@@ -40,13 +40,16 @@ COPY . .
 
 ENV NODE_ENV=production
 
-ARG VITE_PERPIX_APP_URL
-ARG VITE_PHONE_PARAM
-ARG VITE_PHONE_FORMAT
+ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV VITE_PERPIX_APP_URL=${VITE_PERPIX_APP_URL} \
-    VITE_PHONE_PARAM=${VITE_PHONE_PARAM} \
-    VITE_PHONE_FORMAT=${VITE_PHONE_FORMAT}
+# Inlined at build time (static export), so they must be build args, not runtime env.
+ARG NEXT_PUBLIC_PERPIX_APP_URL
+ARG NEXT_PUBLIC_PHONE_PARAM
+ARG NEXT_PUBLIC_PHONE_FORMAT
+
+ENV NEXT_PUBLIC_PERPIX_APP_URL=${NEXT_PUBLIC_PERPIX_APP_URL} \
+    NEXT_PUBLIC_PHONE_PARAM=${NEXT_PUBLIC_PHONE_PARAM} \
+    NEXT_PUBLIC_PHONE_FORMAT=${NEXT_PUBLIC_PHONE_FORMAT}
 
 RUN pnpm build
 
@@ -57,7 +60,7 @@ USER nginx
 WORKDIR /usr/share/nginx/html
 
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder --chown=nginx:nginx /app/dist .
+COPY --from=builder --chown=nginx:nginx /app/out .
 
 EXPOSE 8080
 

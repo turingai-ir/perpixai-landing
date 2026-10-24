@@ -6,6 +6,7 @@ export function SoundToggle({ compact, onEnable }: { compact?: boolean; onEnable
   const on = useSyncExternalStore(
     (fn) => voice.subscribe(fn),
     () => voice.soundOn,
+    () => false,
   )
   return (
     <button

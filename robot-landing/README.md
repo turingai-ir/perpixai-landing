@@ -4,8 +4,8 @@
 
 ```bash
 pnpm install
-pnpm dev      # http://localhost:5173
-pnpm build    # خروجی در dist/
+pnpm dev      # http://localhost:5176
+pnpm build    # خروجی استاتیک (HTML پیش‌رندرشده) در out/
 ```
 
 - **محتوا:** همه‌ی متن‌ها در `src/content/` و لینک‌ها در `src/config.ts` هستند.

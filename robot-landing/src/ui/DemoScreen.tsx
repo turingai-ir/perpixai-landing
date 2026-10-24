@@ -37,7 +37,7 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
             className="absolute inset-0 size-full object-cover"
           />
         )}
-        {(developing || (missing && import.meta.env.DEV)) && (
+        {(developing || (missing && process.env.NODE_ENV === 'development')) && (
           <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_30%,#d92dd455,transparent_50%),radial-gradient(circle_at_70%_70%,#06a1e955,transparent_55%)]">
             <div
               className="absolute inset-0 opacity-40"
