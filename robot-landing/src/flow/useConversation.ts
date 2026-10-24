@@ -80,7 +80,6 @@ export function useConversation(stage: StageControls) {
     voice.preload([...lines('intro'), ...lines('greetNew'), ...lines('greetBack'), ...lines('newcomer')])
     await new Promise((r) => setTimeout(r, 900))
     if (!current(id)) return
-    stage.setLayout('side')
     if (returning) return void say('greetBack', 'greetBack')
     await say('intro', 'boot')
     if (current(id)) await say('greetNew', 'greet')

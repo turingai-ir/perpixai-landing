@@ -10,8 +10,8 @@ export function Tools() {
   const title = t('tools.title', { returnObjects: true })
   return (
     <section id="tools" className="px-5 py-28 md:px-14 md:py-36">
-      <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-        <div className="md:sticky md:top-32 md:self-start">
+      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div className="lg:sticky lg:top-32 lg:self-start">
           <span className="eyebrow mb-5">{t('tools.eyebrow')}</span>
           <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-6xl" />
           <p className="mt-5 max-w-sm text-lg leading-8 text-muted-foreground">{t('tools.body')}</p>

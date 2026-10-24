@@ -8,7 +8,7 @@ export function Faq() {
   const items = t('faq.items', { returnObjects: true })
   return (
     <section id="faq" className="px-5 py-24 md:px-14 md:py-32">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
           <span className="eyebrow mb-5">{t('faq.eyebrow')}</span>
           <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-4xl leading-[1.2] md:text-6xl" />

@@ -28,9 +28,9 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
           <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">{t('plans.body')}</p>
         </header>
 
-        <ul className="grid items-start gap-8 md:grid-cols-3 md:gap-6">
+        <ul className="mx-auto grid max-w-md items-start gap-8 lg:max-w-none lg:grid-cols-3 lg:gap-6">
           {plans.map((p, i) => (
-            <li key={p.id} data-reveal className={clsx('relative', p.featured && 'md:-mt-6')}>
+            <li key={p.id} data-reveal className={clsx('@container relative', p.featured && 'lg:-mt-6')}>
               {p.featured && (
                 <div aria-hidden className="absolute -inset-3 rounded-4xl bg-radial from-primary/33 to-transparent to-70% blur-2xl" />
               )}
@@ -60,17 +60,17 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                   <p className="mt-2 min-h-[3.4rem] leading-7 text-muted-foreground">{t(`plans.items.${p.id}.tagline`)}</p>
 
                   <div className="mt-5 min-h-[1.6rem]">
-                    {p.was && (
+                    {p.was && p.off != null && (
                       <span className="flex items-center gap-2 text-sm">
                         <s className="text-subtle-foreground">{formatNumber(p.was)}</s>
                         <span className="rounded-full bg-primary/20 px-2 py-0.5 text-xs font-bold text-primary-soft">
-                          {t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off!) }) })}
+                          {t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off) }) })}
                         </span>
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 flex items-baseline gap-2 font-poster leading-none">
-                    <span className="text-5xl md:text-price">{formatNumber(p.price)}</span>
+                  <p className="mt-1 flex flex-wrap items-baseline gap-x-2 font-poster leading-none">
+                    <span className="text-4xl @min-[320px]:text-5xl @min-[368px]:text-price">{formatNumber(p.price)}</span>
                     <span className="text-xl text-muted-foreground">{t('plans.currency')}</span>
                   </p>
 

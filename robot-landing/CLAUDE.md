@@ -85,6 +85,25 @@ brand palette `purple`, `blue`, `*-soft` (gradient text), light sources `amber`,
   line in `@theme inline`), then use the utility.
 - The cinema FX layers (vignette, letterbox bars, grain) and the 3D scene are deliberately dark in any theme.
 
+## Responsive (mobile-first)
+Base styles are the phone layout; wider screens add. **Portrait tablets (768–1023) are "big phones"**: two-column layouts and pinned
+scenes start at `lg` (1024), not `md`; `md:` is only for spacing/type bumps. Two custom variants cover what a width cannot see
+(`globals.css`):
+- `wide` = `(min-width: 35rem) and (min-aspect-ratio: 9/10)`: the side-by-side hero (Pixo left, conversation right). `PixoStage` reads the
+  same query (`WIDE_QUERY` in `lib/motion.ts`) and tells the 3D scene where to stand (`controls.setLayout`), so CSS and scene cannot
+  disagree. Use `not-wide:` for the stacked case.
+- `tall` = `(min-height: 40rem)`: needed for big type, pinned scenes and the sticky reel. Landscape phones and short windows get the
+  flowing layout (`lg:tall:…`); the GSAP `matchMedia` in Film/Reel uses `(min-width: 1024px) and (min-height: 640px)`.
+- Hero and Preloader are `min-h-svh` (never a fixed 640px) and may grow; the gate is height-aware (`tall:`) so "enter without sound"
+  stays clickable on a 390px-tall phone. Touch targets: `pointer-coarse:min-h-11` (44px) on header/footer/sound/reel/choices.
+- Notches: `viewport-fit=cover` + `env(safe-area-inset-*)` on the fixed header, sticky CTA and preloader status bar.
+- `html { font-size: 100% }` (honours the user's text size). Prices sit in a container query (`@container` + `@min-[…]:`), and the
+  price row wraps instead of overflowing.
+- RTL gotcha: overflow to the LEFT is not scrollable, and mobile Chrome silently widens the layout viewport to fit it (so
+  `innerWidth` > the device width). When auditing, compare against the emulated width, not `innerWidth`.
+- Audited 20 viewports (280→2560, portrait/landscape phones, tablets, desktop): 0 horizontal overflow, no sub-44px touch targets
+  except narrow text links (still ≥44 tall), choices visible without scrolling from 568×320 up.
+
 ## Conventions
 - Brand colours come from the logo (see Theme): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
 - Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away.

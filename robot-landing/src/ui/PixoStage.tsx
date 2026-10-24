@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type ComponentType } from 'react'
 import { voice } from '@/audio/voice'
 import { season } from '@/content/season'
 import { asset } from '@/lib/asset'
-import { isMobile, useReducedMotion } from '@/lib/motion'
+import { WIDE_QUERY, isMobile, useMediaQuery, useReducedMotion } from '@/lib/motion'
 import type { StageControls } from '@/stage/controls'
 import { StageBoundary } from '@/stage/StageBoundary'
 import type { StageProps } from '@/stage/StageCanvas'
@@ -24,6 +24,8 @@ export function PixoStage({ controls, label, badge }: Props) {
   const [Scene, setScene] = useState<ComponentType<StageProps> | null>(null)
   const [shown, setShown] = useState(false)
   const reducedMotion = useReducedMotion()
+  const wide = useMediaQuery(WIDE_QUERY)
+  useEffect(() => controls.setLayout(wide ? 'side' : 'center'), [controls, wide])
   const [failed, setFailed] = useState(false)
   const still = reducedMotion || failed
   const toStill = useCallback(() => setFailed(true), [])
@@ -36,7 +38,6 @@ export function PixoStage({ controls, label, badge }: Props) {
       .then((m) => {
         if (disposed) return
         controls.setPowered(true)
-        controls.setLayout('side')
         setScene(() => m.default)
       })
       .catch(toStill)
@@ -51,7 +52,7 @@ export function PixoStage({ controls, label, badge }: Props) {
         <img
           src={asset('brand/pixo.webp')}
           alt={label}
-          className="absolute top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] object-contain object-bottom md:left-0 md:h-full md:w-1/2 md:[mask-image:radial-gradient(ellipse_60%_65%_at_50%_55%,black_60%,transparent)]"
+          className="absolute top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] object-contain object-bottom wide:left-0 wide:h-full wide:w-1/2 wide:[mask-image:radial-gradient(ellipse_60%_65%_at_50%_55%,black_60%,transparent)]"
         />
       )}
       {Scene && !still && (
@@ -59,7 +60,7 @@ export function PixoStage({ controls, label, badge }: Props) {
           role="img"
           aria-label={label}
           style={{ opacity: shown ? 1 : 0 }}
-          className="absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] transition-opacity duration-1500 md:h-full md:[mask-image:none]"
+          className="absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] transition-opacity duration-1500 wide:h-full wide:[mask-image:none]"
         >
           <StageBoundary onError={toStill}>
             <Scene
