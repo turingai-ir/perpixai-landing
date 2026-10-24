@@ -13,9 +13,9 @@ services:
       args:
         PNPM_VERSION: ${PNPM_VERSION:-11.4.0}
         PACKAGE_REGISTRY: ${PACKAGE_REGISTRY:-https://registry.npmmirror.com}
-        VITE_PERPIX_APP_URL: ${VITE_PERPIX_APP_URL:-https://app.perpixai.ir}
-        VITE_PHONE_PARAM: ${VITE_PHONE_PARAM:-phone}
-        VITE_PHONE_FORMAT: ${VITE_PHONE_FORMAT:-local}
+        NEXT_PUBLIC_PERPIX_APP_URL: ${NEXT_PUBLIC_PERPIX_APP_URL:-https://app.perpixai.ir}
+        NEXT_PUBLIC_PHONE_PARAM: ${NEXT_PUBLIC_PHONE_PARAM:-phone}
+        NEXT_PUBLIC_PHONE_FORMAT: ${NEXT_PUBLIC_PHONE_FORMAT:-local}
     read_only: true
     tmpfs:
       - /tmp:size=16m,mode=1777

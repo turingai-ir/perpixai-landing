@@ -5,7 +5,12 @@ Conversion-first, RTL (Persian) landing page for perpixai.ir. A 3D character, **
 returning member → login, newcomer → inline phone sign-up, or a "magic show" demo → sign-up.
 
 ## Commands
-- `pnpm dev` / `pnpm build` (typecheck + build) / `pnpm preview`
+- `pnpm dev` (Next.js, :5176) / `pnpm build` (typecheck + static export to `out/`)
+- Next.js App Router with `output: 'export'`: the page is pre-rendered to HTML at build time (SEO) and hydrated on the
+  client, then nginx serves `out/`. `src/app/layout.tsx` holds the metadata, JSON-LD and `<html lang=fa dir=rtl>`;
+  `robots.ts` / `sitemap.ts` generate those files. Env vars are `NEXT_PUBLIC_*` (inlined at build, so Docker build args).
+- Anything that touches `window`/`document`/`localStorage` must run in an effect or behind a `typeof window` guard,
+  because components are also rendered on the server at build time.
 
 ## Structure
 - `src/config.ts` + `src/lib/auth.ts`: shared auth URL and how the phone is handed over (param + format, env-overridable).
