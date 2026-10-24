@@ -1,46 +1,44 @@
 import type { Metadata, Viewport } from 'next'
+import { BRAND, SITE, description, jsonLd, title } from '@/lib/seo'
 import '@/styles/globals.css'
 
-const SITE = 'https://perpixai.ir'
-const title = 'پرپیکس — ساخت تصویر و ویدیو با هوش مصنوعی'
-const description = 'با پرپیکس از یک جمله، تصویر و ویدیو بساز. ثبت‌نام رایگان با اعتبار هدیه.'
+const ogImage = { url: '/brand/og.jpg', width: 1200, height: 630, alt: title }
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title,
   description,
-  applicationName: 'پرپیکس',
-  alternates: { canonical: '/' },
-  icons: { icon: { url: '/brand/logo-192.png', type: 'image/png' } },
+  applicationName: BRAND,
+  keywords: ['پرپیکس', 'ساخت عکس با هوش مصنوعی', 'ساخت ویدیو با هوش مصنوعی', 'هوش مصنوعی فارسی', 'متن به تصویر', 'متن به ویدیو', 'ویرایش عکس با هوش مصنوعی'],
+  alternates: { canonical: '/', languages: { 'fa-IR': '/', 'x-default': '/' } },
+  manifest: '/manifest.webmanifest',
+  icons: {
+    icon: { url: '/brand/logo-192.png', type: 'image/png' },
+    apple: { url: '/brand/logo-192.png', type: 'image/png' },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
+  },
   openGraph: {
     title,
     description,
     type: 'website',
     locale: 'fa_IR',
     url: '/',
-    siteName: 'پرپیکس',
-    images: [{ url: '/brand/og.jpg' }],
+    siteName: BRAND,
+    images: [ogImage],
   },
-  twitter: { card: 'summary_large_image', title, description, images: ['/brand/og.jpg'] },
+  twitter: { card: 'summary_large_image', title, description, images: [{ url: ogImage.url, alt: title }] },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#07060d',
+  themeColor: '#030205',
   width: 'device-width',
   initialScale: 1,
-}
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Perpix',
-  alternateName: 'پرپیکس',
-  url: SITE,
-  applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'Web',
-  inLanguage: 'fa',
-  description: 'ساخت تصویر و ویدیو با هوش مصنوعی',
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'IRR', lowPrice: '5648400', highPrice: '37656000', offerCount: '3' },
+  colorScheme: 'dark',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
