@@ -1,13 +1,21 @@
 import { Color } from 'three'
-import { colors } from '@/styles/tokens'
 
-/** The logo gradient as three.js colours (same values as the CSS brand tokens). */
+/**
+ * The logo gradient as three.js colours, read from the theme's CSS variables (styles/theme.css), so the lights
+ * and emissive parts follow the theme. Only evaluated in the browser: the 3D scene is a client-only chunk.
+ */
+const cssColor = (name: string) => {
+  const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  if (!value) throw new Error(`Missing CSS variable ${name}`)
+  return new Color(value)
+}
+
 export const brand = {
-  magenta: new Color(colors.magenta),
-  purple: new Color(colors.purple),
-  blue: new Color(colors.blue),
-  cyan: new Color(colors.cyan),
-  arc: new Color('#bfe9ff'), // Tesla arc: ice white-blue
+  magenta: cssColor('--primary'),
+  purple: cssColor('--purple'),
+  blue: cssColor('--blue'),
+  cyan: cssColor('--accent'),
+  arc: new Color('#bfe9ff'), // Tesla arc: ice white-blue, not part of the theme
 }
 
 /**

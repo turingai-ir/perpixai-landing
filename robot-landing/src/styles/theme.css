@@ -1,0 +1,134 @@
+/*
+ * Theme: shadcn-style semantic variables.
+ *
+ * Components never name a colour, they name a role: `bg-background`, `text-foreground`, `bg-card`,
+ * `text-muted-foreground`, `bg-primary text-primary-foreground`, `border-border`, `text-accent`.
+ * The roles are plain CSS variables on `:root`; `@theme inline` below exposes them to Tailwind.
+ * Re-theming (a light or seasonal variant) means overriding the variables under another selector,
+ * e.g. `.light { --background: …; --foreground: …; }`; no component changes.
+ *
+ * "Cinema Perpix": an old Tehran picture palace re-wired with the logo's neon. Black velvet ground,
+ * warm projector-white type, Lalezar poster lettering, neon only where light is actually emitted.
+ *
+ * Rules (checked by `pnpm check:theme`): no raw hex / rgb() in TSX or other CSS. Translucency is
+ * `bg-primary/20` in markup and `color-mix(in oklab, var(--primary) 20%, transparent)` in CSS.
+ */
+:root {
+  --radius: 0.5rem;
+
+  /* Surfaces and text */
+  --background: #030205; /* black velvet */
+  --foreground: #f5efe4; /* projector white, warm */
+  --card: #0b0910;
+  --card-foreground: var(--foreground);
+  --muted: #14111c;
+  --muted-foreground: #b9b2c9;
+  --subtle-foreground: #7d768f; /* one step below muted */
+  --border: rgb(245 239 228 / 0.12);
+
+  /* Brand: sampled from the logo gradient (magenta → purple → blue → cyan) */
+  --primary: #d92dd4; /* magenta: calls to action */
+  --primary-foreground: #ffffff;
+  --primary-soft: #ef6aea; /* lighter steps of the same hues: gradient text must stay readable on black */
+  --accent: #06a1e9; /* cyan: highlights, links, focus */
+  --accent-foreground: #030205;
+  --accent-soft: #3fd0ff;
+  --ring: var(--accent);
+  --purple: #863ed3;
+  --purple-soft: #b07cff;
+  --blue: #128ce3;
+  --blue-soft: #4fb2ff;
+
+  /* Light sources */
+  --amber: #ffc46b; /* tungsten bulbs */
+  --bulb: #ffe2a8; /* a lit bulb's hot centre */
+  --projector: #ffecd2; /* the beam */
+  --neon-pink: #fff3fd; /* tube core of a magenta sign */
+  --neon-ice: #effbff; /* tube core of a cyan sign */
+
+  /* Featured ticket surface (start → end) */
+  --featured-start: #2a1240;
+  --featured-mid: #120c22;
+  --featured-end: #0b1a2e;
+
+  /* Season: Yalda (pomegranate) */
+  --yalda: #ff6b7f;
+  --yalda-hot: #ff8a9a;
+  --yalda-red: #e3263f;
+  --yalda-deep: #7a0a1c;
+
+  /* Brand gradients (the logo, left to right) */
+  --gradient-brand: linear-gradient(110deg, var(--primary), var(--purple) 45%, var(--blue) 75%, var(--accent));
+  --gradient-brand-soft: linear-gradient(110deg, var(--primary-soft), var(--purple-soft) 45%, var(--blue-soft) 75%, var(--accent-soft));
+}
+
+/* Roles → Tailwind utilities. `inline` keeps the var() reference, so overriding a variable re-themes everything. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-ring: var(--ring);
+  --color-purple: var(--purple);
+  --color-purple-soft: var(--purple-soft);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-amber: var(--amber);
+  --color-bulb: var(--bulb);
+  --color-projector: var(--projector);
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-ice: var(--neon-ice);
+  --color-featured-start: var(--featured-start);
+  --color-featured-mid: var(--featured-mid);
+  --color-featured-end: var(--featured-end);
+  --color-yalda: var(--yalda);
+  --color-yalda-hot: var(--yalda-hot);
+  --color-yalda-red: var(--yalda-red);
+  --color-yalda-deep: var(--yalda-deep);
+
+  /* One knob (--radius) drives the whole scale; the offsets keep Tailwind's default sizes at 0.5rem. */
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+  --radius-3xl: calc(var(--radius) + 1rem);
+  --radius-4xl: calc(var(--radius) + 1.5rem);
+
+  /* Elevation: coloured light, never grey shadow. */
+  --shadow-cta: 0 10px 40px -10px color-mix(in oklab, var(--primary) 67%, transparent);
+  --shadow-cta-lg: 0 20px 60px -15px var(--primary);
+  --shadow-cta-hover: 0 14px 50px -8px color-mix(in oklab, var(--accent) 67%, transparent);
+  --shadow-glow: 0 0 60px -8px var(--accent);
+  --shadow-frame: 0 40px 140px -30px var(--purple), 0 0 0 1px var(--border);
+  --shadow-frame-accent: 0 30px 100px -40px var(--accent);
+}
+
+@theme {
+  --font-sans: 'Vazirmatn Variable', system-ui, sans-serif;
+  --font-poster: 'Lalezar', 'Vazirmatn Variable', serif;
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Type roles beyond Tailwind's scale */
+  --text-body-sm: 0.95rem;
+  --text-subtitle: 1.35rem; /* Pixo's subtitle, mobile … */
+  --text-subtitle--line-height: 1.8;
+  --text-subtitle-lg: 2.1rem; /* … and desktop */
+  --text-subtitle-lg--line-height: 1.65;
+  --text-price: 3.4rem;
+  --text-price--line-height: 1;
+  --text-countdown: min(18vw, 5.5rem); /* film-leader numerals */
+  --text-countdown--line-height: 1;
+  --text-display: clamp(5rem, 18vw, 13rem); /* the closing «پایان» */
+  --text-display--line-height: 1;
+}

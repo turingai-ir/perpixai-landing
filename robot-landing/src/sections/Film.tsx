@@ -68,8 +68,8 @@ export function Film() {
                 >
                   <span className="text-brand font-poster text-3xl leading-none">{localizeDigits(i + 1)}</span>
                   <div>
-                    <h3 className="text-xl font-bold text-fog">{s.title}</h3>
-                    <p className="mt-1 leading-7 text-mute">{s.body}</p>
+                    <h3 className="text-xl font-bold text-foreground">{s.title}</h3>
+                    <p className="mt-1 leading-7 text-muted-foreground">{s.body}</p>
                   </div>
                 </li>
               ))}
@@ -79,8 +79,8 @@ export function Film() {
           <div className="relative">
             {/* Prompt bar */}
             <div className="border-brand relative mb-5 flex items-center gap-3 rounded-2xl px-5 py-4">
-              <Icon name="pen" className="size-6 shrink-0 text-cyan" />
-              <p className="text-base leading-8 text-fog md:text-lg">
+              <Icon name="pen" className="size-6 shrink-0 text-accent" />
+              <p className="text-base leading-8 text-foreground md:text-lg">
                 {words.map((w, i) => (
                   <span key={i} data-pw>
                     {w}{' '}
@@ -90,7 +90,7 @@ export function Film() {
             </div>
 
             {/* The frame */}
-            <div className="relative aspect-video overflow-hidden rounded-2xl border-10 border-ink-3 bg-ink-2 shadow-frame-purple">
+            <div className="relative aspect-video overflow-hidden rounded-2xl border-10 border-muted bg-card shadow-frame">
               <div data-frame className="absolute inset-0">
                 <LazyVideo id={filmDemoId} className="size-full object-cover" />
               </div>
@@ -99,9 +99,9 @@ export function Film() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 film-noise opacity-0 mix-blend-screen motion-reduce:hidden max-md:hidden"
               />
-              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 text-xs text-fog/80">
+              <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 text-xs text-foreground/80">
                 <span className="flex items-center gap-2">
-                  <span className="size-2 animate-pulse rounded-full bg-magenta" />
+                  <span className="size-2 animate-pulse rounded-full bg-primary" />
                   PERPIX · REC
                 </span>
                 <span dir="ltr" className="font-mono">
@@ -110,9 +110,9 @@ export function Film() {
               </div>
             </div>
 
-            <div data-done className="mt-5 flex flex-wrap items-center gap-3 text-sm text-mute">
-              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/5 px-4 py-2 text-fog">
-                <Icon name="check" className="size-4 text-cyan" />
+            <div data-done className="mt-5 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white/5 px-4 py-2 text-foreground">
+                <Icon name="check" className="size-4 text-accent" />
                 {t('film.done')}
               </span>
               <span>{t('film.note')}</span>

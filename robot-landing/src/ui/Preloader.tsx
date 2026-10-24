@@ -116,7 +116,7 @@ export function Preloader({ ready, onEnter }: Props) {
       role="dialog"
       aria-modal="true"
       aria-label={t('preloader.label')}
-      className="fixed inset-0 z-(--z-preloader) grid place-items-center overflow-hidden bg-ink text-fog"
+      className="fixed inset-0 z-70 grid place-items-center overflow-hidden bg-background text-foreground"
       style={{ ['--sweep' as string]: '0deg' }}
     >
       {/*
@@ -133,21 +133,21 @@ export function Preloader({ ready, onEnter }: Props) {
           </div>
           <div className="bulbs w-[min(80vw,30rem)]" style={{ animationDelay: '-0.8s' }} />
         </div>
-        <p className="text-base text-mute">
+        <p className="text-base text-muted-foreground">
           {t('preloader.showing', { showing: ts(`${season.id}.showing`) })}{' '}
           <span className="neon-cyan font-poster text-2xl">{tc('character.name')}</span>
-          <span className="text-mute"> · {t('preloader.tagline')}</span>
+          <span className="text-muted-foreground"> · {t('preloader.tagline')}</span>
         </p>
 
         <div className="grid min-h-[9.5rem] place-items-center md:min-h-[11rem]">
           {!gate ? (
             /* Film leader */
             <div className="relative grid size-[min(36vw,9rem)] place-items-center md:size-[10.5rem]" aria-hidden>
-              <div className="absolute inset-0 rounded-full border-2 border-fog/70" />
-              <div className="absolute inset-[9%] rounded-full border border-fog/40" />
+              <div className="absolute inset-0 rounded-full border-2 border-foreground/70" />
+              <div className="absolute inset-[9%] rounded-full border border-foreground/40" />
               <div className="absolute inset-[9%] rounded-full leader-sweep" />
-              <div className="absolute inset-x-0 top-1/2 h-px bg-fog/50" />
-              <div className="absolute inset-y-0 left-1/2 w-px bg-fog/50" />
+              <div className="absolute inset-x-0 top-1/2 h-px bg-foreground/50" />
+              <div className="absolute inset-y-0 left-1/2 w-px bg-foreground/50" />
               <span className="relative font-poster text-countdown leading-none">{localizeDigits(count)}</span>
             </div>
           ) : (
@@ -157,16 +157,16 @@ export function Preloader({ ready, onEnter }: Props) {
                 type="button"
                 autoFocus
                 onClick={() => enter(true)}
-                className="cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 font-poster text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-glow-cyan md:text-3xl"
+                className="cursor-pointer rounded-full border-2 border-foreground/80 px-10 py-4 font-poster text-2xl text-foreground transition duration-500 hover:border-accent hover:text-white hover:shadow-glow md:text-3xl"
               >
                 {t('preloader.start')}
               </button>
-              <p data-gate className="flex items-center gap-2 text-sm text-dim">
+              <p data-gate className="flex items-center gap-2 text-sm text-subtle-foreground">
                 <span className="size-1.5 animate-pulse rounded-full bg-amber" /> {t('preloader.withSound')}
                 <button
                   type="button"
                   onClick={() => enter(false)}
-                  className="cursor-pointer underline-offset-4 hover:text-fog hover:underline"
+                  className="cursor-pointer underline-offset-4 hover:text-foreground hover:underline"
                 >
                   {t('preloader.muted')}
                 </button>
@@ -176,12 +176,12 @@ export function Preloader({ ready, onEnter }: Props) {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-6 text-xs text-dim md:px-10">
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-6 text-xs text-subtle-foreground md:px-10">
         <span>{gate ? t('preloader.ready') : t('preloader.loading')}</span>
-        <span className="h-px flex-1 bg-line">
+        <span className="h-px flex-1 bg-border">
           <span
             ref={bar}
-            className="block h-full origin-right scale-x-0 bg-fog/70 transition-transform duration-300 will-change-transform"
+            className="block h-full origin-right scale-x-0 bg-foreground/70 transition-transform duration-300 will-change-transform"
           />
         </span>
         <span ref={pct} dir="ltr" className="font-mono tabular-nums">

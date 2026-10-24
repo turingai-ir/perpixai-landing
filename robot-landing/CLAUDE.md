@@ -65,23 +65,28 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
   render loop (Tesla bolts are a pre-built pool); shaders compile via `compileAsync` before the first frame;
   `govern()` in `StageCanvas` steps DPR/bloom down on slow devices; bloom renders at half resolution.
 
-## Design tokens
-Everything visual is a token; `pnpm check:tokens` (inside `pnpm check`) fails on raw values.
-- **Source of truth: `src/styles/tokens.css`** (`@theme`, Tailwind v4). Colours: surfaces `ink / ink-2 / ink-3` (+ `plum`, `ink-violet`,
-  `ink-navy` for the featured ticket), type `fog / mute / dim`, `line`, brand `magenta / purple / blue / cyan` (+ `-soft` steps for gradient
-  text), light sources `amber / bulb / projector / neon-pink / neon-ice`, season `yalda*`. Also: type roles beyond Tailwind's
-  (`text-body-sm`, `text-subtitle(-lg)`, `text-price`, `text-countdown`, `text-display`), `rounded-frame`, coloured elevation
-  (`shadow-cta`, `-cta-lg`, `-cta-hover`, `-glow-cyan`, `-frame-purple`, `-frame-cyan`), z layers (`z-(--z-chrome)` …), brand gradients.
-- **Composite surfaces are named utilities** in `globals.css`, built only from tokens: `aura-hero/-plans/-finale/-featured/-demo`,
-  `surface-featured`, `scanlines`, `film-noise`, `sprockets`, `leader-sweep`, `projector-beam`, `neon-yalda`, `yalda-seed`.
-  Translucency: `bg-magenta/20` in markup, `color-mix(in oklab, var(--color-x) 20%, transparent)` in CSS.
-- **JS gets only what it must** from `src/styles/tokens.ts` (theme-color, manifest, noscript, three.js lights); the guard checks it
-  against `tokens.css`. 3D material colours are their own palette by role: `src/stage/palette.ts` (`paint.*`, `brand.*`).
-- To add a colour/shadow/size: add the token to `tokens.css` first, then use the utility. Never write `#hex`, `rgb()`, `shadow-[…]`,
-  `z-[…]` in TSX/CSS. The one literal that cannot be a token is the circuit-trace SVG data URI (guard verifies its stroke).
+## Theme (shadcn-style)
+Colours are **semantic CSS variables** in `src/styles/theme.css` (`:root`), exposed to Tailwind with `@theme inline`. Components name a
+role, never a colour: `bg-background text-foreground`, `bg-card`, `bg-muted`, `text-muted-foreground`, `text-subtle-foreground`,
+`border-border`, `bg-primary text-primary-foreground` (magenta CTA), `text-accent` / `ring-ring` (cyan highlight / focus), plus the
+brand palette `purple`, `blue`, `*-soft` (gradient text), light sources `amber`, `bulb`, `projector`, `neon-*`, the featured ticket
+`featured-start/mid/end` and season `yalda*`. Re-theming = overriding variables under another selector (`.light { --background: …; }`).
+- **Use Tailwind utilities first**: gradients and glows are `bg-radial-[…] from-primary/33 to-transparent`, `bg-linear-160 from-… via-… to-…`;
+  translucency is `bg-primary/20`; z-index is `z-30 … z-80`; radius is `rounded-*` driven by one knob, `--radius`.
+- Theme tokens that Tailwind has no scale for live in `theme.css`: elevation (`shadow-cta`, `-cta-lg`, `-cta-hover`, `-glow`, `-frame`,
+  `-frame-accent`), type roles (`text-display`, `text-countdown`, `text-price`, `text-subtitle(-lg)`, `text-body-sm`), `--ease-cine`.
+- A few named utilities exist in `globals.css` only where Tailwind cannot express them (repeating/conic gradients, masks, clip-paths,
+  keyframes): `bg-brand`/`text-brand`/`border-brand`, `neon`, `neon-cyan`, `neon-yalda`, `bulbs`, `ticket`, `scanlines`, `film-noise`,
+  `sprockets`, `leader-sweep`, `projector-beam`, `yalda-seed`. They are built from the same variables.
+- JS: 3D brand lights read `--primary/--purple/--blue/--accent` from CSS at runtime (`stage/palette.ts`); 3D material colours are their own
+  palette by role (`paint.*`). The only literal JS needs is `THEME_COLOR` (`<meta theme-color>`/manifest) in `lib/seo.ts`.
+- `pnpm check:theme` (inside `pnpm check`) rejects raw hex/`rgb()`, `shadow-[…]`, `z-[…]` and the pre-shadcn names (`text-fog`, `bg-ink`,
+  `text-mute` …), and verifies `THEME_COLOR` and the circuit SVG against `theme.css`. To add a colour: add the variable (+ its `--color-*`
+  line in `@theme inline`), then use the utility.
+- The cinema FX layers (vignette, letterbox bars, grain) and the 3D scene are deliberately dark in any theme.
 
 ## Conventions
-- Brand colours come from the logo (see Design tokens): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
+- Brand colours come from the logo (see Theme): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
 - Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away.
 - Track funnel steps with `track()` (`lib/analytics.ts`, pushes to `dataLayer`).
 - Never split Persian text below the word level. Use logical (`ps-`/`pe-`) spacing.

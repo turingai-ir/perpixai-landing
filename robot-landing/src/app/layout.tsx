@@ -3,8 +3,7 @@ import { config } from '@/config'
 import { i18n } from '@/i18n'
 import { defaultLocale, localeMeta } from '@/i18n/config'
 import { I18nProvider } from '@/i18n/I18nProvider'
-import { SITE, getSeo } from '@/lib/seo'
-import { colors, zIndex } from '@/styles/tokens'
+import { SITE, THEME_COLOR, getSeo } from '@/lib/seo'
 import '@/styles/globals.css'
 
 const locale = defaultLocale
@@ -37,7 +36,7 @@ export function generateMetadata(): Metadata {
 }
 
 export const viewport: Viewport = {
-  themeColor: colors.ink,
+  themeColor: THEME_COLOR,
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'dark',
@@ -55,19 +54,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           {/* Without JS the full-screen preloader would never open: hide it (and the letterbox bars) and keep login one tap away. */}
           <style dangerouslySetInnerHTML={{ __html: '[data-preloader],[data-bar]{display:none!important}' }} />
-          <p
-            style={{
-              position: 'relative',
-              zIndex: zIndex.noscript,
-              margin: 0,
-              padding: '1rem',
-              textAlign: 'center',
-              background: colors['ink-3'],
-              color: colors.fog,
-            }}
-          >
+          <p className="relative z-80 bg-muted p-4 text-center text-foreground">
             {i18n.t('noscript.text', { lng: locale })}{' '}
-            <a href={config.authUrl} style={{ color: colors.cyan }}>
+            <a href={config.authUrl} className="text-accent">
               {i18n.t('noscript.login', { lng: locale })}
             </a>
           </p>

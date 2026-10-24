@@ -8,7 +8,7 @@ const noise = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
  */
 export function FilmFx() {
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-(--z-fx) overflow-hidden">
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-60 overflow-hidden">
       <div
         className="absolute -inset-[20%] opacity-[0.05] will-change-transform"
         style={{ backgroundImage: noise, animation: 'grain 0.9s steps(5) infinite' }}
@@ -18,7 +18,7 @@ export function FilmFx() {
         style={{ animation: 'flicker 5s steps(1) infinite' }}
       />
       <div
-        className="absolute inset-y-0 left-[63%] w-px bg-fog/60 opacity-0 will-change-transform motion-reduce:hidden"
+        className="absolute inset-y-0 left-[63%] w-px bg-foreground/60 opacity-0 will-change-transform motion-reduce:hidden"
         style={{ animation: 'scratch 11s linear infinite' }}
       />
     </div>

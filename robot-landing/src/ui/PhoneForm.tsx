@@ -30,9 +30,9 @@ export function PhoneForm({ onSubmit, error }: { onSubmit: (v: string) => void; 
         placeholder={t('phone.placeholder')}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="min-w-0 flex-1 bg-transparent px-4 text-lg tracking-wider text-fog outline-none placeholder:text-mute/50"
+        className="min-w-0 flex-1 bg-transparent px-4 text-lg tracking-wider text-foreground outline-none placeholder:text-muted-foreground/50"
       />
-      <button type="submit" className="bg-brand cursor-pointer rounded-full px-6 py-3 font-semibold text-white">
+      <button type="submit" className="bg-brand cursor-pointer rounded-full px-6 py-3 font-semibold text-primary-foreground">
         {t('phone.submit')}
       </button>
     </form>
