@@ -79,9 +79,9 @@ export class Stage {
   constructor(
     private canvas: HTMLCanvasElement,
     private levelSource: () => number,
-    opts: { lite: boolean; yalda?: boolean; onContextLost?: () => void },
+    opts: { lite: boolean; yalda?: boolean; badge: { name: string; role: string }; onContextLost?: () => void },
   ) {
-    this.outfit = createOutfit({ yalda: !!opts.yalda })
+    this.outfit = createOutfit({ yalda: !!opts.yalda, badge: opts.badge })
     if (location.search.includes('perf')) Object.assign(window, { __stage: this })
     this.renderer = new WebGLRenderer({ canvas, antialias: !opts.lite, alpha: true, powerPreference: 'high-performance' })
     if (opts.lite) this.quality = 1

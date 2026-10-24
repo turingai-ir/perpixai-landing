@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -47,6 +48,7 @@ const firstScene = () =>
 const firstSceneReady: Promise<unknown> = typeof window === 'undefined' ? new Promise(() => {}) : firstScene()
 
 export function App() {
+  const { t } = useTranslation()
   const api = useRef<HeroApi | null>(null)
   const [entered, setEntered] = useState(false)
   /** Bumped by the logo: remounts the preloader and Pixo so the show starts over. */
@@ -132,13 +134,13 @@ export function App() {
   return (
     <>
       <a href="#more" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2">
-        رفتن به محتوا
+        {t('a11y.skipToContent')}
       </a>
       <Preloader key={`pre-${run}`} ready={firstSceneReady} onEnter={enter} />
       <FilmFx />
       <Header onSignup={() => signup('header')} onRestart={restart} />
       <main>
-        <h1 className="sr-only">پرپیکس — ساخت تصویر و ویدیو با هوش مصنوعی از یک جمله</h1>
+        <h1 className="sr-only">{t('a11y.h1')}</h1>
         <Hero key={`hero-${run}`} entered={entered} onReady={(a) => (api.current = a)} />
         <Film />
         <Reel onMake={(demo) => signup('reel', { demo })} />

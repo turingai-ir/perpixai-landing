@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { voice } from '@/audio/voice'
 import { config } from '@/config'
 import { authDebug, loginUrl, signupUrl } from '@/lib/auth'
-import { dialogue, pick, type DialogueKey, type Line } from '@/content/dialogue'
+import { lines, pick, type DialogueKey, type Line } from '@/content/dialogue'
 import type { Demo } from '@/content/demos'
 import { normalizeIranMobile } from '@/lib/digits'
 import { visitor } from '@/lib/storage'
@@ -89,7 +89,7 @@ export function useConversation(stage: React.RefObject<Stage | null>) {
     visitor.markVisited()
     stage.current?.setPowered(true)
     track('view', { returning })
-    voice.preload([...dialogue.intro, ...dialogue.greetNew, ...dialogue.greetBack, ...dialogue.newcomer])
+    voice.preload([...lines('intro'), ...lines('greetNew'), ...lines('greetBack'), ...lines('newcomer')])
     await new Promise((r) => setTimeout(r, 900))
     if (!current(id)) return
     stage.current?.setLayout('side')
@@ -108,7 +108,7 @@ export function useConversation(stage: React.RefObject<Stage | null>) {
   const asNewcomer = useCallback(() => {
     begin()
     track('choose_new')
-    voice.preload([...dialogue.askPhone, ...dialogue.demoAsk, ...dialogue.computing, ...dialogue.reveal])
+    voice.preload([...lines('askPhone'), ...lines('demoAsk'), ...lines('computing'), ...lines('reveal')])
     say('newcomer', 'newcomer')
   }, [begin, say])
 

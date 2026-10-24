@@ -1,15 +1,17 @@
 import type { MetadataRoute } from 'next'
-import { BRAND, description } from '@/lib/seo'
+import { defaultLocale, localeMeta } from '@/i18n/config'
+import { getSeo } from '@/lib/seo'
 
 export const dynamic = 'force-static'
 
 export default function manifest(): MetadataRoute.Manifest {
+  const { brand, manifestName, description } = getSeo()
   return {
-    name: `${BRAND} — ساخت عکس و ویدیو با هوش مصنوعی`,
-    short_name: BRAND,
+    name: manifestName,
+    short_name: brand,
     description,
-    lang: 'fa',
-    dir: 'rtl',
+    lang: defaultLocale,
+    dir: localeMeta[defaultLocale].dir,
     start_url: '/',
     display: 'browser',
     background_color: '#030205',

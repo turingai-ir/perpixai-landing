@@ -1,0 +1,28 @@
+{
+  "title": "پرپیکس — ساخت عکس و ویدیو با هوش مصنوعی به فارسی",
+  "description": "با پرپیکس از یک جمله فارسی، تصویر و ویدیو سینمایی بساز؛ ۱۶ مدل هوش مصنوعی با یک حساب. ثبت‌نام رایگان با اعتبار هدیه.",
+  "siteName": "پرپیکس",
+  "shortDescription": "ساخت تصویر و ویدیو با هوش مصنوعی",
+  "keywords": [
+    "پرپیکس",
+    "ساخت عکس با هوش مصنوعی",
+    "ساخت ویدیو با هوش مصنوعی",
+    "هوش مصنوعی فارسی",
+    "متن به تصویر",
+    "متن به ویدیو",
+    "ویرایش عکس با هوش مصنوعی"
+  ],
+  "manifestName": "پرپیکس — ساخت عکس و ویدیو با هوش مصنوعی",
+  "videoDescription": "ویدیویی که با پرپیکس از این جمله ساخته شده: «{{prompt}}»",
+  "llms": {
+    "summaryEn": "Perpix is a Persian-language AI image and video generator: write an idea in Persian (or upload a photo) and get an image or video, using 16 AI models from a single account. Sign-up is free and includes gift credits.",
+    "features": "قابلیت‌ها",
+    "plans": "پلن‌ها (یک‌ماهه، قیمت به تومان)",
+    "plan": "{{name}}: {{price}} تومان، {{tokens}} اعتبار",
+    "links": "لینک‌ها",
+    "home": "صفحه‌ی اصلی",
+    "homeNote": "معرفی، نمونه‌ی ویدیوها، پلن‌ها و سؤال‌های متداول",
+    "login": "ورود / ثبت‌نام",
+    "loginNote": "ساخت حساب و شروع"
+  }
+}

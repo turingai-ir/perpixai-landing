@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /** Mobile-only sign-up bar once the conversation has scrolled away. */
 export function StickyCta({ onSignup }: { onSignup: () => void }) {
+  const { t } = useTranslation()
   const [show, setShow] = useState(false)
   useEffect(() => {
     const hero = document.getElementById('top')
@@ -21,7 +23,7 @@ export function StickyCta({ onSignup }: { onSignup: () => void }) {
         onClick={onSignup}
         className="bg-brand w-full cursor-pointer rounded-full py-4 text-base font-bold text-white shadow-[0_10px_40px_-5px_#d92dd4aa]"
       >
-        ثبت‌نام رایگان + اعتبار هدیه
+        {t('sticky.signup')}
       </button>
     </div>
   )
