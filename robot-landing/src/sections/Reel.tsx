@@ -8,10 +8,6 @@ import { Icon } from '@/ui/Icon'
 import { LazyVideo } from '@/ui/LazyVideo'
 import { SplitHeading } from '@/ui/SplitHeading'
 
-const sprockets = {
-  backgroundImage: 'repeating-linear-gradient(90deg, transparent 0 14px, rgb(233 230 245 / .14) 14px 26px)',
-}
-
 /**
  * The film reel: real Perpix clips on a strip that travels sideways while you scroll down.
  * RTL — the strip overflows to the left, so it moves in +x. Touch/narrow screens get native swipe.
@@ -77,8 +73,8 @@ export function Reel({ onMake }: { onMake: (demoId: string) => void }) {
 
           {readyDemos.map((d, i) => (
             <figure key={d.id} className="w-[85vw] shrink-0 snap-center md:w-[52vw]">
-              <div className="rounded-[1.75rem] bg-ink-3 p-3 shadow-[0_30px_100px_-40px_#06a1e9] md:p-4">
-                <div aria-hidden className="mb-3 h-3 rounded-sm" style={sprockets} />
+              <div className="rounded-frame bg-ink-3 p-3 shadow-frame-cyan md:p-4">
+                <div aria-hidden className="mb-3 h-3 rounded-sm sprockets" />
                 <div className="relative aspect-video overflow-hidden rounded-xl">
                   <div data-reel-media className="absolute inset-0">
                     <LazyVideo id={d.id} className="size-full object-cover" />
@@ -87,7 +83,7 @@ export function Reel({ onMake }: { onMake: (demoId: string) => void }) {
                     {t('reel.scene', { n: localizeDigits(i + 1) })}
                   </span>
                 </div>
-                <div aria-hidden className="mt-3 h-3 rounded-sm" style={sprockets} />
+                <div aria-hidden className="mt-3 h-3 rounded-sm sprockets" />
               </div>
               <figcaption className="mt-5 flex flex-col gap-4 px-1 md:flex-row md:items-start md:justify-between">
                 <div>

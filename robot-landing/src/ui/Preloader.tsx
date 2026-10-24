@@ -116,7 +116,7 @@ export function Preloader({ ready, onEnter }: Props) {
       role="dialog"
       aria-modal="true"
       aria-label={t('preloader.label')}
-      className="fixed inset-0 z-[70] grid place-items-center overflow-hidden bg-ink text-fog"
+      className="fixed inset-0 z-(--z-preloader) grid place-items-center overflow-hidden bg-ink text-fog"
       style={{ ['--sweep' as string]: '0deg' }}
     >
       {/*
@@ -124,9 +124,7 @@ export function Preloader({ ready, onEnter }: Props) {
         lands immediately); only the slot below it changes from the leader countdown to the gate.
       */}
       <div className="flex flex-col items-center gap-7 px-6 text-center md:gap-8">
-        {ts(`${season.id}.greeting`) && (
-          <p className="font-poster text-2xl text-[#ff6b7f] [text-shadow:0_0_18px_rgb(227_38_63/.7)]">{ts(`${season.id}.greeting`)}</p>
-        )}
+        {ts(`${season.id}.greeting`) && <p className="font-poster text-2xl neon-yalda">{ts(`${season.id}.greeting`)}</p>}
         <div className="flex flex-col items-center gap-3">
           <div className="bulbs w-[min(80vw,30rem)]" />
           <div className="flex items-center gap-4">
@@ -147,13 +145,10 @@ export function Preloader({ ready, onEnter }: Props) {
             <div className="relative grid size-[min(36vw,9rem)] place-items-center md:size-[10.5rem]" aria-hidden>
               <div className="absolute inset-0 rounded-full border-2 border-fog/70" />
               <div className="absolute inset-[9%] rounded-full border border-fog/40" />
-              <div
-                className="absolute inset-[9%] rounded-full"
-                style={{ background: 'conic-gradient(from 0deg, rgb(245 239 228 / .16) var(--sweep), transparent 0)' }}
-              />
+              <div className="absolute inset-[9%] rounded-full leader-sweep" />
               <div className="absolute inset-x-0 top-1/2 h-px bg-fog/50" />
               <div className="absolute inset-y-0 left-1/2 w-px bg-fog/50" />
-              <span className="relative font-poster text-[min(18vw,5.5rem)] leading-none">{localizeDigits(count)}</span>
+              <span className="relative font-poster text-countdown leading-none">{localizeDigits(count)}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-5">
@@ -162,7 +157,7 @@ export function Preloader({ ready, onEnter }: Props) {
                 type="button"
                 autoFocus
                 onClick={() => enter(true)}
-                className="cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 font-poster text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-[0_0_60px_-8px_#06a1e9] md:text-3xl"
+                className="cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 font-poster text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-glow-cyan md:text-3xl"
               >
                 {t('preloader.start')}
               </button>

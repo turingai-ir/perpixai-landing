@@ -12,7 +12,7 @@ export function Header({ onSignup, onRestart }: { onSignup: () => void; onRestar
   return (
     <header
       data-hero-chrome
-      className="fixed inset-x-0 top-0 z-40 flex items-center justify-between gap-4 bg-gradient-to-b from-ink via-ink/80 to-transparent px-5 py-4 md:px-10 md:py-5"
+      className="fixed inset-x-0 top-0 z-(--z-chrome) flex items-center justify-between gap-4 bg-gradient-to-b from-ink via-ink/80 to-transparent px-5 py-4 md:px-10 md:py-5"
     >
       <a
         href="#top"

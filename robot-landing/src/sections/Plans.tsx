@@ -16,7 +16,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
   useOffscreenPause(root)
   return (
     <section ref={root} id="plans" className="relative px-5 py-28 md:px-14 md:py-36">
-      <div aria-hidden className="absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(ellipse_50%_60%_at_50%_0%,#863ed326,transparent)]" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-2/3 aura-plans" />
       <div className="relative mx-auto max-w-6xl">
         <header className="mb-16 flex flex-col items-center text-center">
           <div className="mb-6 inline-flex flex-col gap-1.5">
@@ -31,17 +31,9 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
         <ul className="grid items-start gap-8 md:grid-cols-3 md:gap-6">
           {plans.map((p, i) => (
             <li key={p.id} data-reveal className={clsx('relative', p.featured && 'md:-mt-6')}>
-              {p.featured && (
-                <div
-                  aria-hidden
-                  className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,#d92dd455,transparent_70%)] blur-2xl"
-                />
-              )}
+              {p.featured && <div aria-hidden className="absolute -inset-3 rounded-4xl blur-2xl aura-featured" />}
               <article
-                className={clsx(
-                  'ticket relative flex flex-col rounded-3xl',
-                  p.featured ? 'bg-[linear-gradient(160deg,#2a1240,#120c22_55%,#0b1a2e)]' : 'bg-ink-3',
-                )}
+                className={clsx('ticket relative flex flex-col rounded-3xl', p.featured ? 'surface-featured' : 'bg-ink-3')}
                 style={{ ['--tear' as string]: 'calc(100% - 97px)' }}
               >
                 {p.featured && <div aria-hidden className="bg-brand absolute inset-x-0 top-0 h-1 rounded-t-3xl" />}
@@ -66,20 +58,20 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                     {p.was && (
                       <span className="flex items-center gap-2 text-sm">
                         <s className="text-dim">{formatNumber(p.was)}</s>
-                        <span className="rounded-full bg-magenta/20 px-2 py-0.5 text-xs font-bold text-[#f08cec]">
+                        <span className="rounded-full bg-magenta/20 px-2 py-0.5 text-xs font-bold text-magenta-soft">
                           {t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off!) }) })}
                         </span>
                       </span>
                     )}
                   </div>
                   <p className="mt-1 flex items-baseline gap-2 font-poster leading-none">
-                    <span className="text-5xl md:text-[3.4rem]">{formatNumber(p.price)}</span>
+                    <span className="text-5xl md:text-price">{formatNumber(p.price)}</span>
                     <span className="text-xl text-mute">{t('plans.currency')}</span>
                   </p>
 
                   <ul className="mt-7 space-y-3">
                     {t(`plans.items.${p.id}.features`, { returnObjects: true, tokens: formatNumber(p.tokens) }).map((f) => (
-                      <li key={f} className="flex gap-3 text-[0.95rem] leading-7 text-fog/90">
+                      <li key={f} className="flex gap-3 text-body-sm leading-7 text-fog/90">
                         <Icon name="check" className="mt-1.5 size-4 shrink-0 text-cyan" />
                         {f}
                       </li>
@@ -99,9 +91,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                     onClick={() => onChoose(p.id)}
                     className={clsx(
                       'cursor-pointer rounded-full px-5 py-3 text-sm font-bold transition duration-300 hover:-translate-y-0.5',
-                      p.featured
-                        ? 'bg-brand text-white shadow-[0_12px_36px_-10px_#d92dd4]'
-                        : 'border border-fog/25 text-fog hover:border-fog/50 hover:bg-white/5',
+                      p.featured ? 'bg-brand text-white shadow-cta' : 'border border-fog/25 text-fog hover:border-fog/50 hover:bg-white/5',
                     )}
                   >
                     {t('plans.choose', { name: t(`plans.items.${p.id}.name`) })}

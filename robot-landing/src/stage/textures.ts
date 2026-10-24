@@ -1,3 +1,4 @@
+import { paint } from './palette'
 import { CanvasTexture, RepeatWrapping, SRGBColorSpace } from 'three'
 
 /** Turing tape: a strip of cells holding 0 / 1 / blank, scrolled via texture offset. */
@@ -8,9 +9,9 @@ export function tapeTexture() {
   c.width = cell * cells
   c.height = 64
   const g = c.getContext('2d')!
-  g.fillStyle = '#efe6cf'
+  g.fillStyle = paint.tapeSheet
   g.fillRect(0, 0, c.width, c.height)
-  g.strokeStyle = 'rgba(60,40,20,0.35)'
+  g.strokeStyle = paint.tapeGrain
   g.lineWidth = 2
   g.font = 'bold 38px ui-monospace, Menlo, monospace'
   g.textAlign = 'center'
@@ -19,7 +20,7 @@ export function tapeTexture() {
   for (let i = 0; i < cells; i++) {
     g.strokeRect(i * cell + 1, 6, cell - 2, c.height - 12)
     const s = symbols[(i * 7) % symbols.length]
-    g.fillStyle = '#2a1d12'
+    g.fillStyle = paint.tapeInk
     if (s) g.fillText(s, i * cell + cell / 2, c.height / 2 + 2)
   }
   const tex = new CanvasTexture(c)
@@ -37,12 +38,12 @@ export function plateTexture() {
   c.height = 96
   const g = c.getContext('2d')!
   const grad = g.createLinearGradient(0, 0, 512, 0)
-  grad.addColorStop(0, '#6d5226')
-  grad.addColorStop(0.5, '#c9a25a')
-  grad.addColorStop(1, '#6d5226')
+  grad.addColorStop(0, paint.brassDeep)
+  grad.addColorStop(0.5, paint.brass)
+  grad.addColorStop(1, paint.brassDeep)
   g.fillStyle = grad
   g.fillRect(0, 0, 512, 96)
-  g.fillStyle = '#1c140a'
+  g.fillStyle = paint.brassInk
   g.font = '600 40px Georgia, serif'
   g.textAlign = 'center'
   g.textBaseline = 'middle'
@@ -58,7 +59,7 @@ export function moodTexture(kind: 'ask' | 'think' | 'love') {
   c.width = c.height = 256
   const g = c.getContext('2d')!
   g.translate(128, 128)
-  g.strokeStyle = g.fillStyle = '#ffffff'
+  g.strokeStyle = g.fillStyle = paint.white
   g.lineCap = 'round'
   g.lineJoin = 'round'
   if (kind === 'ask') {
@@ -92,24 +93,24 @@ export function scarfTexture() {
   c.width = 512
   c.height = 128
   const g = c.getContext('2d')!
-  g.fillStyle = '#a3112c'
+  g.fillStyle = paint.scarfRed
   g.fillRect(0, 0, 512, 128)
   // knit texture
-  g.fillStyle = 'rgba(0,0,0,0.12)'
+  g.fillStyle = paint.scarfFold
   for (let x = 0; x < 512; x += 8) for (let y = 0; y < 128; y += 8) if ((x + y) % 16 === 0) g.fillRect(x, y, 4, 8)
-  g.fillStyle = '#d9c39b'
+  g.fillStyle = paint.scarfCream
   g.fillRect(0, 8, 512, 4)
   g.fillRect(0, 116, 512, 4)
   for (let x = 32; x < 512; x += 64) {
-    g.fillStyle = '#5c0716'
+    g.fillStyle = paint.scarfShade
     g.beginPath()
     g.arc(x, 64, 17, 0, Math.PI * 2)
     g.fill()
-    g.fillStyle = '#ff4a5e'
+    g.fillStyle = paint.scarfGlow
     g.beginPath()
     g.arc(x - 4, 60, 13, 0, Math.PI * 2)
     g.fill()
-    g.fillStyle = '#ffd36b'
+    g.fillStyle = paint.scarfGold
     g.fillRect(x - 5, 40, 10, 8) // crown
   }
   const tex = new CanvasTexture(c)
@@ -125,12 +126,12 @@ export function badgeTexture(name: string, role: string) {
   c.height = 96
   const g = c.getContext('2d')!
   const grad = g.createLinearGradient(0, 0, 256, 96)
-  grad.addColorStop(0, '#8a6a2c')
-  grad.addColorStop(0.5, '#e2c27a')
-  grad.addColorStop(1, '#8a6a2c')
+  grad.addColorStop(0, paint.badgeDeep)
+  grad.addColorStop(0.5, paint.badgeGold)
+  grad.addColorStop(1, paint.badgeDeep)
   g.fillStyle = grad
   g.fillRect(0, 0, 256, 96)
-  g.fillStyle = '#2a1a08'
+  g.fillStyle = paint.badgeInk
   g.textAlign = 'center'
   g.direction = 'rtl'
   g.font = 'bold 40px Lalezar, Vazirmatn, Tahoma, sans-serif'

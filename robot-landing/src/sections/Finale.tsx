@@ -11,12 +11,9 @@ export function Finale({ onSignup }: { onSignup: () => void }) {
   const title = t('finale.title', { returnObjects: true })
   return (
     <section className="relative overflow-hidden px-5 pt-28 md:px-14 md:pt-36">
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-3/4 bg-[radial-gradient(ellipse_55%_70%_at_50%_100%,#863ed340,transparent_70%)]"
-      />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 aura-finale" />
       <div className="relative mx-auto flex max-w-5xl flex-col items-center text-center">
-        <p data-reveal className="neon font-poster text-[clamp(5rem,18vw,13rem)] leading-none">
+        <p data-reveal className="neon font-poster text-display leading-none">
           {t('finale.end')}
         </p>
         <p data-reveal className="mt-2 text-sm tracking-wide text-dim">
@@ -32,7 +29,7 @@ export function Finale({ onSignup }: { onSignup: () => void }) {
           <button
             type="button"
             onClick={onSignup}
-            className="bg-brand inline-flex cursor-pointer items-center gap-2 rounded-full px-9 py-4 text-lg font-bold text-white shadow-[0_20px_60px_-15px_#d92dd4] transition hover:-translate-y-0.5"
+            className="bg-brand inline-flex cursor-pointer items-center gap-2 rounded-full px-9 py-4 text-lg font-bold text-white shadow-cta-lg transition hover:-translate-y-0.5"
           >
             <Icon name="gift" className="size-6" />
             {t('finale.signup')}

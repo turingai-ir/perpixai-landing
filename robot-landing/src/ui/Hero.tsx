@@ -64,21 +64,8 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
         className="circuit absolute inset-0 [mask-image:radial-gradient(ellipse_at_28%_55%,black,transparent_65%)] opacity-40"
       />
       {/* Projector beam falling on the stage, and the neon spill around Pixo */}
-      <div
-        aria-hidden
-        className="absolute top-[-15%] h-[125%] w-full opacity-70 mix-blend-screen md:left-[2%] md:w-[46%]"
-        style={{
-          clipPath: 'polygon(44% 0, 56% 0, 100% 100%, 0 100%)',
-          background: 'linear-gradient(to bottom, rgb(255 236 210 / .22), rgb(255 236 210 / .06) 55%, transparent 80%)',
-          filter: 'blur(18px)',
-          animation: 'flicker 4s steps(1) infinite',
-          willChange: 'opacity', // keep the blurred beam on its own layer: flicker = composite only
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_32%_40%_at_14%_70%,#d92dd42e,transparent),radial-gradient(ellipse_30%_40%_at_44%_62%,#06a1e924,transparent)]"
-      />
+      <div aria-hidden className="absolute top-[-15%] h-[125%] w-full projector-beam opacity-70 mix-blend-screen md:left-[2%] md:w-[46%]" />
+      <div aria-hidden className="absolute inset-0 aura-hero" />
       {season.id === 'yalda' && <YaldaSeeds />}
       <PixoStage controls={stage} label={characterLabel} badge={{ name: characterName, role: t('stage.badgeRole') }} />
 
@@ -186,12 +173,12 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
       <div
         aria-hidden
         data-bar
-        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[11vh] origin-top bg-black motion-reduce:hidden max-md:hidden"
+        className="pointer-events-none absolute inset-x-0 top-0 z-(--z-bars) h-[11vh] origin-top bg-black motion-reduce:hidden max-md:hidden"
       />
       <div
         aria-hidden
         data-bar
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-[11vh] origin-bottom bg-black motion-reduce:hidden max-md:hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-(--z-bars) h-[11vh] origin-bottom bg-black motion-reduce:hidden max-md:hidden"
       />
 
       <div data-hero-chrome className="absolute inset-x-0 bottom-0 hidden items-center justify-between px-14 pb-8 md:flex">

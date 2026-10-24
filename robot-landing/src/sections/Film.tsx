@@ -90,18 +90,14 @@ export function Film() {
             </div>
 
             {/* The frame */}
-            <div className="relative aspect-video overflow-hidden rounded-2xl border-[10px] border-ink-3 bg-ink-2 shadow-[0_40px_140px_-30px_#863ed3,0_0_0_1px_rgb(245_239_228/.12)]">
+            <div className="relative aspect-video overflow-hidden rounded-2xl border-10 border-ink-3 bg-ink-2 shadow-frame-purple">
               <div data-frame className="absolute inset-0">
                 <LazyVideo id={filmDemoId} className="size-full object-cover" />
               </div>
               <div
                 data-noise
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-0 mix-blend-screen motion-reduce:hidden max-md:hidden"
-                style={{
-                  backgroundImage:
-                    'repeating-linear-gradient(0deg, rgb(255 255 255 / .07) 0 1px, transparent 1px 3px), radial-gradient(circle at 30% 40%, #d92dd466, transparent 60%), radial-gradient(circle at 70% 60%, #06a1e966, transparent 60%)',
-                }}
+                className="pointer-events-none absolute inset-0 film-noise opacity-0 mix-blend-screen motion-reduce:hidden max-md:hidden"
               />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 text-xs text-fog/80">
                 <span className="flex items-center gap-2">

@@ -43,15 +43,8 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
           />
         )}
         {(developing || (missing && process.env.NODE_ENV === 'development')) && (
-          <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_30%_30%,#d92dd455,transparent_50%),radial-gradient(circle_at_70%_70%,#06a1e955,transparent_55%)]">
-            <div
-              className="absolute inset-0 opacity-40"
-              style={{
-                backgroundImage: 'repeating-linear-gradient(0deg, transparent 0 3px, rgb(255 255 255 / .06) 3px 4px)',
-                backgroundSize: '100% 200%',
-                animation: 'scan 1.2s linear infinite',
-              }}
-            />
+          <div className="absolute inset-0 grid place-items-center aura-demo">
+            <div className="absolute inset-0 scanlines opacity-40" />
             <span className="relative text-sm text-fog/80">{developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}</span>
           </div>
         )}

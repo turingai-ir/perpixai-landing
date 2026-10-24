@@ -20,7 +20,7 @@ import {
 } from 'three'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
 import { materials } from '../materials'
-import { brand } from '../palette'
+import { brand, paint } from '../palette'
 import { moodTexture, plateTexture, tapeTexture } from '../textures'
 import { mergeChildren } from '../merge'
 import type { MachineState } from '../types'
@@ -87,7 +87,7 @@ export function createHead() {
   })
 
   const tapeTex = tapeTexture()
-  const tape = new Mesh(new PlaneGeometry(0.56, 0.06), new MeshStandardMaterial({ map: tapeTex, color: '#8a8070', roughness: 0.8 }))
+  const tape = new Mesh(new PlaneGeometry(0.56, 0.06), new MeshStandardMaterial({ map: tapeTex, color: paint.tapeTint, roughness: 0.8 }))
   tape.position.set(0, -0.04, FRONT + 0.035)
   head.add(tape)
 
@@ -113,7 +113,7 @@ export function createHead() {
     lampSpot.position.set(-0.125 + i * 0.05, -0.2, FRONT + 0.012)
     lampSpot.updateMatrix()
     lamps.setMatrixAt(i, lampSpot.matrix)
-    lamps.setColorAt(i, lampColor.set('#2a2440'))
+    lamps.setColorAt(i, lampColor.set(paint.lampOff))
   }
   head.add(lamps)
 
@@ -144,7 +144,7 @@ export function createHead() {
   })
 
   // Tesla's handlebar moustache, right under the eye
-  const hair = new MeshStandardMaterial({ color: '#b07a45', metalness: 0.7, roughness: 0.35 })
+  const hair = new MeshStandardMaterial({ color: paint.moustache, metalness: 0.7, roughness: 0.35 })
   const moustache = new Group()
   for (const side of [-1, 1]) {
     const curve = new CatmullRomCurve3(
