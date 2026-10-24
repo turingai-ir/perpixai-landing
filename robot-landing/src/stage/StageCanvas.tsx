@@ -55,6 +55,8 @@ function useWorld(yalda: boolean, badge: { name: string; role: string }) {
   const [world, setWorld] = useState<World | null>(null)
   useEffect(() => {
     const w = createWorld({ yalda, badge })
+    // The effect owns the GPU resources it creates; publishing them to render is the point of this state.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setWorld(w)
     return () => {
       setWorld(null)
@@ -102,6 +104,7 @@ function useComposer(lite: boolean) {
       composer.addPass(bloom)
     }
     composer.addPass(new OutputPass())
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- same as useWorld: effect-owned GPU resources
     setFx({ composer, bloom })
     return () => {
       setFx(null)
@@ -191,16 +194,7 @@ function useContextLoss(onContextLost: () => void) {
   }, [gl, onContextLost])
 }
 
-function Pixo({
-  controls,
-  levelSource,
-  lite,
-  yalda,
-  badge,
-  startQuality,
-  onContextLost,
-  onReady,
-}: StageProps & { startQuality: number }) {
+function Pixo({ controls, levelSource, lite, yalda, badge, startQuality, onContextLost, onReady }: StageProps & { startQuality: number }) {
   const gl = useThree((s) => s.gl)
   const camera = useThree((s) => s.camera) as PerspectiveCamera
   const setDpr = useThree((s) => s.setDpr)

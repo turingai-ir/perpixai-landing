@@ -34,8 +34,9 @@ export function Preloader({ ready, onEnter }: Props) {
   }
   const [gate, setGate] = useState(false)
   const [gone, setGone] = useState(false)
+  const [leaving, setLeaving] = useState(false)
 
-  const { contextSafe } = useGSAP(
+  useGSAP(
     () => {
       const reduce = prefersReducedMotion()
       let loaded = false
@@ -79,21 +80,33 @@ export function Preloader({ ready, onEnter }: Props) {
   useGSAP(
     () => {
       if (!gate || prefersReducedMotion()) return
-      gsap.fromTo('[data-gate]', { opacity: 0, y: 16, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power4.out', stagger: 0.12 })
+      gsap.fromTo(
+        '[data-gate]',
+        { opacity: 0, y: 16, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power4.out', stagger: 0.12 },
+      )
     },
     { scope: root, dependencies: [gate] },
   )
 
-  const enter = contextSafe((withSound: boolean) => {
+  // Iris out — the oldest transition in cinema.
+  useGSAP(
+    () => {
+      if (!leaving) return
+      gsap.fromTo(
+        root.current,
+        { clipPath: 'circle(150% at 50% 50%)' },
+        { clipPath: 'circle(0% at 50% 50%)', duration: 1.3, ease: 'power4.inOut', onComplete: () => setGone(true) },
+      )
+    },
+    { scope: root, dependencies: [leaving] },
+  )
+
+  const enter = (withSound: boolean) => {
     onEnter(withSound)
-    if (prefersReducedMotion()) return setGone(true)
-    // Iris out — the oldest transition in cinema.
-    gsap.fromTo(
-      root.current,
-      { clipPath: 'circle(150% at 50% 50%)' },
-      { clipPath: 'circle(0% at 50% 50%)', duration: 1.3, ease: 'power4.inOut', onComplete: () => setGone(true) },
-    )
-  })
+    if (prefersReducedMotion()) setGone(true)
+    else setLeaving(true)
+  }
 
   if (gone) return null
   return (
@@ -118,12 +131,13 @@ export function Preloader({ ready, onEnter }: Props) {
           <div className="bulbs w-[min(80vw,30rem)]" />
           <div className="flex items-center gap-4">
             <img src={asset('brand/logo-192.webp')} alt="" width={77} height={64} className="h-12 w-auto md:h-16" />
-            <p className="font-poster neon text-6xl leading-none md:text-8xl">{t('preloader.title')}</p>
+            <p className="neon font-poster text-6xl leading-none md:text-8xl">{t('preloader.title')}</p>
           </div>
           <div className="bulbs w-[min(80vw,30rem)]" style={{ animationDelay: '-0.8s' }} />
         </div>
         <p className="text-base text-mute">
-          {t('preloader.showing', { showing: ts(`${season.id}.showing`) })} <span className="font-poster neon-cyan text-2xl">{tc('character.name')}</span>
+          {t('preloader.showing', { showing: ts(`${season.id}.showing`) })}{' '}
+          <span className="neon-cyan font-poster text-2xl">{tc('character.name')}</span>
           <span className="text-mute"> · {t('preloader.tagline')}</span>
         </p>
 
@@ -139,7 +153,7 @@ export function Preloader({ ready, onEnter }: Props) {
               />
               <div className="absolute inset-x-0 top-1/2 h-px bg-fog/50" />
               <div className="absolute inset-y-0 left-1/2 w-px bg-fog/50" />
-              <span className="font-poster relative text-[min(18vw,5.5rem)] leading-none">{localizeDigits(count)}</span>
+              <span className="relative font-poster text-[min(18vw,5.5rem)] leading-none">{localizeDigits(count)}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-5">
@@ -148,13 +162,17 @@ export function Preloader({ ready, onEnter }: Props) {
                 type="button"
                 autoFocus
                 onClick={() => enter(true)}
-                className="font-poster cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-[0_0_60px_-8px_#06a1e9] md:text-3xl"
+                className="cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 font-poster text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-[0_0_60px_-8px_#06a1e9] md:text-3xl"
               >
                 {t('preloader.start')}
               </button>
               <p data-gate className="flex items-center gap-2 text-sm text-dim">
                 <span className="size-1.5 animate-pulse rounded-full bg-amber" /> {t('preloader.withSound')}
-                <button type="button" onClick={() => enter(false)} className="cursor-pointer underline-offset-4 hover:text-fog hover:underline">
+                <button
+                  type="button"
+                  onClick={() => enter(false)}
+                  className="cursor-pointer underline-offset-4 hover:text-fog hover:underline"
+                >
                   {t('preloader.muted')}
                 </button>
               </p>
@@ -166,9 +184,14 @@ export function Preloader({ ready, onEnter }: Props) {
       <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-6 text-xs text-dim md:px-10">
         <span>{gate ? t('preloader.ready') : t('preloader.loading')}</span>
         <span className="h-px flex-1 bg-line">
-          <span ref={bar} className="block h-full origin-right scale-x-0 bg-fog/70 transition-transform duration-300 will-change-transform" />
+          <span
+            ref={bar}
+            className="block h-full origin-right scale-x-0 bg-fog/70 transition-transform duration-300 will-change-transform"
+          />
         </span>
-        <span ref={pct} dir="ltr" className="font-mono tabular-nums">{t('percent', { n: localizeDigits(0) })}</span>
+        <span ref={pct} dir="ltr" className="font-mono tabular-nums">
+          {t('percent', { n: localizeDigits(0) })}
+        </span>
       </div>
     </div>
   )

@@ -87,10 +87,7 @@ export function createHead() {
   })
 
   const tapeTex = tapeTexture()
-  const tape = new Mesh(
-    new PlaneGeometry(0.56, 0.06),
-    new MeshStandardMaterial({ map: tapeTex, color: '#8a8070', roughness: 0.8 }),
-  )
+  const tape = new Mesh(new PlaneGeometry(0.56, 0.06), new MeshStandardMaterial({ map: tapeTex, color: '#8a8070', roughness: 0.8 }))
   tape.position.set(0, -0.04, FRONT + 0.035)
   head.add(tape)
 
@@ -120,10 +117,7 @@ export function createHead() {
   }
   head.add(lamps)
 
-  const plate = new Mesh(
-    new PlaneGeometry(0.34, 0.064),
-    new MeshStandardMaterial({ map: plateTexture(), metalness: 0.8, roughness: 0.35 }),
-  )
+  const plate = new Mesh(new PlaneGeometry(0.34, 0.064), new MeshStandardMaterial({ map: plateTexture(), metalness: 0.8, roughness: 0.35 }))
   plate.position.set(0, -0.28, FRONT + 0.012)
   head.add(plate)
 
@@ -176,7 +170,15 @@ export function createHead() {
   const moodColors = { ask: brand.cyan, think: brand.purple, love: brand.magenta } as const
   const glyphs = (['ask', 'think', 'love'] as const).map((kind) => {
     const tex = moodTexture(kind)
-    const mat = new MeshBasicMaterial({ map: tex, color: moodColors[kind], transparent: true, opacity: 0, blending: AdditiveBlending, depthWrite: false, toneMapped: false })
+    const mat = new MeshBasicMaterial({
+      map: tex,
+      color: moodColors[kind],
+      transparent: true,
+      opacity: 0,
+      blending: AdditiveBlending,
+      depthWrite: false,
+      toneMapped: false,
+    })
     const planes = [-0.26, 0.26].map((x) => {
       const m = new Mesh(new PlaneGeometry(0.2, 0.2), mat)
       m.position.set(x, 0.07, FRONT + 0.065)

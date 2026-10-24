@@ -42,9 +42,7 @@ const firstScene = () =>
     import('@/stage/StageCanvas').catch(() => null),
     document.fonts?.ready,
     loadImage(asset('brand/pixo.webp')),
-    ...['intro-1', 'intro-2', 'greet-1', 'greet-2', 'greet-3'].map((id) =>
-      fetch(`${config.voiceDir}/${id}.mp3`).catch(() => null),
-    ),
+    ...['intro-1', 'intro-2', 'greet-1', 'greet-2', 'greet-3'].map((id) => fetch(`${config.voiceDir}/${id}.mp3`).catch(() => null)),
   ])
 
 /** Started at module load in the browser (as before), never during server pre-rendering. */
@@ -136,7 +134,10 @@ export function App() {
 
   return (
     <>
-      <a href="#more" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2">
+      <a
+        href="#more"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2"
+      >
         {t('a11y.skipToContent')}
       </a>
       <Preloader key={`pre-${run}`} ready={firstSceneReady} onEnter={enter} />

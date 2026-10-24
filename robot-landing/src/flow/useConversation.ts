@@ -10,17 +10,7 @@ import { track } from '@/lib/analytics'
 import type { StageControls } from '@/stage/controls'
 import type { Mood } from '@/stage/types'
 
-export type Step =
-  | 'boot'
-  | 'greet'
-  | 'greetBack'
-  | 'login'
-  | 'newcomer'
-  | 'phone'
-  | 'signup'
-  | 'demoPick'
-  | 'computing'
-  | 'reveal'
+export type Step = 'boot' | 'greet' | 'greetBack' | 'login' | 'newcomer' | 'phone' | 'signup' | 'demoPick' | 'computing' | 'reveal'
 
 type State = {
   step: Step
@@ -36,13 +26,7 @@ type State = {
 
 /** Pixo's face for each step of the conversation. */
 const moodFor = (step: Step): Mood =>
-  step === 'computing'
-    ? 'think'
-    : step === 'reveal' || step === 'signup' || step === 'login'
-      ? 'love'
-      : step === 'boot'
-        ? 'neutral'
-        : 'ask'
+  step === 'computing' ? 'think' : step === 'reveal' || step === 'signup' || step === 'login' ? 'love' : step === 'boot' ? 'neutral' : 'ask'
 
 /** Read once per page load (StrictMode runs effects twice). */
 const RETURNING = visitor.isReturning()
@@ -53,12 +37,12 @@ const initial: State = { step: 'boot', line: null, prev: null, ready: false, dem
  * The landing's conversion funnel as a tiny state machine:
  * greet → member? → login | (signup | demo → reveal → signup).
  */
-export function useConversation(stage: React.RefObject<StageControls | null>) {
+export function useConversation(stage: StageControls) {
   const [state, setState] = useState<State>(initial)
   const flow = useRef(0)
   const readyTimer = useRef(0)
   const nudged = useRef(false)
-  const lastAction = useRef(performance.now())
+  const lastAction = useRef(0)
 
   /** Leave for the auth page — or, in test mode, show where we would go. */
   const go = useCallback((url: string) => {
@@ -66,14 +50,17 @@ export function useConversation(stage: React.RefObject<StageControls | null>) {
     else window.setTimeout(() => window.location.assign(url), 250)
   }, [])
 
-  const say = useCallback(async (key: DialogueKey, step: Step, extra: Partial<State> = {}) => {
-    const line = pick(key)
-    window.clearTimeout(readyTimer.current)
-    setState((s) => ({ ...s, ...extra, step, prev: s.line, line, ready: false }))
-    stage.current?.setMood(moodFor(step))
-    readyTimer.current = window.setTimeout(() => setState((s) => ({ ...s, ready: true })), 650)
-    await voice.say(line)
-  }, [stage])
+  const say = useCallback(
+    async (key: DialogueKey, step: Step, extra: Partial<State> = {}) => {
+      const line = pick(key)
+      window.clearTimeout(readyTimer.current)
+      setState((s) => ({ ...s, ...extra, step, prev: s.line, line, ready: false }))
+      stage.setMood(moodFor(step))
+      readyTimer.current = window.setTimeout(() => setState((s) => ({ ...s, ready: true })), 650)
+      await voice.say(line)
+    },
+    [stage],
+  )
 
   /** Starts a new branch; anything awaited by an older branch is ignored. */
   const begin = useCallback(() => {
@@ -85,14 +72,15 @@ export function useConversation(stage: React.RefObject<StageControls | null>) {
 
   const start = useCallback(async () => {
     const id = ++flow.current
+    lastAction.current = performance.now() // the idle clock for the nudge starts when the visitor walks in
     const returning = RETURNING
     visitor.markVisited()
-    stage.current?.setPowered(true)
+    stage.setPowered(true)
     track('view', { returning })
     voice.preload([...lines('intro'), ...lines('greetNew'), ...lines('greetBack'), ...lines('newcomer')])
     await new Promise((r) => setTimeout(r, 900))
     if (!current(id)) return
-    stage.current?.setLayout('side')
+    stage.setLayout('side')
     if (returning) return void say('greetBack', 'greetBack')
     await say('intro', 'boot')
     if (current(id)) await say('greetNew', 'greet')
@@ -144,9 +132,9 @@ export function useConversation(stage: React.RefObject<StageControls | null>) {
     async (demo: Demo) => {
       const id = begin()
       track('demo_pick', { demo: demo.id })
-      stage.current?.setComputing(true)
+      stage.setComputing(true)
       await Promise.all([say('computing', 'computing', { demo }), new Promise((r) => setTimeout(r, 2600))])
-      stage.current?.setComputing(false)
+      stage.setComputing(false)
       if (current(id)) say('reveal', 'reveal')
     },
     [begin, say, stage],
@@ -154,7 +142,7 @@ export function useConversation(stage: React.RefObject<StageControls | null>) {
 
   const back = useCallback(() => {
     begin()
-    stage.current?.setComputing(false)
+    stage.setComputing(false)
     say('greetNew', 'greet', { demo: null, phoneError: false, handoff: null })
   }, [begin, say, stage])
 

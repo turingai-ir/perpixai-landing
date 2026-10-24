@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
 import type { Demo } from '@/content/demos'
@@ -7,8 +7,8 @@ import type { Demo } from '@/content/demos'
 export function DemoScreen({ demo, developing }: { demo: Demo; developing: boolean }) {
   const { t } = useTranslation()
   const { t: td } = useTranslation('demos')
-  const [missing, setMissing] = useState(false)
-  useEffect(() => setMissing(false), [demo.id])
+  const [missingId, setMissingId] = useState<string | null>(null)
+  const missing = missingId === demo.id
 
   return (
     <figure className="word mt-6 max-w-xl">
@@ -17,7 +17,9 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
           <video
             key={demo.id}
             ref={(v) => {
-              if (v) (v.muted = true), v.setAttribute('muted', '')
+              if (!v) return
+              v.muted = true
+              v.setAttribute('muted', '')
             }}
             poster={`${config.demoDir}/${demo.id}.jpg`}
             autoPlay
@@ -29,7 +31,7 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
           >
             <source src={`${config.demoDir}/${demo.id}.mp4`} type="video/mp4" />
             {/* The last source's error means no format could play. */}
-            <source src={`${config.demoDir}/${demo.id}.webm`} type="video/webm" onError={() => setMissing(true)} />
+            <source src={`${config.demoDir}/${demo.id}.webm`} type="video/webm" onError={() => setMissingId(demo.id)} />
           </video>
         )}
         {missing && !developing && (
@@ -50,9 +52,7 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
                 animation: 'scan 1.2s linear infinite',
               }}
             />
-            <span className="relative text-sm text-fog/80">
-              {developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}
-            </span>
+            <span className="relative text-sm text-fog/80">{developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}</span>
           </div>
         )}
       </div>

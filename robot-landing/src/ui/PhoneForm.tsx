@@ -15,7 +15,7 @@ export function PhoneForm({ onSubmit, error }: { onSubmit: (v: string) => void; 
         e.preventDefault()
         onSubmit(value)
       }}
-      className={clsx('word mt-6 flex max-w-md gap-2 rounded-full border-brand p-1.5', error && 'shake')}
+      className={clsx('word border-brand mt-6 flex max-w-md gap-2 rounded-full p-1.5', error && 'shake')}
     >
       <label htmlFor="phone" className="sr-only">
         {t('phone.label')}
