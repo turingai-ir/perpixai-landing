@@ -65,9 +65,23 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
   render loop (Tesla bolts are a pre-built pool); shaders compile via `compileAsync` before the first frame;
   `govern()` in `StageCanvas` steps DPR/bloom down on slow devices; bloom renders at half resolution.
 
+## Design tokens
+Everything visual is a token; `pnpm check:tokens` (inside `pnpm check`) fails on raw values.
+- **Source of truth: `src/styles/tokens.css`** (`@theme`, Tailwind v4). Colours: surfaces `ink / ink-2 / ink-3` (+ `plum`, `ink-violet`,
+  `ink-navy` for the featured ticket), type `fog / mute / dim`, `line`, brand `magenta / purple / blue / cyan` (+ `-soft` steps for gradient
+  text), light sources `amber / bulb / projector / neon-pink / neon-ice`, season `yalda*`. Also: type roles beyond Tailwind's
+  (`text-body-sm`, `text-subtitle(-lg)`, `text-price`, `text-countdown`, `text-display`), `rounded-frame`, coloured elevation
+  (`shadow-cta`, `-cta-lg`, `-cta-hover`, `-glow-cyan`, `-frame-purple`, `-frame-cyan`), z layers (`z-(--z-chrome)` …), brand gradients.
+- **Composite surfaces are named utilities** in `globals.css`, built only from tokens: `aura-hero/-plans/-finale/-featured/-demo`,
+  `surface-featured`, `scanlines`, `film-noise`, `sprockets`, `leader-sweep`, `projector-beam`, `neon-yalda`, `yalda-seed`.
+  Translucency: `bg-magenta/20` in markup, `color-mix(in oklab, var(--color-x) 20%, transparent)` in CSS.
+- **JS gets only what it must** from `src/styles/tokens.ts` (theme-color, manifest, noscript, three.js lights); the guard checks it
+  against `tokens.css`. 3D material colours are their own palette by role: `src/stage/palette.ts` (`paint.*`, `brand.*`).
+- To add a colour/shadow/size: add the token to `tokens.css` first, then use the utility. Never write `#hex`, `rgb()`, `shadow-[…]`,
+  `z-[…]` in TSX/CSS. The one literal that cannot be a token is the circuit-trace SVG data URI (guard verifies its stroke).
+
 ## Conventions
-- Brand colours come from the logo: magenta `#d92dd4`, purple `#863ed3`, blue `#128ce3`, cyan `#06a1e9`
-  (`.bg-brand`, `.text-brand`, `.border-brand`, and `stage/palette.ts`).
+- Brand colours come from the logo (see Design tokens): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
 - Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away.
 - Track funnel steps with `track()` (`lib/analytics.ts`, pushes to `dataLayer`).
 - Never split Persian text below the word level. Use logical (`ps-`/`pe-`) spacing.
