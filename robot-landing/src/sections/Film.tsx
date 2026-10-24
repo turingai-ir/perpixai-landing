@@ -1,8 +1,9 @@
 import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { film } from '@/content/sections'
-import { toFa } from '@/lib/digits'
+import { useTranslation } from 'react-i18next'
+import { filmDemoId } from '@/content/sections'
+import { localizeDigits } from '@/i18n/format'
 import { Icon } from '@/ui/Icon'
 import { LazyVideo } from '@/ui/LazyVideo'
 import { SplitHeading } from '@/ui/SplitHeading'
@@ -14,7 +15,10 @@ import { SplitHeading } from '@/ui/SplitHeading'
  */
 export function Film() {
   const root = useRef<HTMLElement>(null)
-  const words = film.prompt.split(' ')
+  const { t } = useTranslation('home')
+  const words = t('film.prompt').split(' ')
+  const title = t('film.title', { returnObjects: true })
+  const steps = t('film.steps', { returnObjects: true })
 
   useGSAP(
     () => {
@@ -47,17 +51,17 @@ export function Film() {
     <section ref={root} id="more" className="relative flex min-h-svh items-center px-5 py-24 md:px-14 md:py-0">
       <div className="grid w-full items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
         <div>
-          <span className="eyebrow mb-5">{film.eyebrow}</span>
-          <SplitHeading lines={film.title} text={film.title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-6xl xl:text-7xl" />
+          <span className="eyebrow mb-5">{t('film.eyebrow')}</span>
+          <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-6xl xl:text-7xl" />
           <ol className="mt-10 space-y-5">
-            {film.steps.map((s, i) => (
+            {steps.map((s, i) => (
               <li
                 key={s.title}
                 data-step
                 data-active={i === 2 ? '' : undefined}
                 className="group flex gap-4 opacity-40 transition-opacity duration-500 data-[active]:opacity-100 max-md:opacity-100"
               >
-                <span className="font-poster text-brand text-3xl leading-none">{toFa(i + 1)}</span>
+                <span className="font-poster text-brand text-3xl leading-none">{localizeDigits(i + 1)}</span>
                 <div>
                   <h3 className="text-xl font-bold text-fog">{s.title}</h3>
                   <p className="mt-1 leading-7 text-mute">{s.body}</p>
@@ -83,7 +87,7 @@ export function Film() {
           {/* The frame */}
           <div className="relative aspect-video overflow-hidden rounded-2xl border-[10px] border-ink-3 bg-ink-2 shadow-[0_40px_140px_-30px_#863ed3,0_0_0_1px_rgb(245_239_228/.12)]">
             <div data-frame className="absolute inset-0">
-              <LazyVideo id={film.demoId} className="size-full object-cover" />
+              <LazyVideo id={filmDemoId} className="size-full object-cover" />
             </div>
             <div
               data-noise
@@ -106,9 +110,9 @@ export function Film() {
           <div data-done className="mt-5 flex flex-wrap items-center gap-3 text-sm text-mute">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white/5 px-4 py-2 text-fog">
               <Icon name="check" className="size-4 text-cyan" />
-              ساخته شد در پرپیکس
+              {t('film.done')}
             </span>
-            <span>بدون دوربین، بدون تدوین؛ فقط همین یک جمله.</span>
+            <span>{t('film.note')}</span>
           </div>
         </div>
       </div>

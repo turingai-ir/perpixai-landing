@@ -1,37 +1,36 @@
 import type { Metadata, Viewport } from 'next'
-import { BRAND, SITE, description, jsonLd, title } from '@/lib/seo'
+import { defaultLocale, localeMeta } from '@/i18n/config'
+import { I18nProvider } from '@/i18n/I18nProvider'
+import { SITE, getSeo } from '@/lib/seo'
 import '@/styles/globals.css'
 
-const ogImage = { url: '/brand/og.jpg', width: 1200, height: 630, alt: title }
+const locale = defaultLocale
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE),
-  title,
-  description,
-  applicationName: BRAND,
-  keywords: ['پرپیکس', 'ساخت عکس با هوش مصنوعی', 'ساخت ویدیو با هوش مصنوعی', 'هوش مصنوعی فارسی', 'متن به تصویر', 'متن به ویدیو', 'ویرایش عکس با هوش مصنوعی'],
-  alternates: { canonical: '/', languages: { 'fa-IR': '/', 'x-default': '/' } },
-  manifest: '/manifest.webmanifest',
-  icons: {
-    icon: { url: '/brand/logo-192.png', type: 'image/png' },
-    apple: { url: '/brand/logo-192.png', type: 'image/png' },
-  },
-  formatDetection: { telephone: false, email: false, address: false },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
-  },
-  openGraph: {
+export function generateMetadata(): Metadata {
+  const { title, description, brand, keywords } = getSeo(locale)
+  const meta = localeMeta[locale]
+  const ogImage = { url: '/brand/og.jpg', width: 1200, height: 630, alt: title }
+  return {
+    metadataBase: new URL(SITE),
     title,
     description,
-    type: 'website',
-    locale: 'fa_IR',
-    url: '/',
-    siteName: BRAND,
-    images: [ogImage],
-  },
-  twitter: { card: 'summary_large_image', title, description, images: [{ url: ogImage.url, alt: title }] },
+    applicationName: brand,
+    keywords,
+    alternates: { canonical: '/', languages: { [meta.hreflang]: '/', 'x-default': '/' } },
+    manifest: '/manifest.webmanifest',
+    icons: {
+      icon: { url: '/brand/logo-192.png', type: 'image/png' },
+      apple: { url: '/brand/logo-192.png', type: 'image/png' },
+    },
+    formatDetection: { telephone: false, email: false, address: false },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
+    },
+    openGraph: { title, description, type: 'website', locale: meta.ogLocale, url: '/', siteName: brand, images: [ogImage] },
+    twitter: { card: 'summary_large_image', title, description, images: [{ url: ogImage.url, alt: title }] },
+  }
 }
 
 export const viewport: Viewport = {
@@ -42,13 +41,16 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const { jsonLd } = getSeo(locale)
   return (
-    <html lang="fa" dir="rtl">
+    <html lang={locale} dir={localeMeta[locale].dir}>
       <head>
         <link rel="preload" href="/brand/logo-192.webp" as="image" type="image/webp" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <I18nProvider>{children}</I18nProvider>
+      </body>
     </html>
   )
 }

@@ -15,19 +15,28 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 ## Structure
 - `src/config.ts` + `src/lib/auth.ts`: shared auth URL and how the phone is handed over (param + format, env-overridable).
   Agreed with the app team: `?phone=09xxxxxxxxx` (local format). Test with `?authDebug=1&phoneParam=…&phoneFormat=…` (see `docs/AUTH-TEST.md`)
-- `src/content/`: all copy. `dialogue.ts` = Pixo's lines (id = audio file name), `demos.ts`, `sections.ts`
+- `src/i18n/`: i18next (+ react-i18next). **All copy lives in `src/i18n/locales/<lang>/*.json`** (namespaces: `ui`, `home`,
+  `dialogue`, `demos`, `season`, `seo`); keys are type-checked (`i18next.d.ts`). Bundled resources + synchronous init, so the
+  static export and the browser render the same text. Components use `useTranslation(ns)`; non-React code uses
+  `i18n.t` / `i18n.getFixedT(locale, ns)`. Numbers go through `i18n/format.ts` (`formatNumber`, `localizeDigits`).
+  Only `fa` exists today. To add a language: copy `locales/fa` → `locales/<code>`, register it in `resources.ts` and
+  `config.ts` (`locales`, `localeMeta`), record Pixo's lines into `public/audio/<code>/<id>.mp3`. Routing per locale
+  (`/en/…`) is not set up yet: the layout still renders `defaultLocale`.
+- `src/content/`: language-neutral data only. `dialogue.ts` = Pixo's line ids + acting directions (id = audio file name;
+  text is `dialogue.json` → `lines.<id>`), `demos.ts` (ids; chip/prompt in `demos.json`), `sections.ts` (plan prices/tokens
+  as numbers, tool icons; copy in `home.json`)
 - `src/flow/useConversation.ts`: the funnel state machine. Every branch calls `begin()` so stale awaits are ignored
 - `src/audio/voice.ts`: plays `public/audio/fa/<id>.mp3`, exposes loudness; simulates speech if a file is missing
 - `src/stage/`: vanilla three.js scene (loaded as a separate chunk). `character/head.ts` (Turing tape, reels, blinking eye,
   brass Tesla moustache, mood glyphs ؟/spiral/heart via `setMood`, springy valves), `character/tesla.ts` (coil + voice-driven
   arcs), `character/outfit.ts` (usher's velvet jacket, epaulettes, neon bow tie, badge; Yalda scarf + pomegranate brooch),
   `character/body.ts`, `character/cables.ts`
-- `src/content/season.ts`: seasonal dressing (`season = seasons.yalda`); drives the scarf, the gate/marquee copy,
+- `src/content/season.ts` (copy in `season.json`): seasonal dressing (`season = seasons.yalda`); drives the scarf, the gate/marquee copy,
   the rising pomegranate seeds (`ui/YaldaSeeds`) and which demo comes first. Set to `seasons.none` after Yalda
 - `src/ui/`: Preloader (leader + gate), FilmFx (grain/vignette), Hero (canvas + conversation, letterbox intro, static `pixo.webp` fallback), Subtitle, Choice, PhoneForm,
   DemoScreen, Header, StickyCta, `SplitHeading` (accessible word reveal), `LazyVideo` (plays only in view), `Icon` (Solar subset)
 - `src/sections/`: Film (pinned prompt→film scrub), Reel (horizontal film strip of the demo clips), Tools, Plans
-  (real prices in `content/sections.ts`), Faq, Finale, Footer. Page choreography lives in `App.tsx`
+  (real prices in `content/sections.ts`, copy in `home.json`), Faq, Finale, Footer. Page choreography lives in `App.tsx`
 - `docs/ASSETS.md`: video prompts and voice-line script for the content team
 - `docs/BACKEND-HANDOFF.md`: the phone-prefill request sent to the app team (`?phone=09xxxxxxxxx` on `/auth/login`)
 

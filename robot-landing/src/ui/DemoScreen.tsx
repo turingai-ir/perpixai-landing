@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
 import type { Demo } from '@/content/demos'
 
 /** Cinematic frame that "develops" while Pixo computes, then plays the clip. */
 export function DemoScreen({ demo, developing }: { demo: Demo; developing: boolean }) {
+  const { t } = useTranslation()
+  const { t: td } = useTranslation('demos')
   const [missing, setMissing] = useState(false)
   useEffect(() => setMissing(false), [demo.id])
 
@@ -48,14 +51,14 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
               }}
             />
             <span className="relative text-sm text-fog/80">
-              {developing ? 'در حال ساخت…' : `ویدیو را در public/demo/${demo.id}.mp4 قرار دهید`}
+              {developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}
             </span>
           </div>
         )}
       </div>
       <figcaption className="mt-3 text-sm leading-7 text-mute">
-        <span className="text-brand font-semibold">پرامپت: </span>
-        {demo.prompt}
+        <span className="text-brand font-semibold">{t('demo.promptLabel')}</span>
+        {td(`${demo.id}.prompt`)}
       </figcaption>
     </figure>
   )

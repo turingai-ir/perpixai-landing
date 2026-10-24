@@ -1,57 +1,70 @@
+import { i18n } from '@/i18n'
+
 /**
  * Everything Pixo says. Each line's `id` is also its audio file name:
- * public/audio/fa/<id>.mp3 (made with ElevenLabs). Missing files are fine —
- * the subtitle still shows and the machine "speaks" with a simulated envelope.
+ * public/audio/<lang>/<id>.mp3 (made with ElevenLabs). The spoken text is a translation
+ * (`locales/<lang>/dialogue.json`, `lines.<id>`); `direction` is the English acting note for the voice session.
+ * Missing audio is fine — the subtitle still shows and the machine "speaks" with a simulated envelope.
  */
 export type Line = { id: string; text: string; direction: string }
 
-const line = (id: string, text: string, direction: string): Line => ({ id, text, direction })
+type LineId =
+  | 'intro-1' | 'intro-2' | 'greet-1' | 'greet-2' | 'greet-3' | 'back-1' | 'back-2' | 'login-1' | 'new-1'
+  | 'phone-1' | 'phone-bad' | 'signup-1' | 'demo-ask' | 'compute-1' | 'compute-2' | 'reveal-1' | 'reveal-2'
+  | 'scroll-1' | 'nudge-1' | 'nudge-2'
 
-export const character = {
-  name: 'پیکسو',
-  title: 'ماشینِ خیال‌پردازِ پرپیکس',
-}
+type Script = { id: LineId; direction: string }
 
-export const dialogue = {
+const script = {
   intro: [
-    line('intro-1', 'اوه! بالاخره یکی روشنم کرد. من پیکسو‌ام، ماشینِ خیال‌پردازِ پرپیکس.', 'Surprised, waking up, then proud. Warm, playful.'),
-    line('intro-2', 'جرقه‌ها روشن، نوار آماده! سلام، من پیکسو‌ام؛ از حرفات عکس و ویدیو می‌سازم.', 'Energetic, like a machine powering up. Friendly.'),
+    { id: 'intro-1', direction: 'Surprised, waking up, then proud. Warm, playful.' },
+    { id: 'intro-2', direction: 'Energetic, like a machine powering up. Friendly.' },
   ],
   greetNew: [
-    line('greet-1', 'خب رفیق، قبلاً تو پرپیکس ثبت‌نام کردی؟', 'Casual, curious question.'),
-    line('greet-2', 'یه سؤال؛ قبلاً با هم کار کردیم یا تازه اومدی؟', 'Light, a bit cheeky.'),
-    line('greet-3', 'بگو ببینم، عضو پرپیکس هستی یا اولین باره که اومدی؟', 'Friendly and inviting.'),
+    { id: 'greet-1', direction: 'Casual, curious question.' },
+    { id: 'greet-2', direction: 'Light, a bit cheeky.' },
+    { id: 'greet-3', direction: 'Friendly and inviting.' },
   ],
   greetBack: [
-    line('back-1', 'اِ، تویی؟ خوش برگشتی! مستقیم بریم سراغ ورود؟', 'Happy recognition, upbeat.'),
-    line('back-2', 'دوباره اومدی؟ معلومه خوشت اومده! بریم وارد شیم؟', 'Teasing, smiling voice.'),
+    { id: 'back-1', direction: 'Happy recognition, upbeat.' },
+    { id: 'back-2', direction: 'Teasing, smiling voice.' },
   ],
-  toLogin: [line('login-1', 'ایول! یه ثانیه صبر کن، الان می‌فرستمت صفحه‌ی ورود.', 'Quick, satisfied.')],
-  newcomer: [
-    line('new-1', 'پس تازه‌واردی! دو راه داری: یا همین الان در کمتر از یه دقیقه ثبت‌نام کن و اعتبار هدیه بگیر، یا اول بذار نشونت بدم چی بلدم.', 'Excited, clear, a little salesy but charming.'),
-  ],
-  askPhone: [line('phone-1', 'شماره موبایلت رو بزن، بقیه‌ش با من.', 'Confident, reassuring.')],
-  badPhone: [line('phone-bad', 'اوه، این شماره یه جوریه! یه بار دیگه چک کن؛ باید با ۰۹ شروع بشه.', 'Gentle, a little funny, not scolding.')],
-  toSignup: [line('signup-1', 'عالیه! داری می‌ری که اولین شاهکارت رو بسازی.', 'Celebratory.')],
-  demoAsk: [line('demo-ask', 'یکی از این ایده‌ها رو انتخاب کن تا جلوی چشمت بسازمش.', 'Showman, inviting.')],
+  toLogin: [{ id: 'login-1', direction: 'Quick, satisfied.' }],
+  newcomer: [{ id: 'new-1', direction: 'Excited, clear, a little salesy but charming.' }],
+  askPhone: [{ id: 'phone-1', direction: 'Confident, reassuring.' }],
+  badPhone: [{ id: 'phone-bad', direction: 'Gentle, a little funny, not scolding.' }],
+  toSignup: [{ id: 'signup-1', direction: 'Celebratory.' }],
+  demoAsk: [{ id: 'demo-ask', direction: 'Showman, inviting.' }],
   computing: [
-    line('compute-1', 'یه لحظه... جرقه‌ها دارن کار می‌کنن!', 'Concentrated, building tension.'),
-    line('compute-2', 'دارم صفر و یک‌ها رو به تصویر تبدیل می‌کنم...', 'Whispery, mysterious.'),
+    { id: 'compute-1', direction: 'Concentrated, building tension.' },
+    { id: 'compute-2', direction: 'Whispery, mysterious.' },
   ],
   reveal: [
-    line('reveal-1', 'تقدیم با عشق! اینو با پرپیکس ساختم. حالا نوبت خودته.', 'Proud reveal, then a direct invitation.'),
-    line('reveal-2', 'دیدی؟ فقط با یه جمله! تو هم می‌تونی؛ ثبت‌نام رایگانه.', 'Amazed, then encouraging.'),
+    { id: 'reveal-1', direction: 'Proud reveal, then a direct invitation.' },
+    { id: 'reveal-2', direction: 'Amazed, then encouraging.' },
   ],
-  scrollMore: [line('scroll-1', 'باشه، یه نگاه بنداز پایین. من همین‌جام.', 'Relaxed, easygoing.')],
+  scrollMore: [{ id: 'scroll-1', direction: 'Relaxed, easygoing.' }],
   nudge: [
-    line('nudge-1', 'هنوز اونجایی؟ قول می‌دم ثبت‌نامش از آب خوردن هم راحت‌تره!', 'Playful nudge.'),
-    line('nudge-2', 'من که حوصله‌م سر نمی‌ره، ولی جرقه‌هام منتظرن ها!', 'Cheeky.'),
+    { id: 'nudge-1', direction: 'Playful nudge.' },
+    { id: 'nudge-2', direction: 'Cheeky.' },
   ],
-} satisfies Record<string, Line[]>
+} satisfies Record<string, Script[]>
 
-export type DialogueKey = keyof typeof dialogue
+export type DialogueKey = keyof typeof script
+
+/** The line with its text in the current language. */
+const resolve = ({ id, direction }: Script): Line => ({ id, direction, text: i18n.t(`lines.${id}`, { ns: 'dialogue' }) })
+
+/** Lines of a group in the current language (read at call time, so a language switch is picked up). */
+export const lines = (key: DialogueKey): Line[] => script[key].map(resolve)
 
 export const pick = (key: DialogueKey): Line => {
-  const lines = dialogue[key]
-  return lines[Math.floor(Math.random() * lines.length)]
+  const group = script[key]
+  return resolve(group[Math.floor(Math.random() * group.length)])
 }
+
+/** Pixo's name and title in the current language. */
+export const character = () => ({
+  name: i18n.t('character.name', { ns: 'dialogue' }),
+  title: i18n.t('character.title', { ns: 'dialogue' }),
+})

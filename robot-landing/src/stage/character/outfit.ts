@@ -33,7 +33,7 @@ const frontZ = (y: number) => 0.56 * (y > 0.05 ? 0.48 - (y - 0.05) * 2.4 : 0.6 +
 
 export type Outfit = { group: Group; bow: Group; update(t: number, level: number): void }
 
-export function createOutfit({ yalda }: { yalda: boolean }): Outfit {
+export function createOutfit({ yalda, badge: badgeText }: { yalda: boolean; badge: { name: string; role: string } }): Outfit {
   const g = new Group()
 
   // Shirt collar band above the jacket
@@ -70,7 +70,7 @@ export function createOutfit({ yalda }: { yalda: boolean }): Outfit {
   // Name badge on the chest
   const badge = new Mesh(
     new PlaneGeometry(0.17, 0.064),
-    new MeshStandardMaterial({ map: badgeTexture('پیکسو', 'کنترلچی سالن ۱'), metalness: 0.6, roughness: 0.35 }),
+    new MeshStandardMaterial({ map: badgeTexture(badgeText.name, badgeText.role), metalness: 0.6, roughness: 0.35 }),
   )
   badge.position.set(-0.3, -0.06, frontZ(-0.06) + 0.012)
   badge.rotation.y = -0.18

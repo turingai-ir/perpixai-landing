@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
 import { asset } from '@/lib/asset'
 import { prefersReducedMotion } from '@/lib/motion'
-import { toFa } from '@/lib/digits'
+import { localizeDigits } from '@/i18n/format'
 import { season } from '@/content/season'
 
 type Props = {
@@ -17,6 +18,9 @@ type Props = {
  * screening" — so the show can open with sound. The gate dissolves through an iris.
  */
 export function Preloader({ ready, onEnter }: Props) {
+  const { t } = useTranslation()
+  const { t: ts } = useTranslation('season')
+  const { t: tc } = useTranslation('dialogue')
   const root = useRef<HTMLDivElement>(null)
   const [count, setCount] = useState(3)
   const countRef = useRef(3)
@@ -25,7 +29,7 @@ export function Preloader({ ready, onEnter }: Props) {
   /** Progress is written straight to the DOM: no React render per animation frame. */
   const setProgress = (v: number) => {
     if (bar.current) bar.current.style.transform = `scaleX(${v / 100})`
-    if (pct.current) pct.current.textContent = `${toFa(v)}٪`
+    if (pct.current) pct.current.textContent = t('percent', { n: localizeDigits(v) })
   }
   const [gate, setGate] = useState(false)
   const [gone, setGone] = useState(false)
@@ -97,7 +101,7 @@ export function Preloader({ ready, onEnter }: Props) {
       ref={root}
       role="dialog"
       aria-modal="true"
-      aria-label="سینما پرپیکس"
+      aria-label={t('preloader.label')}
       className="fixed inset-0 z-[70] grid place-items-center overflow-hidden bg-ink text-fog"
       style={{ ['--sweep' as string]: '0deg' }}
     >
@@ -106,20 +110,20 @@ export function Preloader({ ready, onEnter }: Props) {
         lands immediately); only the slot below it changes from the leader countdown to the gate.
       */}
       <div className="flex flex-col items-center gap-7 px-6 text-center md:gap-8">
-        {season.greeting && (
-          <p className="font-poster text-2xl text-[#ff6b7f] [text-shadow:0_0_18px_rgb(227_38_63/.7)]">{season.greeting}</p>
+        {ts(`${season.id}.greeting`) && (
+          <p className="font-poster text-2xl text-[#ff6b7f] [text-shadow:0_0_18px_rgb(227_38_63/.7)]">{ts(`${season.id}.greeting`)}</p>
         )}
         <div className="flex flex-col items-center gap-3">
           <div className="bulbs w-[min(80vw,30rem)]" />
           <div className="flex items-center gap-4">
             <img src={asset('brand/logo-192.webp')} alt="" width={77} height={64} className="h-12 w-auto md:h-16" />
-            <p className="font-poster neon text-6xl leading-none md:text-8xl">سینما پرپیکس</p>
+            <p className="font-poster neon text-6xl leading-none md:text-8xl">{t('preloader.title')}</p>
           </div>
           <div className="bulbs w-[min(80vw,30rem)]" style={{ animationDelay: '-0.8s' }} />
         </div>
         <p className="text-base text-mute">
-          {season.showing}: <span className="font-poster neon-cyan text-2xl">پیکسو</span>
-          <span className="text-mute"> · ماشینِ خیال‌پرداز</span>
+          {t('preloader.showing', { showing: ts(`${season.id}.showing`) })} <span className="font-poster neon-cyan text-2xl">{tc('character.name')}</span>
+          <span className="text-mute"> · {t('preloader.tagline')}</span>
         </p>
 
         <div className="grid min-h-[9.5rem] place-items-center md:min-h-[11rem]">
@@ -134,7 +138,7 @@ export function Preloader({ ready, onEnter }: Props) {
               />
               <div className="absolute inset-x-0 top-1/2 h-px bg-fog/50" />
               <div className="absolute inset-y-0 left-1/2 w-px bg-fog/50" />
-              <span className="font-poster relative text-[min(18vw,5.5rem)] leading-none">{toFa(count)}</span>
+              <span className="font-poster relative text-[min(18vw,5.5rem)] leading-none">{localizeDigits(count)}</span>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-5">
@@ -145,12 +149,12 @@ export function Preloader({ ready, onEnter }: Props) {
                 onClick={() => enter(true)}
                 className="font-poster cursor-pointer rounded-full border-2 border-fog/80 px-10 py-4 text-2xl text-fog transition duration-500 hover:border-cyan hover:text-white hover:shadow-[0_0_60px_-8px_#06a1e9] md:text-3xl"
               >
-                [ کلیک کن تا اکران شروع شود ]
+                {t('preloader.start')}
               </button>
               <p data-gate className="flex items-center gap-2 text-sm text-dim">
-                <span className="size-1.5 animate-pulse rounded-full bg-amber" /> با صدا ببینید
+                <span className="size-1.5 animate-pulse rounded-full bg-amber" /> {t('preloader.withSound')}
                 <button type="button" onClick={() => enter(false)} className="cursor-pointer underline-offset-4 hover:text-fog hover:underline">
-                  · ورود بی‌صدا
+                  {t('preloader.muted')}
                 </button>
               </p>
             </div>
@@ -159,11 +163,11 @@ export function Preloader({ ready, onEnter }: Props) {
       </div>
 
       <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-6 text-xs text-dim md:px-10">
-        <span>{gate ? 'سالن آماده است' : 'در حال آماده‌سازی سالن…'}</span>
+        <span>{gate ? t('preloader.ready') : t('preloader.loading')}</span>
         <span className="h-px flex-1 bg-line">
           <span ref={bar} className="block h-full origin-right scale-x-0 bg-fog/70 transition-transform duration-300 will-change-transform" />
         </span>
-        <span ref={pct} dir="ltr" className="font-mono tabular-nums">۰٪</span>
+        <span ref={pct} dir="ltr" className="font-mono tabular-nums">{t('percent', { n: localizeDigits(0) })}</span>
       </div>
     </div>
   )

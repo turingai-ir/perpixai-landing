@@ -8,7 +8,7 @@ pnpm dev      # http://localhost:5176
 pnpm build    # خروجی استاتیک (HTML پیش‌رندرشده) در out/
 ```
 
-- **محتوا:** همه‌ی متن‌ها در `src/content/` و لینک‌ها در `src/config.ts` هستند.
+- **محتوا و ترجمه:** همه‌ی متن‌ها در `src/i18n/locales/<زبان>/*.json` هستند (فعلاً فقط `fa`)؛ داده‌های بدون زبان (قیمت‌ها، شناسه‌ها) در `src/content/` و لینک‌ها در `src/config.ts`.
 - **ویدیوها و صدا:** راهنمای ساختشان در [docs/ASSETS.md](docs/ASSETS.md) است. فایل‌ها به `public/demo/` و `public/audio/fa/` می‌روند.
 - **ساختار پروژه:** در [CLAUDE.md](CLAUDE.md) توضیح داده شده است.
 

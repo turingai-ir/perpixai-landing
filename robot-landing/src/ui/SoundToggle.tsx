@@ -1,8 +1,10 @@
 import { useSyncExternalStore } from 'react'
+import { useTranslation } from 'react-i18next'
 import { voice } from '@/audio/voice'
 import { Icon } from './Icon'
 
 export function SoundToggle({ compact, onEnable }: { compact?: boolean; onEnable?: () => void }) {
+  const { t } = useTranslation()
   const on = useSyncExternalStore(
     (fn) => voice.subscribe(fn),
     () => voice.soundOn,
@@ -20,7 +22,7 @@ export function SoundToggle({ compact, onEnable }: { compact?: boolean; onEnable
       className="flex cursor-pointer items-center gap-2 rounded-full border border-line bg-ink/70 px-4 py-2 text-xs text-fog/85 backdrop-blur transition hover:border-fog/30 hover:text-fog"
     >
       <Icon name={on ? 'soundOn' : 'soundOff'} className={`size-4 ${on ? 'text-cyan' : 'text-dim'}`} />
-      {compact ? (on ? 'صدا روشن' : 'بی‌صدا') : on ? 'صدای پیکسو روشن است' : 'صدای پیکسو را روشن کن'}
+      {compact ? (on ? t('sound.compactOn') : t('sound.compactOff')) : on ? t('sound.on') : t('sound.off')}
     </button>
   )
 }

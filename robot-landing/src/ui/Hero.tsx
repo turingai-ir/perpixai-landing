@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { voice } from '@/audio/voice'
-import { character } from '@/content/dialogue'
+import { useTranslation } from 'react-i18next'
 import { readyDemos } from '@/content/demos'
 import { useConversation } from '@/flow/useConversation'
 import { isMobile, prefersReducedMotion } from '@/lib/motion'
@@ -21,6 +21,12 @@ import { asset } from '@/lib/asset'
 export type HeroApi = ReturnType<typeof useConversation>
 
 export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; entered: boolean }) {
+  const { t } = useTranslation()
+  const { t: ts } = useTranslation('season')
+  const { t: td } = useTranslation('demos')
+  const { t: tc } = useTranslation('dialogue')
+  const characterName = tc('character.name')
+  const characterLabel = tc('character.label', { name: characterName, title: tc('character.title') })
   const canvas = useRef<HTMLCanvasElement>(null)
   const stage = useRef<Stage | null>(null)
   const convo = useConversation(stage)
@@ -41,6 +47,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
           stage.current = new Stage(canvas.current, () => voice.level(), {
             lite: isMobile(),
             yalda: season.id === 'yalda',
+            badge: { name: characterName, role: t('stage.badgeRole') },
             onContextLost: () => setStill(true),
           })
           stage.current.setPowered(true)
@@ -100,14 +107,14 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
       {still && (
         <img
           src={asset('brand/pixo.webp')}
-          alt={`${character.name}، ${character.title}`}
+          alt={characterLabel}
           className="absolute top-0 h-[66%] w-full object-contain object-bottom [mask-image:linear-gradient(black_78%,transparent)] md:left-0 md:h-full md:w-1/2 md:[mask-image:radial-gradient(ellipse_60%_65%_at_50%_55%,black_60%,transparent)]"
         />
       )}
       <canvas
         ref={canvas}
         hidden={still}
-        aria-label={`${character.name}، ${character.title}`}
+        aria-label={characterLabel}
         role="img"
         style={{ opacity: 0 }}
         className="transition-opacity duration-[1500ms] absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] md:h-full md:[mask-image:none]"
@@ -120,9 +127,9 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
             <div className="inline-flex flex-col gap-1.5">
               <div className="bulbs w-full" />
               <p className="flex items-baseline gap-3 px-1">
-                <span className="text-sm text-amber">{season.showing}</span>
-                <span className="font-poster neon text-4xl leading-none md:text-5xl">{character.name}</span>
-                <span className="hidden text-sm text-mute md:inline">{character.title}</span>
+                <span className="text-sm text-amber">{ts(`${season.id}.showing`)}</span>
+                <span className="font-poster neon text-4xl leading-none md:text-5xl">{characterName}</span>
+                <span className="hidden text-sm text-mute md:inline">{tc('character.title')}</span>
               </p>
               <div className="bulbs w-full" style={{ animationDelay: '-0.8s' }} />
             </div>
@@ -137,13 +144,13 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
             <Choices>
               {state.step === 'greetBack' ? (
                 <>
-                  <Choice primary onClick={convo.toLogin}>آره، بریم ورود</Choice>
-                  <Choice index={1} onClick={convo.asNewcomer}>نه، حساب ندارم</Choice>
+                  <Choice primary onClick={convo.toLogin}>{t('hero.back.yes')}</Choice>
+                  <Choice index={1} onClick={convo.asNewcomer}>{t('hero.back.no')}</Choice>
                 </>
               ) : (
                 <>
-                  <Choice onClick={convo.toLogin}>آره، عضوم؛ ورود</Choice>
-                  <Choice primary index={1} onClick={convo.asNewcomer}>نه، تازه‌واردم</Choice>
+                  <Choice onClick={convo.toLogin}>{t('hero.greet.member')}</Choice>
+                  <Choice primary index={1} onClick={convo.asNewcomer}>{t('hero.greet.newcomer')}</Choice>
                 </>
               )}
             </Choices>
@@ -151,9 +158,9 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
 
           {r && state.step === 'newcomer' && (
             <Choices>
-              <Choice primary onClick={convo.toPhone}>ثبت‌نام سریع + اعتبار هدیه</Choice>
-              <Choice index={1} onClick={convo.toDemo}>اول نشونم بده ✦</Choice>
-              <Choice index={2} onClick={() => (convo.browse(), scrollToId('plans'))}>قیمت‌ها چنده؟</Choice>
+              <Choice primary onClick={convo.toPhone}>{t('hero.newcomer.signup')}</Choice>
+              <Choice index={1} onClick={convo.toDemo}>{t('hero.newcomer.demo')}</Choice>
+              <Choice index={2} onClick={() => (convo.browse(), scrollToId('plans'))}>{t('hero.newcomer.prices')}</Choice>
             </Choices>
           )}
 
@@ -163,7 +170,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
             <Choices>
               {readyDemos.map((d, i) => (
                 <Choice key={d.id} index={i} onClick={() => convo.runDemo(d)}>
-                  {d.chip}
+                  {td(`${d.id}.chip`)}
                 </Choice>
               ))}
             </Choices>
@@ -175,21 +182,21 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
 
           {r && state.step === 'reveal' && (
             <Choices>
-              <Choice primary onClick={convo.toPhone}>خودم بسازم؛ ثبت‌نام رایگان</Choice>
-              <Choice index={1} onClick={convo.toDemo}>یه نمونه‌ی دیگه</Choice>
+              <Choice primary onClick={convo.toPhone}>{t('hero.reveal.signup')}</Choice>
+              <Choice index={1} onClick={convo.toDemo}>{t('hero.reveal.again')}</Choice>
             </Choices>
           )}
 
           {(state.step === 'signup' || state.step === 'login') && !state.handoff && (
-            <p className="word mt-6 text-sm text-mute">در حال انتقال…</p>
+            <p className="word mt-6 text-sm text-mute">{t('hero.redirecting')}</p>
           )}
 
           {state.handoff && (
             <div className="word mt-6 max-w-xl rounded-2xl border border-dashed border-cyan/50 bg-cyan/5 p-4 text-sm">
-              <p className="font-semibold text-cyan">حالت تست: کاربر به این آدرس فرستاده می‌شود</p>
+              <p className="font-semibold text-cyan">{t('hero.handoff.title')}</p>
               <code dir="ltr" className="mt-2 block break-all text-fog/90">{state.handoff}</code>
               <a href={state.handoff} className="mt-3 inline-block rounded-full bg-cyan/15 px-4 py-2 text-cyan hover:bg-cyan/25">
-                باز کردن صفحه‌ی ورود
+                {t('hero.handoff.open')}
               </a>
             </div>
           )}
@@ -204,11 +211,11 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
         <div className="flex items-center gap-3">
           {!['boot', 'greet', 'greetBack'].includes(state.step) && (
             <button type="button" onClick={convo.back} className="flex cursor-pointer items-center gap-2 rounded-full border border-line px-4 py-2 text-xs text-fog/80 transition hover:text-fog">
-              <Icon name="restart" className="size-4" /> از اول
+              <Icon name="restart" className="size-4" /> {t('hero.restart')}
             </button>
           )}
           <button type="button" onClick={() => scrollToId('more')} className="flex cursor-pointer items-center gap-2 text-sm text-mute transition hover:text-fog">
-            ادامه‌ی فیلم
+            {t('hero.continue')}
             <Icon name="down" className="size-4 animate-bounce" />
           </button>
         </div>
