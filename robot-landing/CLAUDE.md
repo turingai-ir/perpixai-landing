@@ -27,7 +27,10 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
   as numbers, tool icons; copy in `home.json`)
 - `src/flow/useConversation.ts`: the funnel state machine. Every branch calls `begin()` so stale awaits are ignored
 - `src/audio/voice.ts`: plays `public/audio/fa/<id>.mp3`, exposes loudness; simulates speech if a file is missing
-- `src/stage/`: vanilla three.js scene (loaded as a separate chunk). `character/head.ts` (Turing tape, reels, blinking eye,
+- `src/stage/`: the 3D scene on react-three-fiber (`StageCanvas.tsx`, loaded as a separate chunk; `StageBoundary` falls back to
+  the still image if WebGL fails). R3F owns the canvas, resize and frame loop; three's own `EffectComposer` + UnrealBloom render
+  (priority-1 `useFrame`). `controls.ts` is the plain object the conversation uses (`setMood/setPowered/setLayout/setComputing`).
+  The character builders stay vanilla three: `character/head.ts` (Turing tape, reels, blinking eye,
   brass Tesla moustache, mood glyphs ؟/spiral/heart via `setMood`, springy valves), `character/tesla.ts` (coil + voice-driven
   arcs), `character/outfit.ts` (usher's velvet jacket, epaulettes, neon bow tie, badge; Yalda scarf + pomegranate brooch),
   `character/body.ts`, `character/cables.ts`
@@ -57,7 +60,7 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
   decorative loops inside sections that use `useOffscreenPause`; animate only transform/opacity (no blend
   modes or animated filters on large layers); merge static meshes with `stage/merge.ts`; no allocation in the
   render loop (Tesla bolts are a pre-built pool); shaders compile via `compileAsync` before the first frame;
-  `Stage.govern()` steps DPR/bloom down on slow devices; bloom renders at half resolution.
+  `govern()` in `StageCanvas` steps DPR/bloom down on slow devices; bloom renders at half resolution.
 
 ## Conventions
 - Brand colours come from the logo: magenta `#d92dd4`, purple `#863ed3`, blue `#128ce3`, cyan `#06a1e9`
@@ -65,6 +68,8 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
 - Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away.
 - Track funnel steps with `track()` (`lib/analytics.ts`, pushes to `dataLayer`).
 - Never split Persian text below the word level. Use logical (`ps-`/`pe-`) spacing.
+- GSAP in components goes through `useGSAP` (`@gsap/react`): it scopes selectors and reverts tweens/ScrollTriggers on unmount;
+  use `contextSafe` for tweens started from event handlers. No hand-rolled `gsap.context` in effects.
 - One smooth-scroll engine only (Lenis, driven by the GSAP ticker). Under reduced motion: no Lenis, no pins/scrubs,
   static Pixo image, everything in its final state.
 - Demo clips: `public/demo/<id>.{webm,mp4,jpg}` (720p, no audio); set `ready: true` in `demos.ts`.

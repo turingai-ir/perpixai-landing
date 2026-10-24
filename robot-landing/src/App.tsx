@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Header } from '@/ui/Header'
 import { Hero, type HeroApi } from '@/ui/Hero'
@@ -24,7 +25,9 @@ import { scrollToId, setLenis } from '@/ui/scroll'
 import { prefersReducedMotion } from '@/lib/motion'
 import { track } from '@/lib/analytics'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(useGSAP, ScrollTrigger)
+
+const onLoad = () => ScrollTrigger.refresh()
 
 const loadImage = (src: string) =>
   new Promise((resolve) => {
@@ -36,7 +39,7 @@ const loadImage = (src: string) =>
 /** What the first scene needs before the gate opens: the 3D chunk, fonts, Pixo's first lines. */
 const firstScene = () =>
   Promise.all([
-    import('@/stage/Stage').catch(() => null),
+    import('@/stage/StageCanvas').catch(() => null),
     document.fonts?.ready,
     loadImage(asset('brand/pixo.webp')),
     ...['intro-1', 'intro-2', 'greet-1', 'greet-2', 'greet-3'].map((id) =>
@@ -81,7 +84,9 @@ export function App() {
     api.current?.toPhone()
   }
 
-  useEffect(() => {
+  // Smooth scroll (Lenis, driven by the GSAP ticker) and the scroll reveals. useGSAP reverts every
+  // tween/ScrollTrigger created in here on unmount and runs the returned cleanup.
+  useGSAP(() => {
     // Reduced motion: no smooth scroll, no scrubbing — everything renders in its final state.
     if (prefersReducedMotion()) return
 
@@ -94,36 +99,34 @@ export function App() {
     gsap.ticker.add(tick)
     gsap.ticker.lagSmoothing(0)
 
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>('[data-split]').forEach((el) =>
-        gsap.from(el.querySelectorAll('[data-w]'), {
-          yPercent: 110,
-          opacity: 0,
-          filter: 'blur(8px)',
-          duration: 0.95,
-          ease: 'power4.out',
-          stagger: 0.05,
-          scrollTrigger: { trigger: el, start: 'top 82%', once: true },
-        }),
-      )
-      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) =>
-        gsap.from(el, {
-          y: 36,
-          opacity: 0,
-          filter: 'blur(8px)',
-          duration: 1,
-          ease: 'power4.out',
-          scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-        }),
-      )
-    })
+    gsap.utils.toArray<HTMLElement>('[data-split]').forEach((el) =>
+      gsap.from(el.querySelectorAll('[data-w]'), {
+        yPercent: 110,
+        opacity: 0,
+        filter: 'blur(8px)',
+        duration: 0.95,
+        ease: 'power4.out',
+        stagger: 0.05,
+        scrollTrigger: { trigger: el, start: 'top 82%', once: true },
+      }),
+    )
+    gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) =>
+      gsap.from(el, {
+        y: 36,
+        opacity: 0,
+        filter: 'blur(8px)',
+        duration: 1,
+        ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+      }),
+    )
 
     // Pinned sections depend on font and media metrics.
     document.fonts?.ready.then(() => ScrollTrigger.refresh())
-    window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
+    window.addEventListener('load', onLoad, { once: true })
 
     return () => {
-      ctx.revert()
+      window.removeEventListener('load', onLoad)
       gsap.ticker.remove(tick)
       lenis.destroy()
       lenisRef.current = null

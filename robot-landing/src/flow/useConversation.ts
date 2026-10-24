@@ -7,7 +7,7 @@ import type { Demo } from '@/content/demos'
 import { normalizeIranMobile } from '@/lib/digits'
 import { visitor } from '@/lib/storage'
 import { track } from '@/lib/analytics'
-import type { Stage } from '@/stage/Stage'
+import type { StageControls } from '@/stage/controls'
 import type { Mood } from '@/stage/types'
 
 export type Step =
@@ -53,7 +53,7 @@ const initial: State = { step: 'boot', line: null, prev: null, ready: false, dem
  * The landing's conversion funnel as a tiny state machine:
  * greet → member? → login | (signup | demo → reveal → signup).
  */
-export function useConversation(stage: React.RefObject<Stage | null>) {
+export function useConversation(stage: React.RefObject<StageControls | null>) {
   const [state, setState] = useState<State>(initial)
   const flow = useRef(0)
   const readyTimer = useRef(0)

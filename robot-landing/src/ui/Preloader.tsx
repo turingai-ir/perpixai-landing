@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { asset } from '@/lib/asset'
 import { prefersReducedMotion } from '@/lib/motion'
 import { localizeDigits } from '@/i18n/format'
@@ -34,57 +35,56 @@ export function Preloader({ ready, onEnter }: Props) {
   const [gate, setGate] = useState(false)
   const [gone, setGone] = useState(false)
 
-  useEffect(() => {
-    const reduce = prefersReducedMotion()
-    let loaded = false
-    let alive = true
-    // Never hold the audience hostage: open the gate after 7s whatever happens.
-    const timeout = Promise.race([ready, new Promise((r) => setTimeout(r, 7000))]).then(() => (loaded = true))
+  const { contextSafe } = useGSAP(
+    () => {
+      const reduce = prefersReducedMotion()
+      let loaded = false
+      let alive = true
+      // Never hold the audience hostage: open the gate after 7s whatever happens.
+      const timeout = Promise.race([ready, new Promise((r) => setTimeout(r, 7000))]).then(() => (loaded = true))
 
-    countRef.current = 3
-    setCount(3)
-    const ctx = gsap.context(() => {
-      if (reduce) {
-        timeout.then(() => alive && (setProgress(100), setGate(true)))
-        return
+      countRef.current = 3
+      setCount(3)
+      if (reduce) timeout.then(() => alive && (setProgress(100), setGate(true)))
+      else {
+        const sweep = { a: 0 }
+        const tl = gsap.timeline({
+          repeat: -1,
+          onRepeat: () => {
+            if (countRef.current <= 1 && loaded) {
+              tl.kill()
+              setProgress(100)
+              setGate(true)
+              return
+            }
+            // Still loading at "1": loop the last numbers rather than freeze.
+            countRef.current = countRef.current <= 1 ? 3 : countRef.current - 1
+            setCount(countRef.current)
+          },
+        })
+        tl.to(sweep, {
+          a: 360,
+          duration: 0.62,
+          ease: 'none',
+          onUpdate: () => root.current?.style.setProperty('--sweep', `${sweep.a}deg`),
+        })
+        const p = { v: 0 }
+        gsap.to(p, { v: 92, duration: 3.2, ease: 'power2.out', onUpdate: () => alive && setProgress(Math.round(p.v)) })
       }
-      const sweep = { a: 0 }
-      const tl = gsap.timeline({
-        repeat: -1,
-        onRepeat: () => {
-          if (countRef.current <= 1 && loaded) {
-            tl.kill()
-            setProgress(100)
-            setGate(true)
-            return
-          }
-          // Still loading at "1": loop the last numbers rather than freeze.
-          countRef.current = countRef.current <= 1 ? 3 : countRef.current - 1
-          setCount(countRef.current)
-        },
-      })
-      tl.to(sweep, {
-        a: 360,
-        duration: 0.62,
-        ease: 'none',
-        onUpdate: () => root.current?.style.setProperty('--sweep', `${sweep.a}deg`),
-      })
-      const p = { v: 0 }
-      gsap.to(p, { v: 92, duration: 3.2, ease: 'power2.out', onUpdate: () => alive && setProgress(Math.round(p.v)) })
-    }, root)
+      return () => void (alive = false)
+    },
+    { scope: root, dependencies: [ready] },
+  )
 
-    return () => {
-      alive = false
-      ctx.revert()
-    }
-  }, [ready])
+  useGSAP(
+    () => {
+      if (!gate || prefersReducedMotion()) return
+      gsap.fromTo('[data-gate]', { opacity: 0, y: 16, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power4.out', stagger: 0.12 })
+    },
+    { scope: root, dependencies: [gate] },
+  )
 
-  useEffect(() => {
-    if (!gate || prefersReducedMotion()) return
-    gsap.fromTo('[data-gate]', { opacity: 0, y: 16, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power4.out', stagger: 0.12 })
-  }, [gate])
-
-  const enter = (withSound: boolean) => {
+  const enter = contextSafe((withSound: boolean) => {
     onEnter(withSound)
     if (prefersReducedMotion()) return setGone(true)
     // Iris out — the oldest transition in cinema.
@@ -93,7 +93,7 @@ export function Preloader({ ready, onEnter }: Props) {
       { clipPath: 'circle(150% at 50% 50%)' },
       { clipPath: 'circle(0% at 50% 50%)', duration: 1.3, ease: 'power4.inOut', onComplete: () => setGone(true) },
     )
-  }
+  })
 
   if (gone) return null
   return (
