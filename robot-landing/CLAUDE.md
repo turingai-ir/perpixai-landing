@@ -27,8 +27,8 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
   as numbers, tool icons; copy in `home.json`)
 - `src/flow/useConversation.ts`: the funnel state machine. Every branch calls `begin()` so stale awaits are ignored
 - `src/audio/voice.ts`: plays `public/audio/fa/<id>.mp3`, exposes loudness; simulates speech if a file is missing
-- `src/stage/`: the 3D scene on react-three-fiber (`StageCanvas.tsx`, loaded as a separate chunk; `StageBoundary` falls back to
-  the still image if WebGL fails). R3F owns the canvas, resize and frame loop; three's own `EffectComposer` + UnrealBloom render
+- `src/stage/`: the 3D scene on react-three-fiber (`StageCanvas.tsx`, loaded as a separate chunk; `ui/PixoStage.tsx` lazy-loads it; `StageBoundary` falls back to
+  the still image if WebGL fails; `world.ts` builds/disposes Pixo and the lights). R3F owns the canvas, resize and frame loop; three's own `EffectComposer` + UnrealBloom render
   (priority-1 `useFrame`). `controls.ts` is the plain object the conversation uses (`setMood/setPowered/setLayout/setComputing`).
   The character builders stay vanilla three: `character/head.ts` (Turing tape, reels, blinking eye,
   brass Tesla moustache, mood glyphs ؟/spiral/heart via `setMood`, springy valves), `character/tesla.ts` (coil + voice-driven

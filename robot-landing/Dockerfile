@@ -26,7 +26,7 @@ RUN --mount=type=cache,id=robot-landing-pnpm-store,target=/pnpm/store \
     pnpm config set registry "${PACKAGE_REGISTRY}" && \
     pnpm install --frozen-lockfile
 
-# Dev stage for running vite dev server inside container
+# Dev stage for running the Next.js dev server inside container
 FROM base AS dev
 COPY . .
 ENV NODE_ENV=development
