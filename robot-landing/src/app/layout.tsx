@@ -4,6 +4,7 @@ import { i18n } from '@/i18n'
 import { defaultLocale, localeMeta } from '@/i18n/config'
 import { I18nProvider } from '@/i18n/I18nProvider'
 import { SITE, getSeo } from '@/lib/seo'
+import { colors, zIndex } from '@/styles/tokens'
 import '@/styles/globals.css'
 
 const locale = defaultLocale
@@ -36,7 +37,7 @@ export function generateMetadata(): Metadata {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#030205',
+  themeColor: colors.ink,
   width: 'device-width',
   initialScale: 1,
   colorScheme: 'dark',
@@ -57,16 +58,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p
             style={{
               position: 'relative',
-              zIndex: 80,
+              zIndex: zIndex.noscript,
               margin: 0,
               padding: '1rem',
               textAlign: 'center',
-              background: '#14111c',
-              color: '#f5efe4',
+              background: colors['ink-3'],
+              color: colors.fog,
             }}
           >
             {i18n.t('noscript.text', { lng: locale })}{' '}
-            <a href={config.authUrl} style={{ color: '#06a1e9' }}>
+            <a href={config.authUrl} style={{ color: colors.cyan }}>
               {i18n.t('noscript.login', { lng: locale })}
             </a>
           </p>

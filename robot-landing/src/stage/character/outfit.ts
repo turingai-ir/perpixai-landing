@@ -12,21 +12,21 @@ import {
   TubeGeometry,
   Vector3,
 } from 'three'
-import { brand } from '../palette'
+import { brand, paint } from '../palette'
 import { badgeTexture, scarfTexture } from '../textures'
 import { mergeChildren } from '../merge'
 
 /** Old-cinema usher: maroon velvet, brass, a neon bow tie. */
 export const velvet = new MeshPhysicalMaterial({
-  color: '#3a0714',
+  color: paint.velvet,
   roughness: 0.9,
   sheen: 0.45,
-  sheenColor: '#a8324f',
+  sheenColor: paint.velvetSheen,
   sheenRoughness: 0.5,
 })
-const shirt = new MeshStandardMaterial({ color: '#b9b0a2', roughness: 0.85 })
-const gold = new MeshStandardMaterial({ color: '#e0b25e', metalness: 1, roughness: 0.25 })
-const neonBow = new MeshStandardMaterial({ color: '#2a0a2a', emissive: brand.magenta, emissiveIntensity: 1.6, roughness: 0.4 })
+const shirt = new MeshStandardMaterial({ color: paint.shirt, roughness: 0.85 })
+const gold = new MeshStandardMaterial({ color: paint.goldPolished, metalness: 1, roughness: 0.25 })
+const neonBow = new MeshStandardMaterial({ color: paint.bowBase, emissive: brand.magenta, emissiveIntensity: 1.6, roughness: 0.4 })
 
 /** Front surface of the torso at height y (body space), from the lathe profile × z-scale. */
 const frontZ = (y: number) => 0.56 * (y > 0.05 ? 0.48 - (y - 0.05) * 2.4 : 0.6 + Math.min(0.05, -y * 0.25))
@@ -91,7 +91,7 @@ export function createOutfit({ yalda, badge: badgeText }: { yalda: boolean; badg
 
   if (yalda) {
     const tex = scarfTexture()
-    const knit = new MeshStandardMaterial({ map: tex, color: '#9c9c9c', roughness: 1 })
+    const knit = new MeshStandardMaterial({ map: tex, color: paint.knit, roughness: 1 })
     // Two loose loops around the collar…
     const loopA = new Mesh(new TorusGeometry(0.2, 0.07, 20, 64), knit)
     loopA.rotation.x = Math.PI / 2 + 0.12
@@ -111,7 +111,7 @@ export function createOutfit({ yalda, badge: badgeText }: { yalda: boolean; badg
     ])
     const tail = new Mesh(new TubeGeometry(tailCurve, 40, 0.06, 14), knit)
     const fringe = new Group()
-    const yarn = new MeshStandardMaterial({ color: '#f3e3c3' })
+    const yarn = new MeshStandardMaterial({ color: paint.yarn })
     for (let i = 0; i < 7; i++) {
       const f = new Mesh(new CylinderGeometry(0.004, 0.004, 0.06, 5), yarn)
       f.position.set(0.17 + i * 0.013, -0.27, frontZ(-0.25) + 0.05)
@@ -119,7 +119,7 @@ export function createOutfit({ yalda, badge: badgeText }: { yalda: boolean; badg
     }
     // Pomegranate brooch on the lapel
     const brooch = new Group()
-    const fruit = new Mesh(new SphereGeometry(0.03, 24, 16), new MeshStandardMaterial({ color: '#c2142f', roughness: 0.35 }))
+    const fruit = new Mesh(new SphereGeometry(0.03, 24, 16), new MeshStandardMaterial({ color: paint.pomegranate, roughness: 0.35 }))
     const crown = new Mesh(new CylinderGeometry(0.008, 0.014, 0.018, 6), gold)
     crown.position.y = 0.032
     brooch.add(fruit, crown)

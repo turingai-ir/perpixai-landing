@@ -20,15 +20,12 @@ export function YaldaSeeds({ count = 22 }: { count?: number }) {
       {seeds.map((s, i) => (
         <span
           key={i}
-          className="absolute bottom-[-5%] rounded-[45%_45%_50%_50%]"
+          className="absolute bottom-[-5%] yalda-seed"
           style={{
             left: `${s.left}%`,
             width: s.size,
             height: s.size * 1.25,
-            background: 'radial-gradient(circle at 35% 30%, #ff8a9a, #e3263f 55%, #7a0a1c)',
-            boxShadow: '0 0 10px 2px rgb(227 38 63 / .55)',
             animation: `seed ${s.duration}s linear ${s.delay}s infinite`,
-            willChange: 'transform, opacity',
           }}
         />
       ))}

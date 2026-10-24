@@ -10,7 +10,7 @@ export function Subtitle({ line, prev }: { line: Line | null; prev: Line | null 
         </p>
       )}
       {line && (
-        <p key={line.id} className="text-[1.35rem] leading-[1.8] font-bold text-fog md:text-[2.1rem] md:leading-[1.65]">
+        <p key={line.id} className="text-subtitle font-bold text-fog md:text-subtitle-lg">
           {line.text.split(' ').map((w, i) => (
             <span key={i} className="word" style={{ animationDelay: `${i * 70}ms` }}>
               {w}&nbsp;

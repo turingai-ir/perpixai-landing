@@ -11,7 +11,7 @@ export function Choice({ primary, index = 0, className, children, ...rest }: Pro
       className={clsx(
         'word cursor-pointer rounded-full px-4 py-2.5 text-sm font-medium transition duration-300 ease-cine hover:-translate-y-0.5 md:px-5 md:py-3 md:text-base',
         primary
-          ? 'bg-brand text-white shadow-[0_10px_40px_-10px_#d92dd4aa] hover:shadow-[0_14px_50px_-8px_#06a1e9aa]'
+          ? 'bg-brand text-white shadow-cta hover:shadow-cta-hover'
           : 'border border-fog/25 bg-white/[0.06] text-fog backdrop-blur hover:border-fog/50 hover:bg-white/10',
         className,
       )}

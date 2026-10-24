@@ -4,7 +4,7 @@ import { createCables } from './character/cables'
 import { createHead } from './character/head'
 import { createOutfit } from './character/outfit'
 import { createTesla } from './character/tesla'
-import { brand } from './palette'
+import { brand, paint } from './palette'
 
 export const HEAD_Y = 1.1
 
@@ -25,7 +25,7 @@ export function createWorld({ yalda, badge }: WorldOptions) {
   headRig.add(tesla.group)
   rig.add(headRig)
 
-  const key = new DirectionalLight('#fff4ea', 1.05)
+  const key = new DirectionalLight(paint.keyLight, 1.05)
   key.position.set(1.5, 3, 4)
   const rimL = new SpotLight(brand.magenta, 28, 12, 0.6, 0.8)
   rimL.position.set(-3.2, 2.4, -2.2)
@@ -34,7 +34,7 @@ export function createWorld({ yalda, badge }: WorldOptions) {
   rimR.position.set(3.2, 2, -2)
   rimR.target.position.set(0, 1, 0)
   const lights = new Group()
-  lights.add(new HemisphereLight('#c9c3ff', '#0a0710', 0.5), key, rimL, rimL.target, rimR, rimR.target)
+  lights.add(new HemisphereLight(paint.skyLight, paint.groundLight, 0.5), key, rimL, rimL.target, rimR, rimR.target)
 
   return { outfit, head, tesla, rig, headRig, lights }
 }

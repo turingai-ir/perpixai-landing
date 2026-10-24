@@ -59,7 +59,7 @@ export function PixoStage({ controls, label, badge }: Props) {
           role="img"
           aria-label={label}
           style={{ opacity: shown ? 1 : 0 }}
-          className="absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] transition-opacity duration-[1500ms] md:h-full md:[mask-image:none]"
+          className="absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] transition-opacity duration-1500 md:h-full md:[mask-image:none]"
         >
           <StageBoundary onError={toStill}>
             <Scene

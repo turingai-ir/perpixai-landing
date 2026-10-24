@@ -1,0 +1,102 @@
+/*
+ * Design tokens: the single source of truth for the web UI.
+ *
+ * "Cinema Perpix": an old Tehran picture palace re-wired with the logo's neon. Black velvet ground,
+ * warm projector-white type, Lalezar poster lettering, neon (magenta → cyan) only where light is emitted.
+ *
+ * Rules
+ *  - Components use these tokens (utilities such as `bg-ink-2`, `text-mute`, `shadow-cta`, `text-display`,
+ *    `rounded-frame`, `z-(--z-chrome)`); no raw hex / rgb() in TSX. `pnpm check` enforces it.
+ *  - Translucent colours are written `bg-magenta/20` (utilities) or `color-mix(in oklab, var(--color-x) 20%, transparent)` (CSS).
+ *  - The few values JS needs (theme-color, manifest, three.js lights) live in `tokens.ts`; `pnpm check` verifies they match this file.
+ *  - 3D material colours are a separate palette: `src/stage/palette.ts`.
+ */
+@theme {
+  /* ── Surfaces: black velvet, three steps up ───────────────────────────── */
+  --color-ink: #030205;
+  --color-ink-2: #0b0910;
+  --color-ink-3: #14111c;
+  --color-plum: #2a1240; /* featured ticket gradient: start … */
+  --color-ink-violet: #120c22; /* … middle … */
+  --color-ink-navy: #0b1a2e; /* … end */
+
+  /* ── Type & lines ─────────────────────────────────────────────────────── */
+  --color-fog: #f5efe4; /* projector white, warm */
+  --color-mute: #b9b2c9;
+  --color-dim: #7d768f;
+  --color-line: rgb(245 239 228 / 0.12);
+
+  /* ── Brand: sampled from the logo gradient ────────────────────────────── */
+  --color-magenta: #d92dd4;
+  --color-purple: #863ed3;
+  --color-blue: #128ce3;
+  --color-cyan: #06a1e9;
+  /* Lighter steps of the same hues: gradient text must stay readable on black. */
+  --color-magenta-soft: #ef6aea;
+  --color-purple-soft: #b07cff;
+  --color-blue-soft: #4fb2ff;
+  --color-cyan-soft: #3fd0ff;
+
+  /* ── Light sources ────────────────────────────────────────────────────── */
+  --color-amber: #ffc46b; /* tungsten bulbs */
+  --color-bulb: #ffe2a8; /* a lit bulb's hot centre */
+  --color-projector: #ffecd2; /* the beam */
+  --color-neon-pink: #fff3fd; /* tube core of a magenta neon sign */
+  --color-neon-ice: #effbff; /* tube core of a cyan neon sign */
+
+  /* ── Season: Yalda (pomegranate) ──────────────────────────────────────── */
+  --color-yalda: #ff6b7f;
+  --color-yalda-hot: #ff8a9a;
+  --color-yalda-red: #e3263f;
+  --color-yalda-deep: #7a0a1c;
+
+  /* ── Fonts & motion ───────────────────────────────────────────────────── */
+  --font-sans: 'Vazirmatn Variable', system-ui, sans-serif;
+  --font-poster: 'Lalezar', 'Vazirmatn Variable', serif;
+  --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Type scale beyond Tailwind's: named by role, not by size ─────────── */
+  --text-body-sm: 0.95rem;
+  --text-subtitle: 1.35rem; /* Pixo's subtitle, mobile … */
+  --text-subtitle--line-height: 1.8;
+  --text-subtitle-lg: 2.1rem; /* … and desktop */
+  --text-subtitle-lg--line-height: 1.65;
+  --text-price: 3.4rem;
+  --text-price--line-height: 1;
+  --text-countdown: min(18vw, 5.5rem); /* film-leader numerals */
+  --text-countdown--line-height: 1;
+  --text-display: clamp(5rem, 18vw, 13rem); /* the closing «پایان» */
+  --text-display--line-height: 1;
+
+  /* ── Radii ────────────────────────────────────────────────────────────── */
+  --radius-frame: 1.75rem; /* film frames */
+
+  /* ── Elevation: coloured light, never grey shadow ─────────────────────── */
+  --shadow-cta: 0 10px 40px -10px color-mix(in oklab, var(--color-magenta) 67%, transparent);
+  --shadow-cta-lg: 0 20px 60px -15px var(--color-magenta);
+  --shadow-cta-hover: 0 14px 50px -8px color-mix(in oklab, var(--color-cyan) 67%, transparent);
+  --shadow-glow-cyan: 0 0 60px -8px var(--color-cyan);
+  --shadow-frame-purple: 0 40px 140px -30px var(--color-purple), 0 0 0 1px var(--color-line);
+  --shadow-frame-cyan: 0 30px 100px -40px var(--color-cyan);
+}
+
+/* Tokens that are not Tailwind theme namespaces. */
+:root {
+  /* Stacking order, top to bottom. Use as `z-(--z-chrome)`. */
+  --z-noscript: 80;
+  --z-preloader: 70;
+  --z-fx: 60; /* film grain / vignette overlay */
+  --z-skip: 50; /* skip link when focused */
+  --z-chrome: 40; /* header, sticky CTA */
+  --z-bars: 30; /* letterbox bars */
+
+  /* Brand gradients (the logo, left to right). */
+  --gradient-brand: linear-gradient(110deg, var(--color-magenta), var(--color-purple) 45%, var(--color-blue) 75%, var(--color-cyan));
+  --gradient-brand-soft: linear-gradient(
+    110deg,
+    var(--color-magenta-soft),
+    var(--color-purple-soft) 45%,
+    var(--color-blue-soft) 75%,
+    var(--color-cyan-soft)
+  );
+}
