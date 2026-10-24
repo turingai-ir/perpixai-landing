@@ -5,6 +5,18 @@
 @import './theme.css';
 
 /*
+ * Mobile-first. Tailwind's `md` (768) is a phone-sized step; two-column layouts start at `lg` (1024), so portrait
+ * tablets get the roomy single-column layout. Two situations a width breakpoint cannot see:
+ *  - `wide`: side-by-side hero (Pixo left, conversation right). Landscape-ish screens only. PixoStage reads the same
+ *    query (WIDE_QUERY) to tell the 3D scene where to stand, so CSS and scene can never disagree.
+ *  - `tall`: pinned/scrubbed scenes and the sticky reel need real height (not landscape phones or short windows).
+ */
+/* Keep in sync with WIDE_QUERY in lib/motion.ts. */
+@custom-variant wide (@media (min-width: 35rem) and (min-aspect-ratio: 9/10));
+@custom-variant not-wide (@media not all and (min-width: 35rem) and (min-aspect-ratio: 9/10));
+@custom-variant tall (@media (min-height: 40rem));
+
+/*
  * Unlayered on purpose: hosts (e.g. the claude.ai preview skeleton) ship their own
  * unlayered reset, which would otherwise beat these and paint the page white.
  */
@@ -13,7 +25,10 @@
   background: var(--background);
 }
 html {
-  font-size: 16px;
+  /* 100%, not 16px: respect the user's system / browser font size. */
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   background: var(--background) !important;
 }
 body {

@@ -268,8 +268,8 @@ function Pixo({ controls, levelSource, lite, yalda, badge, startQuality, onConte
     st.level += (levelSource() - st.level) * Math.min(1, dt * 18)
 
     // Shift into the left half (the RTL text column sits on the right).
-    const portrait = camera.aspect < 0.9
-    if (controls.layout === 'center' || portrait) g.targetX = 0
+    // `controls.layout` mirrors the CSS layout (PixoStage): side-by-side only when the page itself is.
+    if (controls.layout === 'center') g.targetX = 0
     else {
       const halfW = Math.tan((camera.fov * Math.PI) / 360) * camera.position.z * camera.aspect
       g.targetX = -halfW * 0.42

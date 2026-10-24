@@ -22,7 +22,7 @@ export function Reel({ onMake }: { onMake: (demoId: string) => void }) {
   useGSAP(
     () => {
       const mm = gsap.matchMedia()
-      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      mm.add('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)', () => {
         const distance = () => Math.max(0, track.current!.scrollWidth - window.innerWidth)
         const move = gsap.to(track.current, {
           x: () => distance(),
@@ -57,22 +57,22 @@ export function Reel({ onMake }: { onMake: (demoId: string) => void }) {
   // so React must never use the section itself as a sibling anchor.
   return (
     <div>
-      <section ref={root} id="reel" className="relative overflow-hidden py-24 md:flex md:h-svh md:items-center md:py-0">
+      <section ref={root} id="reel" className="relative overflow-hidden py-24 lg:tall:flex lg:tall:h-svh lg:tall:items-center lg:tall:py-0">
         <div
           ref={track}
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 md:w-max md:snap-none md:gap-10 md:overflow-visible md:px-14 md:pb-0 md:motion-reduce:w-auto md:motion-reduce:snap-x md:motion-reduce:overflow-x-auto"
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-4 md:gap-10 md:px-14 lg:tall:w-max lg:tall:snap-none lg:tall:overflow-visible lg:tall:pb-0 lg:tall:motion-reduce:w-auto lg:tall:motion-reduce:snap-x lg:tall:motion-reduce:overflow-x-auto"
         >
-          <header className="flex w-[80vw] shrink-0 snap-start flex-col justify-center md:w-[34vw]">
+          <header className="flex w-[80vw] shrink-0 snap-start flex-col justify-center md:w-[40vw] lg:tall:w-[34vw]">
             <span className="eyebrow mb-5">{t('reel.eyebrow')}</span>
             <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-6xl" />
             <p className="mt-5 max-w-sm leading-8 text-muted-foreground">{t('reel.body')}</p>
-            <p className="mt-8 hidden items-center gap-2 text-sm text-muted-foreground md:flex">
+            <p className="mt-8 hidden items-center gap-2 text-sm text-muted-foreground lg:tall:flex">
               <Icon name="arrow" className="size-4" /> {t('reel.scrollHint')}
             </p>
           </header>
 
           {readyDemos.map((d, i) => (
-            <figure key={d.id} className="w-[85vw] shrink-0 snap-center md:w-[52vw]">
+            <figure key={d.id} className="w-[85vw] shrink-0 snap-center md:w-[70vw] lg:tall:w-[52vw]">
               <div className="rounded-3xl bg-muted p-3 shadow-frame-accent md:p-4">
                 <div aria-hidden className="mb-3 h-3 rounded-sm sprockets" />
                 <div className="relative aspect-video overflow-hidden rounded-xl">
@@ -96,7 +96,7 @@ export function Reel({ onMake }: { onMake: (demoId: string) => void }) {
                 <button
                   type="button"
                   onClick={() => onMake(d.id)}
-                  className="inline-flex shrink-0 cursor-pointer items-center gap-2 self-start rounded-full border border-border bg-white/5 px-5 py-2.5 text-sm text-foreground transition hover:border-white/30 hover:bg-white/10"
+                  className="inline-flex shrink-0 cursor-pointer items-center gap-2 self-start rounded-full border border-border bg-white/5 px-5 py-2.5 text-sm text-foreground transition hover:border-white/30 hover:bg-white/10 pointer-coarse:min-h-11"
                 >
                   {t('reel.make')}
                   <Icon name="arrow" className="size-4" />

@@ -21,19 +21,19 @@ export function Footer() {
   return (
     <footer className="border-t border-border px-5 pt-10 pb-28 text-sm text-muted-foreground md:px-14 md:pb-10">
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <a href="#top" className="flex items-center gap-3 text-foreground">
+        <a href="#top" className="flex items-center gap-3 text-foreground pointer-coarse:min-h-11">
           <img src={asset('brand/logo-192.webp')} alt="" width={34} height={28} className="h-7 w-auto" />
           <span className="font-black">{t('brand')}</span>
           <span className="text-muted-foreground">· {t('footer.tagline')}</span>
         </a>
-        <nav aria-label={t('footer.navLabel')} className="flex flex-wrap gap-6">
-          <a href="#plans" className="transition hover:text-foreground">
+        <nav aria-label={t('footer.navLabel')} className="flex flex-wrap gap-x-6 gap-y-1">
+          <a href="#plans" className="inline-flex items-center transition hover:text-foreground pointer-coarse:min-h-11">
             {t('footer.plans')}
           </a>
-          <a href="#faq" className="transition hover:text-foreground">
+          <a href="#faq" className="inline-flex items-center transition hover:text-foreground pointer-coarse:min-h-11">
             {t('footer.faq')}
           </a>
-          <a href={config.authUrl} className="transition hover:text-foreground">
+          <a href={config.authUrl} className="inline-flex items-center transition hover:text-foreground pointer-coarse:min-h-11">
             {t('footer.login')}
           </a>
         </nav>

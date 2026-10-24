@@ -7,6 +7,7 @@ export type Layout = 'center' | 'side'
  * import, so it stays in the main bundle): the conversation sets targets, `StageCanvas` reads them every frame.
  */
 export class StageControls {
+  /** 'side' = Pixo in the left half (RTL: text on the right). Set by PixoStage from the same media query as the CSS `wide` variant. */
   layout: Layout = 'center'
   mood: Mood = 'neutral'
   /** Target values (0..1) the scene eases towards. */

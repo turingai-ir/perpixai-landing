@@ -23,7 +23,7 @@ export function Film() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia()
-      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      mm.add('(min-width: 1024px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)', () => {
         const tl = gsap.timeline({
           defaults: { ease: 'none' },
           scrollTrigger: { trigger: root.current, start: 'top top', end: '+=160%', scrub: 1, pin: true, anticipatePin: 1 },
@@ -53,8 +53,8 @@ export function Film() {
   // so React must never use the section itself as a sibling anchor.
   return (
     <div>
-      <section ref={root} id="more" className="relative flex min-h-svh items-center px-5 py-24 md:px-14 md:py-0">
-        <div className="grid w-full items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
+      <section ref={root} id="more" className="relative flex min-h-svh items-center px-5 py-24 md:px-14 lg:tall:py-0">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
           <div>
             <span className="eyebrow mb-5">{t('film.eyebrow')}</span>
             <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-6xl xl:text-7xl" />
@@ -64,7 +64,7 @@ export function Film() {
                   key={s.title}
                   data-step
                   data-active={i === 2 ? '' : undefined}
-                  className="group flex gap-4 opacity-40 transition-opacity duration-500 data-[active]:opacity-100 max-md:opacity-100"
+                  className="group flex gap-4 transition-opacity duration-500 lg:tall:opacity-40 lg:tall:data-[active]:opacity-100 lg:tall:motion-reduce:opacity-100"
                 >
                   <span className="text-brand font-poster text-3xl leading-none">{localizeDigits(i + 1)}</span>
                   <div>
@@ -97,7 +97,7 @@ export function Film() {
               <div
                 data-noise
                 aria-hidden
-                className="pointer-events-none absolute inset-0 film-noise opacity-0 mix-blend-screen motion-reduce:hidden max-md:hidden"
+                className="pointer-events-none absolute inset-0 film-noise opacity-0 mix-blend-screen motion-reduce:hidden max-lg:hidden"
               />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4 text-xs text-foreground/80">
                 <span className="flex items-center gap-2">

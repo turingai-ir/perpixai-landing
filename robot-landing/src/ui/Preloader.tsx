@@ -123,13 +123,13 @@ export function Preloader({ ready, onEnter }: Props) {
         The marquee is on screen from the first paint (it is the page's largest content, so LCP
         lands immediately); only the slot below it changes from the leader countdown to the gate.
       */}
-      <div className="flex flex-col items-center gap-7 px-6 text-center md:gap-8">
+      <div className="flex flex-col items-center gap-3 px-6 text-center tall:gap-7 tall:md:gap-8">
         {ts(`${season.id}.greeting`) && <p className="font-poster text-2xl neon-yalda">{ts(`${season.id}.greeting`)}</p>}
         <div className="flex flex-col items-center gap-3">
           <div className="bulbs w-[min(80vw,30rem)]" />
           <div className="flex items-center gap-4">
-            <img src={asset('brand/logo-192.webp')} alt="" width={77} height={64} className="h-12 w-auto md:h-16" />
-            <p className="neon font-poster text-6xl leading-none md:text-8xl">{t('preloader.title')}</p>
+            <img src={asset('brand/logo-192.webp')} alt="" width={77} height={64} className="h-9 w-auto tall:h-12 tall:md:h-16" />
+            <p className="neon font-poster text-4xl leading-none tall:text-6xl tall:md:text-8xl">{t('preloader.title')}</p>
           </div>
           <div className="bulbs w-[min(80vw,30rem)]" style={{ animationDelay: '-0.8s' }} />
         </div>
@@ -139,10 +139,10 @@ export function Preloader({ ready, onEnter }: Props) {
           <span className="text-muted-foreground"> · {t('preloader.tagline')}</span>
         </p>
 
-        <div className="grid min-h-[9.5rem] place-items-center md:min-h-[11rem]">
+        <div className="grid min-h-24 place-items-center tall:min-h-[9.5rem] tall:md:min-h-[11rem]">
           {!gate ? (
             /* Film leader */
-            <div className="relative grid size-[min(36vw,9rem)] place-items-center md:size-[10.5rem]" aria-hidden>
+            <div className="relative grid size-24 place-items-center tall:size-[min(36vw,9rem)] tall:md:size-[10.5rem]" aria-hidden>
               <div className="absolute inset-0 rounded-full border-2 border-foreground/70" />
               <div className="absolute inset-[9%] rounded-full border border-foreground/40" />
               <div className="absolute inset-[9%] rounded-full leader-sweep" />
@@ -151,7 +151,7 @@ export function Preloader({ ready, onEnter }: Props) {
               <span className="relative font-poster text-countdown leading-none">{localizeDigits(count)}</span>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-5">
+            <div className="flex flex-col items-center gap-2 tall:gap-5">
               <button
                 data-gate
                 type="button"
@@ -166,7 +166,7 @@ export function Preloader({ ready, onEnter }: Props) {
                 <button
                   type="button"
                   onClick={() => enter(false)}
-                  className="cursor-pointer underline-offset-4 hover:text-foreground hover:underline"
+                  className="inline-flex cursor-pointer items-center px-1 underline-offset-4 hover:text-foreground hover:underline pointer-coarse:min-h-11"
                 >
                   {t('preloader.muted')}
                 </button>
@@ -176,7 +176,7 @@ export function Preloader({ ready, onEnter }: Props) {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-6 text-xs text-subtle-foreground md:px-10">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-xs text-subtle-foreground md:px-10">
         <span>{gate ? t('preloader.ready') : t('preloader.loading')}</span>
         <span className="h-px flex-1 bg-border">
           <span
