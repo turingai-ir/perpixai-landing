@@ -5,6 +5,9 @@ import { i18n } from '@/i18n'
 
 export const SITE = 'https://perpixai.ir'
 
+/** `<meta name="theme-color">` and the manifest cannot read CSS variables: this is `--background` in styles/theme.css (`pnpm check:theme` verifies). */
+export const THEME_COLOR = '#030205'
+
 /** Date the demo clips were added (their upload date). */
 const UPLOADED = '2026-10-23'
 

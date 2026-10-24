@@ -65,12 +65,14 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
       />
       {/* Projector beam falling on the stage, and the neon spill around Pixo */}
       <div aria-hidden className="absolute top-[-15%] h-[125%] w-full projector-beam opacity-70 mix-blend-screen md:left-[2%] md:w-[46%]" />
-      <div aria-hidden className="absolute inset-0 aura-hero" />
+      {/* Neon spill around Pixo */}
+      <div aria-hidden className="absolute inset-0 bg-radial-[ellipse_32%_40%_at_14%_70%] from-primary/18 to-transparent" />
+      <div aria-hidden className="absolute inset-0 bg-radial-[ellipse_30%_40%_at_44%_62%] from-accent/14 to-transparent" />
       {season.id === 'yalda' && <YaldaSeeds />}
       <PixoStage controls={stage} label={characterLabel} badge={{ name: characterName, role: t('stage.badgeRole') }} />
 
       <div className="relative flex h-full flex-col justify-end px-5 pb-8 md:w-1/2 md:justify-center md:px-14 md:pb-0">
-        <div className="bg-gradient-to-t from-ink via-ink/95 to-transparent pt-10 md:bg-none md:pt-0">
+        <div className="bg-gradient-to-t from-background via-background/95 to-transparent pt-10 md:bg-none md:pt-0">
           <div className="mb-5 flex items-center justify-between gap-3 md:mb-7">
             {/* Marquee sign: what's showing tonight */}
             <div className="inline-flex flex-col gap-1.5">
@@ -78,7 +80,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
               <p className="flex items-baseline gap-3 px-1">
                 <span className="text-sm text-amber">{ts(`${season.id}.showing`)}</span>
                 <span className="neon font-poster text-4xl leading-none md:text-5xl">{characterName}</span>
-                <span className="hidden text-sm text-mute md:inline">{tc('character.title')}</span>
+                <span className="hidden text-sm text-muted-foreground md:inline">{tc('character.title')}</span>
               </p>
               <div className="bulbs w-full" style={{ animationDelay: '-0.8s' }} />
             </div>
@@ -153,16 +155,16 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
           )}
 
           {(state.step === 'signup' || state.step === 'login') && !state.handoff && (
-            <p className="word mt-6 text-sm text-mute">{t('hero.redirecting')}</p>
+            <p className="word mt-6 text-sm text-muted-foreground">{t('hero.redirecting')}</p>
           )}
 
           {state.handoff && (
-            <div className="word mt-6 max-w-xl rounded-2xl border border-dashed border-cyan/50 bg-cyan/5 p-4 text-sm">
-              <p className="font-semibold text-cyan">{t('hero.handoff.title')}</p>
-              <code dir="ltr" className="mt-2 block break-all text-fog/90">
+            <div className="word mt-6 max-w-xl rounded-2xl border border-dashed border-accent/50 bg-accent/5 p-4 text-sm">
+              <p className="font-semibold text-accent">{t('hero.handoff.title')}</p>
+              <code dir="ltr" className="mt-2 block break-all text-foreground/90">
                 {state.handoff}
               </code>
-              <a href={state.handoff} className="mt-3 inline-block rounded-full bg-cyan/15 px-4 py-2 text-cyan hover:bg-cyan/25">
+              <a href={state.handoff} className="mt-3 inline-block rounded-full bg-accent/15 px-4 py-2 text-accent hover:bg-accent/25">
                 {t('hero.handoff.open')}
               </a>
             </div>
@@ -173,12 +175,12 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
       <div
         aria-hidden
         data-bar
-        className="pointer-events-none absolute inset-x-0 top-0 z-(--z-bars) h-[11vh] origin-top bg-black motion-reduce:hidden max-md:hidden"
+        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[11vh] origin-top bg-black motion-reduce:hidden max-md:hidden"
       />
       <div
         aria-hidden
         data-bar
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-(--z-bars) h-[11vh] origin-bottom bg-black motion-reduce:hidden max-md:hidden"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-[11vh] origin-bottom bg-black motion-reduce:hidden max-md:hidden"
       />
 
       <div data-hero-chrome className="absolute inset-x-0 bottom-0 hidden items-center justify-between px-14 pb-8 md:flex">
@@ -188,7 +190,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
             <button
               type="button"
               onClick={convo.back}
-              className="flex cursor-pointer items-center gap-2 rounded-full border border-line px-4 py-2 text-xs text-fog/80 transition hover:text-fog"
+              className="flex cursor-pointer items-center gap-2 rounded-full border border-border px-4 py-2 text-xs text-foreground/80 transition hover:text-foreground"
             >
               <Icon name="restart" className="size-4" /> {t('hero.restart')}
             </button>
@@ -196,7 +198,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
           <button
             type="button"
             onClick={() => scrollToId('more')}
-            className="flex cursor-pointer items-center gap-2 text-sm text-mute transition hover:text-fog"
+            className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
           >
             {t('hero.continue')}
             <Icon name="down" className="size-4 animate-bounce" />

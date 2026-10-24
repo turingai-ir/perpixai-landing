@@ -13,17 +13,17 @@ export function Faq() {
           <span className="eyebrow mb-5">{t('faq.eyebrow')}</span>
           <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-4xl leading-[1.2] md:text-6xl" />
         </div>
-        <div className="border-t border-line">
+        <div className="border-t border-border">
           {items.map((f) => (
-            <details key={f.q} className="group border-b border-line">
+            <details key={f.q} className="group border-b border-border">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-semibold transition hover:text-white [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <Icon
                   name="plus"
-                  className="size-6 shrink-0 text-purple transition duration-500 ease-cine group-open:rotate-45 group-open:text-cyan"
+                  className="size-6 shrink-0 text-purple transition duration-500 ease-cine group-open:rotate-45 group-open:text-accent"
                 />
               </summary>
-              <p className="-mt-2 pb-6 leading-8 text-mute">{f.a}</p>
+              <p className="-mt-2 pb-6 leading-8 text-muted-foreground">{f.a}</p>
             </details>
           ))}
         </div>

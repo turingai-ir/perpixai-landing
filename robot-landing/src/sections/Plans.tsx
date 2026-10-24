@@ -16,7 +16,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
   useOffscreenPause(root)
   return (
     <section ref={root} id="plans" className="relative px-5 py-28 md:px-14 md:py-36">
-      <div aria-hidden className="absolute inset-x-0 top-0 h-2/3 aura-plans" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-2/3 bg-radial-[ellipse_50%_60%_at_50%_0%] from-purple/15 to-transparent" />
       <div className="relative mx-auto max-w-6xl">
         <header className="mb-16 flex flex-col items-center text-center">
           <div className="mb-6 inline-flex flex-col gap-1.5">
@@ -25,20 +25,25 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
             <div className="bulbs w-full" style={{ animationDelay: '-0.8s' }} />
           </div>
           <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-7xl" />
-          <p className="mt-5 max-w-xl text-lg leading-8 text-mute">{t('plans.body')}</p>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">{t('plans.body')}</p>
         </header>
 
         <ul className="grid items-start gap-8 md:grid-cols-3 md:gap-6">
           {plans.map((p, i) => (
             <li key={p.id} data-reveal className={clsx('relative', p.featured && 'md:-mt-6')}>
-              {p.featured && <div aria-hidden className="absolute -inset-3 rounded-4xl blur-2xl aura-featured" />}
+              {p.featured && (
+                <div aria-hidden className="absolute -inset-3 rounded-4xl bg-radial from-primary/33 to-transparent to-70% blur-2xl" />
+              )}
               <article
-                className={clsx('ticket relative flex flex-col rounded-3xl', p.featured ? 'surface-featured' : 'bg-ink-3')}
+                className={clsx(
+                  'ticket relative flex flex-col rounded-3xl',
+                  p.featured ? 'bg-linear-160 from-featured-start via-featured-mid via-55% to-featured-end' : 'bg-muted',
+                )}
                 style={{ ['--tear' as string]: 'calc(100% - 97px)' }}
               >
                 {p.featured && <div aria-hidden className="bg-brand absolute inset-x-0 top-0 h-1 rounded-t-3xl" />}
                 <div className="flex flex-col p-7 pb-6 md:p-8">
-                  <div className="flex items-center justify-between text-xs text-dim">
+                  <div className="flex items-center justify-between text-xs text-subtle-foreground">
                     <span>{t('plans.ticket')}</span>
                     <span dir="ltr" className="font-mono">
                       № {String(i + 1).padStart(3, '0')}
@@ -52,13 +57,13 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                       </span>
                     )}
                   </div>
-                  <p className="mt-2 min-h-[3.4rem] leading-7 text-mute">{t(`plans.items.${p.id}.tagline`)}</p>
+                  <p className="mt-2 min-h-[3.4rem] leading-7 text-muted-foreground">{t(`plans.items.${p.id}.tagline`)}</p>
 
                   <div className="mt-5 min-h-[1.6rem]">
                     {p.was && (
                       <span className="flex items-center gap-2 text-sm">
-                        <s className="text-dim">{formatNumber(p.was)}</s>
-                        <span className="rounded-full bg-magenta/20 px-2 py-0.5 text-xs font-bold text-magenta-soft">
+                        <s className="text-subtle-foreground">{formatNumber(p.was)}</s>
+                        <span className="rounded-full bg-primary/20 px-2 py-0.5 text-xs font-bold text-primary-soft">
                           {t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off!) }) })}
                         </span>
                       </span>
@@ -66,13 +71,13 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                   </div>
                   <p className="mt-1 flex items-baseline gap-2 font-poster leading-none">
                     <span className="text-5xl md:text-price">{formatNumber(p.price)}</span>
-                    <span className="text-xl text-mute">{t('plans.currency')}</span>
+                    <span className="text-xl text-muted-foreground">{t('plans.currency')}</span>
                   </p>
 
                   <ul className="mt-7 space-y-3">
                     {t(`plans.items.${p.id}.features`, { returnObjects: true, tokens: formatNumber(p.tokens) }).map((f) => (
-                      <li key={f} className="flex gap-3 text-body-sm leading-7 text-fog/90">
-                        <Icon name="check" className="mt-1.5 size-4 shrink-0 text-cyan" />
+                      <li key={f} className="flex gap-3 text-body-sm leading-7 text-foreground/90">
+                        <Icon name="check" className="mt-1.5 size-4 shrink-0 text-accent" />
                         {f}
                       </li>
                     ))}
@@ -80,9 +85,9 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                 </div>
 
                 {/* Tear line + stub */}
-                <div aria-hidden className="mx-6 border-t-2 border-dashed border-fog/15" />
+                <div aria-hidden className="mx-6 border-t-2 border-dashed border-foreground/15" />
                 <div className="flex h-24 items-center justify-between gap-4 px-7 md:px-8">
-                  <p className="flex items-center gap-2 text-sm font-semibold text-cyan">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-accent">
                     <Icon name="gift" className="size-5" />
                     {t('plans.tokens', { tokens: formatNumber(p.tokens) })}
                   </p>
@@ -91,7 +96,9 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                     onClick={() => onChoose(p.id)}
                     className={clsx(
                       'cursor-pointer rounded-full px-5 py-3 text-sm font-bold transition duration-300 hover:-translate-y-0.5',
-                      p.featured ? 'bg-brand text-white shadow-cta' : 'border border-fog/25 text-fog hover:border-fog/50 hover:bg-white/5',
+                      p.featured
+                        ? 'bg-brand text-primary-foreground shadow-cta'
+                        : 'border border-foreground/25 text-foreground hover:border-foreground/50 hover:bg-white/5',
                     )}
                   >
                     {t('plans.choose', { name: t(`plans.items.${p.id}.name`) })}
@@ -101,7 +108,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
             </li>
           ))}
         </ul>
-        <p className="mt-10 text-center text-mute">{t('plans.note')}</p>
+        <p className="mt-10 text-center text-muted-foreground">{t('plans.note')}</p>
       </div>
     </section>
   )

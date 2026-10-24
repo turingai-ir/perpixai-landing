@@ -43,13 +43,17 @@ export function DemoScreen({ demo, developing }: { demo: Demo; developing: boole
           />
         )}
         {(developing || (missing && process.env.NODE_ENV === 'development')) && (
-          <div className="absolute inset-0 grid place-items-center aura-demo">
+          <div className="absolute inset-0 grid place-items-center">
+            <div className="absolute inset-0 bg-radial-[circle_at_30%_30%] from-primary/33 to-transparent to-50%" />
+            <div className="absolute inset-0 bg-radial-[circle_at_70%_70%] from-accent/33 to-transparent to-55%" />
             <div className="absolute inset-0 scanlines opacity-40" />
-            <span className="relative text-sm text-fog/80">{developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}</span>
+            <span className="relative text-sm text-foreground/80">
+              {developing ? t('demo.developing') : t('demo.missing', { id: demo.id })}
+            </span>
           </div>
         )}
       </div>
-      <figcaption className="mt-3 text-sm leading-7 text-mute">
+      <figcaption className="mt-3 text-sm leading-7 text-muted-foreground">
         <span className="text-brand font-semibold">{t('demo.promptLabel')}</span>
         {td(`${demo.id}.prompt`)}
       </figcaption>
