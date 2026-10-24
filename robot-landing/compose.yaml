@@ -1,8 +1,8 @@
 x-logging: &default-logging
   driver: json-file
   options:
-    max-size: "10m"
-    max-file: "3"
+    max-size: '10m'
+    max-file: '3'
 
 services:
   robot-landing:
@@ -27,10 +27,9 @@ services:
       - ALL
     pids_limit: 128
     mem_limit: 256m
-    cpus: "0.20"
+    cpus: '0.20'
     healthcheck:
-      test:
-        ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz | grep -q ok"]
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:8080/healthz | grep -q ok']
       interval: 30s
       timeout: 3s
       retries: 3
@@ -44,4 +43,3 @@ services:
 networks:
   perpix:
     external: true
-

@@ -8,7 +8,12 @@ const noSubscribe = () => () => {}
 const BUILD_YEAR = Number(process.env.NEXT_PUBLIC_BUILD_YEAR)
 
 /** The current year, without a hydration mismatch: the server snapshot is the build year. */
-const useCurrentYear = () => useSyncExternalStore(noSubscribe, () => new Date().getFullYear(), () => BUILD_YEAR)
+const useCurrentYear = () =>
+  useSyncExternalStore(
+    noSubscribe,
+    () => new Date().getFullYear(),
+    () => BUILD_YEAR,
+  )
 
 export function Footer() {
   const year = useCurrentYear()
@@ -22,9 +27,15 @@ export function Footer() {
           <span className="text-mute">· {t('footer.tagline')}</span>
         </a>
         <nav aria-label={t('footer.navLabel')} className="flex flex-wrap gap-6">
-          <a href="#plans" className="transition hover:text-fog">{t('footer.plans')}</a>
-          <a href="#faq" className="transition hover:text-fog">{t('footer.faq')}</a>
-          <a href={config.authUrl} className="transition hover:text-fog">{t('footer.login')}</a>
+          <a href="#plans" className="transition hover:text-fog">
+            {t('footer.plans')}
+          </a>
+          <a href="#faq" className="transition hover:text-fog">
+            {t('footer.faq')}
+          </a>
+          <a href={config.authUrl} className="transition hover:text-fog">
+            {t('footer.login')}
+          </a>
         </nav>
       </div>
       <div className="mt-8 flex flex-col gap-2 text-xs text-mute/70 md:flex-row md:justify-between">

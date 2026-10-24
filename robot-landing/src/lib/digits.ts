@@ -3,8 +3,7 @@ const AR = '٠١٢٣٤٥٦٧٨٩'
 
 export const toFa = (v: string | number) => String(v).replace(/\d/g, (d) => FA[Number(d)])
 
-export const toEn = (v: string) =>
-  v.replace(/[۰-۹]/g, (d) => String(FA.indexOf(d))).replace(/[٠-٩]/g, (d) => String(AR.indexOf(d)))
+export const toEn = (v: string) => v.replace(/[۰-۹]/g, (d) => String(FA.indexOf(d))).replace(/[٠-٩]/g, (d) => String(AR.indexOf(d)))
 
 /** Normalises Persian/Arabic digits, +98 / 0098 prefixes and spaces into 09xxxxxxxxx. */
 export function normalizeIranMobile(raw: string): string | null {

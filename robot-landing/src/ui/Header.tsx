@@ -30,7 +30,7 @@ export function Header({ onSignup, onRestart }: { onSignup: () => void; onRestar
               <a
                 href={`#${id}`}
                 onClick={(e) => (e.preventDefault(), scrollToId(id))}
-                className="relative py-2 transition hover:text-fog after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-fog after:transition-transform after:duration-500 hover:after:scale-x-100"
+                className="relative py-2 transition after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-fog after:transition-transform after:duration-500 hover:text-fog hover:after:scale-x-100"
               >
                 {t(`header.nav.${id}`)}
               </a>

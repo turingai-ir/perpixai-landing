@@ -54,7 +54,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           {/* Without JS the full-screen preloader would never open: hide it (and the letterbox bars) and keep login one tap away. */}
           <style dangerouslySetInnerHTML={{ __html: '[data-preloader],[data-bar]{display:none!important}' }} />
-          <p style={{ position: 'relative', zIndex: 80, margin: 0, padding: '1rem', textAlign: 'center', background: '#14111c', color: '#f5efe4' }}>
+          <p
+            style={{
+              position: 'relative',
+              zIndex: 80,
+              margin: 0,
+              padding: '1rem',
+              textAlign: 'center',
+              background: '#14111c',
+              color: '#f5efe4',
+            }}
+          >
             {i18n.t('noscript.text', { lng: locale })}{' '}
             <a href={config.authUrl} style={{ color: '#06a1e9' }}>
               {i18n.t('noscript.login', { lng: locale })}

@@ -6,6 +6,9 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 
 ## Commands
 - `pnpm dev` (Next.js, :5176) / `pnpm build` (typecheck + static export to `out/`)
+- `pnpm check` = typecheck + ESLint (`eslint-config-next`, flat config) + Prettier check. `pnpm lint:fix` / `pnpm format` fix them.
+  Prettier: no semicolons, single quotes, 140 columns, Tailwind class sorting. Keep `pnpm check` clean before committing.
+  Rules are relaxed only where justified in `eslint.config.mjs` (`<img>` under static export; three.js objects are mutable).
 - Next.js App Router with `output: 'export'`: the page is pre-rendered to HTML at build time (SEO) and hydrated on the
   client, then nginx serves `out/`. `src/app/layout.tsx` holds the metadata, JSON-LD and `<html lang=fa dir=rtl>`;
   `robots.ts` / `sitemap.ts` generate those files. Env vars are `NEXT_PUBLIC_*` (inlined at build, so Docker build args).

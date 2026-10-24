@@ -21,7 +21,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
         <header className="mb-16 flex flex-col items-center text-center">
           <div className="mb-6 inline-flex flex-col gap-1.5">
             <div className="bulbs w-full" />
-            <span className="font-poster neon px-4 text-3xl md:text-4xl">{t('plans.box')}</span>
+            <span className="neon px-4 font-poster text-3xl md:text-4xl">{t('plans.box')}</span>
             <div className="bulbs w-full" style={{ animationDelay: '-0.8s' }} />
           </div>
           <SplitHeading lines={title} text={title.join(' ')} className="font-poster text-5xl leading-[1.15] md:text-7xl" />
@@ -31,7 +31,12 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
         <ul className="grid items-start gap-8 md:grid-cols-3 md:gap-6">
           {plans.map((p, i) => (
             <li key={p.id} data-reveal className={clsx('relative', p.featured && 'md:-mt-6')}>
-              {p.featured && <div aria-hidden className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,#d92dd455,transparent_70%)] blur-2xl" />}
+              {p.featured && (
+                <div
+                  aria-hidden
+                  className="absolute -inset-3 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,#d92dd455,transparent_70%)] blur-2xl"
+                />
+              )}
               <article
                 className={clsx(
                   'ticket relative flex flex-col rounded-3xl',
@@ -43,12 +48,16 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                 <div className="flex flex-col p-7 pb-6 md:p-8">
                   <div className="flex items-center justify-between text-xs text-dim">
                     <span>{t('plans.ticket')}</span>
-                    <span dir="ltr" className="font-mono">№ {String(i + 1).padStart(3, '0')}</span>
+                    <span dir="ltr" className="font-mono">
+                      № {String(i + 1).padStart(3, '0')}
+                    </span>
                   </div>
                   <div className="mt-5 flex items-center justify-between">
                     <h3 className={clsx('font-poster text-4xl', p.featured && 'neon')}>{t(`plans.items.${p.id}.name`)}</h3>
                     {p.featured && (
-                      <span className="rotate-[-6deg] rounded-md border-2 border-amber/80 px-2.5 py-0.5 text-sm font-bold text-amber">{t('plans.recommended')}</span>
+                      <span className="rotate-[-6deg] rounded-md border-2 border-amber/80 px-2.5 py-0.5 text-sm font-bold text-amber">
+                        {t('plans.recommended')}
+                      </span>
                     )}
                   </div>
                   <p className="mt-2 min-h-[3.4rem] leading-7 text-mute">{t(`plans.items.${p.id}.tagline`)}</p>
@@ -57,11 +66,13 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                     {p.was && (
                       <span className="flex items-center gap-2 text-sm">
                         <s className="text-dim">{formatNumber(p.was)}</s>
-                        <span className="rounded-full bg-magenta/20 px-2 py-0.5 text-xs font-bold text-[#f08cec]">{t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off!) }) })}</span>
+                        <span className="rounded-full bg-magenta/20 px-2 py-0.5 text-xs font-bold text-[#f08cec]">
+                          {t('plans.percentOff', { percent: tu('percent', { n: formatNumber(p.off!) }) })}
+                        </span>
                       </span>
                     )}
                   </div>
-                  <p className="font-poster mt-1 flex items-baseline gap-2 leading-none">
+                  <p className="mt-1 flex items-baseline gap-2 font-poster leading-none">
                     <span className="text-5xl md:text-[3.4rem]">{formatNumber(p.price)}</span>
                     <span className="text-xl text-mute">{t('plans.currency')}</span>
                   </p>
@@ -88,7 +99,9 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                     onClick={() => onChoose(p.id)}
                     className={clsx(
                       'cursor-pointer rounded-full px-5 py-3 text-sm font-bold transition duration-300 hover:-translate-y-0.5',
-                      p.featured ? 'bg-brand text-white shadow-[0_12px_36px_-10px_#d92dd4]' : 'border border-fog/25 text-fog hover:border-fog/50 hover:bg-white/5',
+                      p.featured
+                        ? 'bg-brand text-white shadow-[0_12px_36px_-10px_#d92dd4]'
+                        : 'border border-fog/25 text-fog hover:border-fog/50 hover:bg-white/5',
                     )}
                   >
                     {t('plans.choose', { name: t(`plans.items.${p.id}.name`) })}

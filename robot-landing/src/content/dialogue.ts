@@ -9,9 +9,26 @@ import { i18n } from '@/i18n'
 export type Line = { id: string; text: string; direction: string }
 
 type LineId =
-  | 'intro-1' | 'intro-2' | 'greet-1' | 'greet-2' | 'greet-3' | 'back-1' | 'back-2' | 'login-1' | 'new-1'
-  | 'phone-1' | 'phone-bad' | 'signup-1' | 'demo-ask' | 'compute-1' | 'compute-2' | 'reveal-1' | 'reveal-2'
-  | 'scroll-1' | 'nudge-1' | 'nudge-2'
+  | 'intro-1'
+  | 'intro-2'
+  | 'greet-1'
+  | 'greet-2'
+  | 'greet-3'
+  | 'back-1'
+  | 'back-2'
+  | 'login-1'
+  | 'new-1'
+  | 'phone-1'
+  | 'phone-bad'
+  | 'signup-1'
+  | 'demo-ask'
+  | 'compute-1'
+  | 'compute-2'
+  | 'reveal-1'
+  | 'reveal-2'
+  | 'scroll-1'
+  | 'nudge-1'
+  | 'nudge-2'
 
 type Script = { id: LineId; direction: string }
 

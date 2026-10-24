@@ -11,14 +11,23 @@ export function Finale({ onSignup }: { onSignup: () => void }) {
   const title = t('finale.title', { returnObjects: true })
   return (
     <section className="relative overflow-hidden px-5 pt-28 md:px-14 md:pt-36">
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4 bg-[radial-gradient(ellipse_55%_70%_at_50%_100%,#863ed340,transparent_70%)]" />
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-3/4 bg-[radial-gradient(ellipse_55%_70%_at_50%_100%,#863ed340,transparent_70%)]"
+      />
       <div className="relative mx-auto flex max-w-5xl flex-col items-center text-center">
-        <p data-reveal className="font-poster neon text-[clamp(5rem,18vw,13rem)] leading-none">{t('finale.end')}</p>
-        <p data-reveal className="mt-2 text-sm tracking-wide text-dim">{t('finale.endNote')}</p>
-        <h2 data-reveal className="font-poster mt-12 text-4xl leading-[1.25] md:text-6xl">
+        <p data-reveal className="neon font-poster text-[clamp(5rem,18vw,13rem)] leading-none">
+          {t('finale.end')}
+        </p>
+        <p data-reveal className="mt-2 text-sm tracking-wide text-dim">
+          {t('finale.endNote')}
+        </p>
+        <h2 data-reveal className="mt-12 font-poster text-4xl leading-[1.25] md:text-6xl">
           {title[0]} <span className="text-brand">{title[1]}</span>
         </h2>
-        <p data-reveal className="mt-5 max-w-md text-lg leading-8 text-mute">{t('finale.body')}</p>
+        <p data-reveal className="mt-5 max-w-md text-lg leading-8 text-mute">
+          {t('finale.body')}
+        </p>
         <div data-reveal className="mt-10 flex flex-wrap justify-center gap-3">
           <button
             type="button"

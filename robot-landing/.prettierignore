@@ -1,0 +1,11 @@
+.next
+out
+dist
+node_modules
+pnpm-lock.yaml
+next-env.d.ts
+public
+docs
+*.md
+.claude
+src/ui/icons.data.ts

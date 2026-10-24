@@ -17,7 +17,10 @@ export function FilmFx() {
         className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,transparent_55%,#000_120%)] will-change-[opacity]"
         style={{ animation: 'flicker 5s steps(1) infinite' }}
       />
-      <div className="absolute inset-y-0 left-[63%] w-px bg-fog/60 opacity-0 will-change-transform motion-reduce:hidden" style={{ animation: 'scratch 11s linear infinite' }} />
+      <div
+        className="absolute inset-y-0 left-[63%] w-px bg-fog/60 opacity-0 will-change-transform motion-reduce:hidden"
+        style={{ animation: 'scratch 11s linear infinite' }}
+      />
     </div>
   )
 }

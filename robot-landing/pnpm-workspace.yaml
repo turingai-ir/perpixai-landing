@@ -1,3 +1,7 @@
 # Static export never uses next/image optimisation, so skip sharp and its per-platform binaries.
 ignoredOptionalDependencies:
   - sharp
+
+# unrs-resolver (an eslint-config-next dependency) ships prebuilt binaries; its install script is only a fallback.
+allowBuilds:
+  unrs-resolver: false

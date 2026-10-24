@@ -43,7 +43,10 @@ body {
   margin: 0;
   background: #030205 !important;
   color: #f5efe4;
-  font: 400 1rem/1.7 'Vazirmatn Variable', system-ui, sans-serif;
+  font:
+    400 1rem/1.7 'Vazirmatn Variable',
+    system-ui,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }

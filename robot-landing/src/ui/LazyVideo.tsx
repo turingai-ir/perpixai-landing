@@ -52,16 +52,7 @@ export function LazyVideo({ id, className }: { id: string; className?: string })
 
   if (failed) return <img src={poster} alt="" loading="lazy" decoding="async" className={className} />
   return (
-    <video
-      ref={ref}
-      poster={near ? poster : undefined}
-      muted
-      loop
-      playsInline
-      preload="none"
-      className={className}
-      aria-hidden
-    >
+    <video ref={ref} poster={near ? poster : undefined} muted loop playsInline preload="none" className={className} aria-hidden>
       {near && (
         <>
           <source src={`${config.demoDir}/${id}.mp4`} type="video/mp4" />

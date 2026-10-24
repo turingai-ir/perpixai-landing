@@ -142,4 +142,3 @@ export function createOutfit({ yalda, badge: badgeText }: { yalda: boolean; badg
     },
   }
 }
-
