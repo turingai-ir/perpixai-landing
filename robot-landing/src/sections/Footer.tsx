@@ -1,9 +1,17 @@
+import { useSyncExternalStore } from 'react'
 import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
 import { localizeDigits } from '@/i18n/format'
 import { asset } from '@/lib/asset'
 
+const noSubscribe = () => () => {}
+const BUILD_YEAR = Number(process.env.NEXT_PUBLIC_BUILD_YEAR)
+
+/** The current year, without a hydration mismatch: the server snapshot is the build year. */
+const useCurrentYear = () => useSyncExternalStore(noSubscribe, () => new Date().getFullYear(), () => BUILD_YEAR)
+
 export function Footer() {
+  const year = useCurrentYear()
   const { t } = useTranslation()
   return (
     <footer className="border-t border-line px-5 pt-10 pb-28 text-sm text-mute md:px-14 md:pb-10">
@@ -20,7 +28,7 @@ export function Footer() {
         </nav>
       </div>
       <div className="mt-8 flex flex-col gap-2 text-xs text-mute/70 md:flex-row md:justify-between">
-        <span>{t('footer.copyright', { year: localizeDigits(new Date().getFullYear()) })}</span>
+        <span>{t('footer.copyright', { year: localizeDigits(year) })}</span>
         <span dir="ltr">{t('footer.icons')}</span>
       </div>
     </footer>

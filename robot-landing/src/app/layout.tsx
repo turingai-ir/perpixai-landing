@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from 'next'
+import { config } from '@/config'
+import { i18n } from '@/i18n'
 import { defaultLocale, localeMeta } from '@/i18n/config'
 import { I18nProvider } from '@/i18n/I18nProvider'
 import { SITE, getSeo } from '@/lib/seo'
@@ -49,6 +51,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       </head>
       <body>
+        <noscript>
+          {/* Without JS the full-screen preloader would never open: hide it (and the letterbox bars) and keep login one tap away. */}
+          <style dangerouslySetInnerHTML={{ __html: '[data-preloader],[data-bar]{display:none!important}' }} />
+          <p style={{ position: 'relative', zIndex: 80, margin: 0, padding: '1rem', textAlign: 'center', background: '#14111c', color: '#f5efe4' }}>
+            {i18n.t('noscript.text', { lng: locale })}{' '}
+            <a href={config.authUrl} style={{ color: '#06a1e9' }}>
+              {i18n.t('noscript.login', { lng: locale })}
+            </a>
+          </p>
+        </noscript>
         <I18nProvider>{children}</I18nProvider>
       </body>
     </html>

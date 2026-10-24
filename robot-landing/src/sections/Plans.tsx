@@ -67,7 +67,7 @@ export function Plans({ onChoose }: { onChoose: (planId: string) => void }) {
                   </p>
 
                   <ul className="mt-7 space-y-3">
-                    {t(`plans.items.${p.id}.features`, { returnObjects: true }).map((f) => (
+                    {t(`plans.items.${p.id}.features`, { returnObjects: true, tokens: formatNumber(p.tokens) }).map((f) => (
                       <li key={f} className="flex gap-3 text-[0.95rem] leading-7 text-fog/90">
                         <Icon name="check" className="mt-1.5 size-4 shrink-0 text-cyan" />
                         {f}

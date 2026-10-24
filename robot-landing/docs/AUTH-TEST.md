@@ -10,7 +10,7 @@ https://app.perpixai.ir/auth/login?phone=09121234567
 
 ## تست بدون تغییر کد
 
-این گزینه‌ها را به آخر آدرس لندینگ اضافه کنید، مثلاً `http://localhost:5173/?authDebug=1`:
+این گزینه‌ها را به آخر آدرس لندینگ اضافه کنید، مثلاً `http://localhost:5176/?authDebug=1`:
 
 | گزینه | کار | مقدارها |
 | --- | --- | --- |
@@ -32,4 +32,4 @@ https://app.perpixai.ir/auth/login?phone=09121234567
 
 یکی از این دو کار کافی است:
 - در `src/config.ts` مقدار `phone.param` و `phone.format` را عوض کنید، یا
-- موقع build متغیرهای `VITE_PHONE_PARAM` و `VITE_PHONE_FORMAT` را بدهید (نمونه در `.env.example`).
+- موقع build متغیرهای `NEXT_PUBLIC_PHONE_PARAM` و `NEXT_PUBLIC_PHONE_FORMAT` را بدهید (نمونه در `.env.example`).

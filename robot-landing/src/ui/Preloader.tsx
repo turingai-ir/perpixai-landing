@@ -99,6 +99,7 @@ export function Preloader({ ready, onEnter }: Props) {
   return (
     <div
       ref={root}
+      data-preloader
       role="dialog"
       aria-modal="true"
       aria-label={t('preloader.label')}

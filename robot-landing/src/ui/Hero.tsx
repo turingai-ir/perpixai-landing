@@ -1,27 +1,22 @@
-import { useCallback, useEffect, useRef, useState, type ComponentType } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { voice } from '@/audio/voice'
 import { useTranslation } from 'react-i18next'
 import { readyDemos } from '@/content/demos'
 import { useConversation } from '@/flow/useConversation'
-import { isMobile, prefersReducedMotion } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion'
 import { useOffscreenPause } from '@/lib/useOffscreenPause'
 import { StageControls } from '@/stage/controls'
-import { StageBoundary } from '@/stage/StageBoundary'
-import type { StageProps } from '@/stage/StageCanvas'
 import { Choice, Choices } from './Choice'
 import { DemoScreen } from './DemoScreen'
 import { PhoneForm } from './PhoneForm'
+import { PixoStage } from './PixoStage'
 import { SoundToggle } from './SoundToggle'
 import { Subtitle } from './Subtitle'
 import { Icon } from './Icon'
 import { YaldaSeeds } from './YaldaSeeds'
 import { season } from '@/content/season'
 import { scrollToId } from './scroll'
-import { asset } from '@/lib/asset'
-
-const level = () => voice.level()
 
 export type HeroApi = ReturnType<typeof useConversation>
 
@@ -34,34 +29,10 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
   const characterLabel = tc('character.label', { name: characterName, title: tc('character.title') })
   const stage = useRef<StageControls | null>(null)
   if (!stage.current) stage.current = new StageControls()
-  /** The 3D scene (react-three-fiber) loads in its own chunk so the conversation renders instantly. */
-  const [Scene, setScene] = useState<ComponentType<StageProps> | null>(null)
-  const [sceneShown, setSceneShown] = useState(false)
   const convo = useConversation(stage)
   const { state } = convo
-  /** Static Pixo instead of WebGL: reduced motion, no WebGL, or a lost context. */
-  const [still, setStill] = useState(false)
   const root = useRef<HTMLElement>(null)
   useOffscreenPause(root)
-
-  const toStill = useCallback(() => setStill(true), [])
-  const showScene = useCallback(() => setSceneShown(true), [])
-
-  useEffect(() => {
-    if (prefersReducedMotion()) return setStill(true)
-    let disposed = false
-    import('@/stage/StageCanvas')
-      .then((m) => {
-        if (disposed) return
-        stage.current!.setPowered(true)
-        stage.current!.setLayout('side')
-        setScene(() => m.default)
-      })
-      .catch(toStill)
-    return () => {
-      disposed = true
-    }
-  }, [toStill])
 
   // The show starts when the visitor walks in through the preloader gate.
   useEffect(() => {
@@ -104,33 +75,7 @@ export function Hero({ onReady, entered }: { onReady: (api: HeroApi) => void; en
       />
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_32%_40%_at_14%_70%,#d92dd42e,transparent),radial-gradient(ellipse_30%_40%_at_44%_62%,#06a1e924,transparent)]" />
       {season.id === 'yalda' && <YaldaSeeds />}
-      {still && (
-        <img
-          src={asset('brand/pixo.webp')}
-          alt={characterLabel}
-          className="absolute top-0 h-[66%] w-full object-contain object-bottom [mask-image:linear-gradient(black_78%,transparent)] md:left-0 md:h-full md:w-1/2 md:[mask-image:radial-gradient(ellipse_60%_65%_at_50%_55%,black_60%,transparent)]"
-        />
-      )}
-      {Scene && !still && (
-        <div
-          role="img"
-          aria-label={characterLabel}
-          style={{ opacity: sceneShown ? 1 : 0 }}
-          className="transition-opacity duration-[1500ms] absolute inset-x-0 top-0 h-[66%] w-full [mask-image:linear-gradient(black_78%,transparent)] md:h-full md:[mask-image:none]"
-        >
-          <StageBoundary onError={toStill}>
-            <Scene
-              controls={stage.current}
-              levelSource={level}
-              lite={isMobile()}
-              yalda={season.id === 'yalda'}
-              badge={{ name: characterName, role: t('stage.badgeRole') }}
-              onContextLost={toStill}
-              onCreated={showScene}
-            />
-          </StageBoundary>
-        </div>
-      )}
+      <PixoStage controls={stage.current} label={characterLabel} badge={{ name: characterName, role: t('stage.badgeRole') }} />
 
       <div className="relative flex h-full flex-col justify-end px-5 pb-8 md:w-1/2 md:justify-center md:px-14 md:pb-0">
         <div className="bg-gradient-to-t from-ink via-ink/95 to-transparent pt-10 md:bg-none md:pt-0">
