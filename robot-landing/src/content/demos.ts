@@ -8,7 +8,7 @@ import { season } from './season'
  */
 export const demos = [
   { id: 'paykan-rain', ready: true },
-  { id: 'yalda-pomegranate', ready: true },
+  { id: 'yalda-pomegranate', ready: false }, // seasonal: flip back on for the Yalda campaign,
   { id: 'flying-carpet', ready: true },
 ] as const
 
