@@ -77,33 +77,6 @@ function readModel(v: unknown): ApiModel | null {
   }
 }
 
-const median = (xs: number[]) => {
-  const s = [...xs].sort((a, b) => a - b)
-  const m = s.length >> 1
-  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2
-}
-/** 159 → 150, 2782 → 2700, 22 → 22: a rough figure should not look precise. */
-const roughly = (n: number) => {
-  if (n < 100) return Math.floor(n)
-  const step = 10 ** (String(Math.floor(n)).length - 2)
-  return Math.floor(n / step) * step
-}
-
-/**
- * How much a plan's credit buys, as a deliberately rough number: the credit divided by the *median* starting price of the
- * models the plan unlocks (the cheapest model alone would promise far more than most people get).
- */
-function estimateCapacity(creditUsdMicro: number, allowed: Set<string>, models: ApiModel[]) {
-  const by = (kind: 'IMAGE' | 'VIDEO') =>
-    models.filter((m) => allowed.has(m.name) && m.supported_outputs.includes(kind) && m.min_cost > 0).map((m) => m.min_cost)
-  const images = by('IMAGE')
-  const videos = by('VIDEO')
-  return {
-    images: images.length ? roughly(creditUsdMicro / median(images)) : 0,
-    videos: videos.length ? roughly(creditUsdMicro / median(videos)) : 0,
-  }
-}
-
 const kindOf = (m: ApiModel): ModelKind => (m.supported_outputs.includes('VIDEO') ? 'video' : 'image')
 const INPUTS: ModelInput[] = ['TEXT', 'IMAGE', 'VIDEO', 'AUDIO']
 
@@ -138,7 +111,6 @@ export function parseLanding(
       recommended: p.is_recommended,
       free: priceToman === 0,
       modelCount: p.allowed_models.length,
-      capacity: estimateCapacity(p.balance_gift_amount_usdmicro, new Set(p.allowed_models), apiModels),
     }
   }
   const all = apiPlans.map(toPlan)

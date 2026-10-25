@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { formatNumber } from '@/i18n/format'
 import { durationLabels, primaryDuration } from '@/lib/landing/format'
 import { useLanding } from '@/lib/landing/client'
-import type { Plan } from '@/lib/landing/types'
 import { Icon } from '@/ui/Icon'
 import { SplitHeading } from '@/ui/SplitHeading'
 
@@ -19,14 +18,6 @@ export function Plans({ onChoose }: { onChoose: (planSlug: string) => void }) {
   const main = durationLabels(primaryDuration(landing), t)
   const root = useRef<HTMLElement>(null)
   useOffscreenPause(root)
-
-  /** "حدود ۱۵۰ تصویر یا ۲۲ ویدیو": only the kinds the plan can actually make. */
-  const capacity = (p: Plan) =>
-    p.capacity.images && p.capacity.videos
-      ? t('plans.capacity.both', { images: formatNumber(p.capacity.images), videos: formatNumber(p.capacity.videos) })
-      : p.capacity.images
-        ? t('plans.capacity.images', { images: formatNumber(p.capacity.images) })
-        : null
 
   return (
     <section ref={root} id="plans" data-source={landing.source} className="relative px-5 py-28 md:px-14 md:py-36">
@@ -87,7 +78,6 @@ export function Plans({ onChoose }: { onChoose: (planSlug: string) => void }) {
                     <span className="text-4xl @min-[320px]:text-5xl @min-[368px]:text-price">{formatNumber(p.priceToman)}</span>
                     <span className="text-xl text-muted-foreground">{t('plans.currency')}</span>
                   </p>
-                  {capacity(p) && <p className="mt-3 text-sm text-accent">{capacity(p)}</p>}
 
                   <ul className="mt-6 space-y-3">
                     {p.features.map((f) => (
@@ -133,12 +123,7 @@ export function Plans({ onChoose }: { onChoose: (planSlug: string) => void }) {
               <p className="text-sm text-muted-foreground">{t('plans.free.lead')}</p>
               <p className="mt-1 font-poster text-3xl">{freePlan.name}</p>
               <p className="mt-1 text-sm text-accent">
-                {[
-                  t('plans.free.meta', { credits: formatNumber(freePlan.credits), models: formatNumber(freePlan.modelCount) }),
-                  capacity(freePlan),
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
+                {t('plans.free.meta', { credits: formatNumber(freePlan.credits), models: formatNumber(freePlan.modelCount) })}
               </p>
             </div>
             <button
@@ -152,7 +137,6 @@ export function Plans({ onChoose }: { onChoose: (planSlug: string) => void }) {
         )}
 
         <p className="mt-10 text-center text-muted-foreground">{t('plans.note', { noun: main.noun })}</p>
-        <p className="mx-auto mt-3 max-w-xl text-center text-sm text-subtle-foreground">{t('plans.capacity.note')}</p>
       </div>
     </section>
   )
