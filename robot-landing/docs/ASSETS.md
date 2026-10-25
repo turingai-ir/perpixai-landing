@@ -15,7 +15,7 @@
 Cinematic night shot in Tehran: a vintage 1970s Iranian Paykan sedan, cream-white, drives slowly toward the camera down a narrow rain-soaked street. Neon signs in magenta and electric blue reflect in deep puddles; raindrops streak through the headlight beams. Low-angle tracking shot, shallow depth of field, anamorphic lens flares, subtle film grain, moody magenta-and-teal color grade. Milad Tower glows faintly through the mist in the background. Slow, smooth dolly-in. No text, no subtitles, no logos. 8 seconds, 16:9.
 ```
 
-### `yalda-pomegranate.mp4` — اناری که شب یلدا ستاره می‌شود
+### `yalda-pomegranate.mp4` — اناری که ستاره می‌شود
 ```
 Macro cinematic shot of a Yalda night table: candlelight, an open book of Hafez poetry, nuts and watermelon slices softly out of focus. A ripe red pomegranate slowly splits open in slow motion; its glowing ruby seeds float upward and transform into twinkling stars drifting into a deep indigo night sky. Warm amber candlelight blending into a magical magenta and blue glow, shallow depth of field, slow push-in, dreamy and emotional. No text, no subtitles, no people. 8 seconds, 16:9.
 ```

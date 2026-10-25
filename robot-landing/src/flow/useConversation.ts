@@ -85,11 +85,12 @@ export function useConversation(stage: StageControls) {
     if (current(id)) await say('greetNew', 'greet')
   }, [say, stage])
 
-  const toLogin = useCallback(async () => {
-    const id = begin()
+  const toLogin = useCallback(() => {
+    begin()
     track('choose_login')
-    await say('toLogin', 'login')
-    if (current(id)) go(loginUrl())
+    // Leave right away: the line plays while the page changes, nobody waits for speech to log in.
+    void say('toLogin', 'login')
+    go(loginUrl())
   }, [begin, say, go])
 
   const asNewcomer = useCallback(() => {
@@ -106,8 +107,8 @@ export function useConversation(stage: StageControls) {
   }, [begin, say])
 
   const submitPhone = useCallback(
-    async (raw: string) => {
-      const id = begin()
+    (raw: string) => {
+      begin()
       const phone = normalizeIranMobile(raw)
       if (!phone) {
         track('phone_invalid')
@@ -115,8 +116,8 @@ export function useConversation(stage: StageControls) {
       }
       track('signup_redirect', { method: 'phone' })
       const url = signupUrl(phone)
-      await say('toSignup', 'signup', { phoneError: false })
-      if (current(id)) go(url)
+      void say('toSignup', 'signup', { phoneError: false })
+      go(url)
     },
     [begin, say, go],
   )

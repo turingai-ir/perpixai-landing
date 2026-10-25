@@ -38,7 +38,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
   arcs), `character/outfit.ts` (usher's velvet jacket, epaulettes, neon bow tie, badge; Yalda scarf + pomegranate brooch),
   `character/body.ts`, `character/cables.ts`
 - `src/content/season.ts` (copy in `season.json`): seasonal dressing (`season = seasons.yalda`); drives the scarf, the gate/marquee copy,
-  the rising pomegranate seeds (`ui/YaldaSeeds`) and which demo comes first. Set to `seasons.none` after Yalda
+  the rising pomegranate seeds (`ui/YaldaSeeds`) and which demo comes first. Set to `seasons.none` when the campaign ends (the dormant seasonal copy is neutral)
 - `src/ui/`: Preloader (leader + gate), FilmFx (grain/vignette), Hero (canvas + conversation, letterbox intro, static `pixo.webp` fallback), Subtitle, Choice, PhoneForm,
   DemoScreen, Header, StickyCta, `SplitHeading` (accessible word reveal), `LazyVideo` (plays only in view), `Icon` (Solar subset)
 - `src/sections/`: Film (pinned prompt→film scrub), Reel (horizontal film strip of the demo clips), Tools, Plans
@@ -50,7 +50,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 "Cinema Perpix": an old Tehran picture palace re-wired with the logo's neon. Black ground (#030205), warm
 projector-white type, Lalezar (`font-poster`) for poster headings, Vazirmatn for reading, neon (`.neon`) only on
 things that emit light, tungsten `.bulbs` for marquee signs (max a few per page), plans as `.ticket`s.
-Flow: film-leader preloader → "click to start" gate (unlocks sound + one projector clack; no continuous background audio) → iris → hero.
+Flow: film-leader preloader (the gate opens as soon as the first scene is ready, no fixed countdown) → "click to start" gate (unlocks sound + one projector clack; no continuous background audio) → iris → hero.
 
 Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key in `App.tsx`). Pinned sections
 (Film, Reel) render inside a stable wrapper `<div>` because ScrollTrigger re-parents the pinned `<section>`.
@@ -134,7 +134,9 @@ scenes start at `lg` (1024), not `md`; `md:` is only for spacing/type bumps. Two
 
 ## Conventions
 - Brand colours come from the logo (see Theme): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
-- Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away.
+- Every sign-up button routes to Pixo's inline phone form (`App.signup`). Keep login one tap away. Login/sign-up redirect immediately; Pixo's line is not awaited.
+- nginx security headers live once in `security-headers.conf` (included by every location). `/audio` and `/demo` revalidate (`no-cache` + ETag) because file names are not hashed.
+- `compose.yaml` builds with `LANDING_DATA_STRICT=1` by default (stale prices fail the build); set it to `0` for a build without egress.
 - Track funnel steps with `track()` (`lib/analytics.ts`, pushes to `dataLayer`).
 - Never split Persian text below the word level. Use logical (`ps-`/`pe-`) spacing.
 - GSAP in components goes through `useGSAP` (`@gsap/react`): it scopes selectors and reverts tweens/ScrollTriggers on unmount;

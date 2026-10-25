@@ -52,13 +52,13 @@ export function Preloader({ ready, onEnter }: Props) {
         const tl = gsap.timeline({
           repeat: -1,
           onRepeat: () => {
-            if (countRef.current <= 1 && loaded) {
+            if (loaded) {
               tl.kill()
               setProgress(100)
               setGate(true)
               return
             }
-            // Still loading at "1": loop the last numbers rather than freeze.
+            // Still loading: loop the numbers rather than freeze (once everything is ready the gate opens at the next frame of the sweep).
             countRef.current = countRef.current <= 1 ? 3 : countRef.current - 1
             setCount(countRef.current)
           },
