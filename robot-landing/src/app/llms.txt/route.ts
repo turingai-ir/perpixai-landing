@@ -11,7 +11,7 @@ export const dynamic = 'force-static'
 
 /** llms.txt: a plain-text summary for AI crawlers and answer engines, generated from the page's own translations and data. */
 export async function GET() {
-  const landing = await getLandingData()
+  const landing = getLandingData()
   const t = i18n.getFixedT(defaultLocale, 'seo')
   const th = i18n.getFixedT(defaultLocale, 'home')
   const { brand, description } = getSeo(landing, defaultLocale)

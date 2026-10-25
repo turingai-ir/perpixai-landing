@@ -6,7 +6,7 @@ import { THEME_COLOR, getSeo } from '@/lib/seo'
 export const dynamic = 'force-static'
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
-  const { brand, manifestName, description } = getSeo(await getLandingData())
+  const { brand, manifestName, description } = getSeo(getLandingData())
   return {
     name: manifestName,
     short_name: brand,

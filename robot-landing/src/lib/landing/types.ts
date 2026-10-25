@@ -69,7 +69,7 @@ export type LandingData = {
   freePlan: Plan | null
   /** images first, then videos; cheapest first inside each group */
   models: Model[]
-  /** where this came from: the live API at build/run time, or the committed snapshot */
+  /** 'snapshot' = baked at build time; 'live' = refreshed in the browser from the API proxy */
   source: 'live' | 'snapshot'
   fetchedAt: string
 }

@@ -69,9 +69,13 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
 Prices, credits, durations, plan copy (`meta.features`) and the 18 models come from the Perpix API, not from the repo
 (`lib/landing/`). Do not hard-code them: copy that mentions the plan length or the model count takes it from the data
 (`{{adj}}` / `{{noun}}` from `durationLabels()`, `{{models}}`).
-- **Build:** `app/page.tsx`, the layout (JSON-LD, metadata), `manifest`, `llms.txt` call `getLandingData()` (`lib/landing/server.ts`):
-  live API (`LANDING_API_URL`, default https://api.perpixai.ir, 20 s) → else the committed `src/data/landing-snapshot.json` with a
-  loud warning → `LANDING_DATA_STRICT=1` fails the build instead. Refresh the snapshot with `pnpm snapshot:landing`.
+- **Dev & build:** `pnpm dev` and `pnpm build` first run `scripts/snapshot-landing.mjs`, which refreshes
+  `src/data/landing-snapshot.json` from the API (`LANDING_API_URL`, default https://api.perpixai.ir, 10 s). The pages only read that
+  file (`getLandingData()` in `lib/landing/server.ts`: page, layout JSON-LD/metadata, `manifest`, `llms.txt`). If the API is unreachable
+  or answers with something `parseLanding()` cannot read, the existing snapshot is kept with a warning (offline dev and a Docker build
+  without egress keep working); `LANDING_DATA_STRICT=1` or `--strict` makes that an error instead (use it for release builds). The file
+  is rewritten only when plans/models changed, and is excluded from Prettier. `pnpm snapshot:landing` refreshes it by hand (strict).
+  A running `pnpm dev` reads the snapshot once: restart it to pick up a refresh. Commit the snapshot when it changes.
 - **Run:** `LandingProvider` (`lib/landing/client.tsx`) shows the baked data at once (no loading state, crawlers see real prices)
   and refreshes it after hydration from `NEXT_PUBLIC_LANDING_API_URL` (default `/api/landing`; `off` disables). Any failure keeps
   the baked data. `parseLanding()` validates, and returns null for a malformed/empty answer so bad data never replaces good data.

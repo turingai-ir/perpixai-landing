@@ -9,3 +9,4 @@ docs
 *.md
 .claude
 src/ui/icons.data.ts
+src/data/landing-snapshot.json

@@ -1,11 +1,5 @@
 export type LandingEndpoints = { plans: string; models: string }
 
-/** The Perpix API, called server-side at build time. */
-export const directEndpoints = (base: string): LandingEndpoints => ({
-  plans: `${base}/api/v1/user/subscription/plans`,
-  models: `${base}/api/v1/ai-registry/models`,
-})
-
 /** The same-origin proxy served by nginx (see nginx.conf): the browser cannot call the API directly, CORS allows only app.perpixai.ir. */
 export const proxyEndpoints = (base: string): LandingEndpoints => ({ plans: `${base}/plans`, models: `${base}/models` })
 
