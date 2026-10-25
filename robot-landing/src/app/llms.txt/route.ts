@@ -35,6 +35,9 @@ ${landing.models.map((m) => `- ${t('llms.model', { name: m.name, owner: m.owner,
 ## ${t('llms.links')}
 - [${t('llms.home')}](${SITE}/): ${t('llms.homeNote')}
 - [${t('llms.login')}](${config.authUrl}): ${t('llms.loginNote')}
+- [${t('llms.terms')}](${SITE}/terms/): ${t('llms.termsNote')}
+- [${t('llms.privacy')}](${SITE}/privacy/): ${t('llms.privacyNote')}
+- [${t('llms.contact')}](${SITE}/contact/): ${t('llms.contactNote')}
 `
   return new Response(body, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } })
 }
