@@ -17,7 +17,8 @@ services:
         NEXT_PUBLIC_PHONE_PARAM: ${NEXT_PUBLIC_PHONE_PARAM:-phone}
         NEXT_PUBLIC_PHONE_FORMAT: ${NEXT_PUBLIC_PHONE_FORMAT:-local}
         LANDING_API_URL: ${LANDING_API_URL:-https://api.perpixai.ir}
-        LANDING_DATA_STRICT: ${LANDING_DATA_STRICT:-}
+        # Strict by default: a release build fails instead of silently baking stale prices. Set to 0 only for a build without egress.
+        LANDING_DATA_STRICT: ${LANDING_DATA_STRICT:-1}
         NEXT_PUBLIC_LANDING_API_URL: ${NEXT_PUBLIC_LANDING_API_URL:-/api/landing}
     read_only: true
     tmpfs:

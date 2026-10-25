@@ -71,6 +71,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
 COPY --chown=nginx:nginx landing-proxy.conf /etc/nginx/landing-proxy.conf
+COPY --chown=nginx:nginx security-headers.conf /etc/nginx/security-headers.conf
 COPY --from=builder --chown=nginx:nginx /app/out .
 
 EXPOSE 8080

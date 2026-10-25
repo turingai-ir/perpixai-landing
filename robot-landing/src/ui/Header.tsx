@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
 import { asset } from '@/lib/asset'
@@ -9,6 +10,7 @@ const nav = ['more', 'reel', 'models', 'plans', 'faq'] as const
 /** Login and sign-up stay one tap away no matter where the conversation is. */
 export function Header({ onSignup, onRestart }: { onSignup: () => void; onRestart: () => void }) {
   const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
   return (
     <header
       data-hero-chrome
@@ -53,7 +55,40 @@ export function Header({ onSignup, onRestart }: { onSignup: () => void; onRestar
         >
           {t('header.signup')}
         </button>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? t('header.menuClose') : t('header.menu')}
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex size-10 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full lg:hidden pointer-coarse:size-11"
+        >
+          <span className={`h-0.5 w-5 bg-foreground transition ${open ? 'translate-y-2 rotate-45' : ''}`} />
+          <span className={`h-0.5 w-5 bg-foreground transition ${open ? 'opacity-0' : ''}`} />
+          <span className={`h-0.5 w-5 bg-foreground transition ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+        </button>
       </div>
+      {open && (
+        <nav
+          id="mobile-nav"
+          aria-label={t('header.navLabel')}
+          className="absolute inset-x-0 top-full border-y border-border bg-background/95 px-5 py-3 backdrop-blur lg:hidden"
+        >
+          <ul>
+            {nav.map((id) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  onClick={(e) => (e.preventDefault(), setOpen(false), scrollToId(id))}
+                  className="flex items-center py-3 text-base text-foreground/90 pointer-coarse:min-h-11"
+                >
+                  {t(`header.nav.${id}`)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   )
 }
