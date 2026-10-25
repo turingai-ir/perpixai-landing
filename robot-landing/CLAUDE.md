@@ -80,8 +80,7 @@ Prices, credits, durations, plan copy (`meta.features`) and the 18 models come f
   stale on API errors, GET only, nothing forwarded from the visitor. Local `pnpm dev` has no proxy, so it shows the baked data.
   Alternative without nginx: have the backend allow `perpixai.ir` for these two public GETs.
 - **Units:** API prices are IRR (÷10 → Toman). Credits = micro-USD ÷ 1000 (plan `balance_gift_amount_usdmicro`, model `min_cost`).
-  `capacity` ("حدود ۱۵۰ تصویر یا ۲۲ ویدیو") = plan credit ÷ the **median** starting price of the models it unlocks, rounded down to 2
-  significant digits; deliberately not the cheapest model (that would promise 2,782 images on the top plan).
+  Show only what the API states: no derived promises (an earlier "about N images or videos" estimate was removed on purpose).
 - Analytics keep the legacy plan ids (`economy | creator | pro`, `free`) via `LEGACY_SLUGS`.
 - **Prices in the HTML and JSON-LD are as of the last build**: rebuild/redeploy on a schedule (or when plans change) so crawlers and
   no-JS visitors do not see stale numbers.

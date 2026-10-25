@@ -49,8 +49,6 @@ export type Plan = {
   recommended: boolean
   free: boolean
   modelCount: number
-  /** rough output the plan's credits buy at a typical model's starting price (see `estimateCapacity`) */
-  capacity: { images: number; videos: number }
 }
 
 export type Model = {
