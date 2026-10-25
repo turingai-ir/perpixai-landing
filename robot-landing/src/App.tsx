@@ -17,7 +17,10 @@ import { config } from '@/config'
 import { Film } from '@/sections/Film'
 import { Reel } from '@/sections/Reel'
 import { Tools } from '@/sections/Tools'
+import { Models } from '@/sections/Models'
 import { Plans } from '@/sections/Plans'
+import { LandingProvider } from '@/lib/landing/client'
+import type { LandingData } from '@/lib/landing/types'
 import { Faq } from '@/sections/Faq'
 import { Finale } from '@/sections/Finale'
 import { Footer } from '@/sections/Footer'
@@ -48,7 +51,7 @@ const firstScene = () =>
 /** Started at module load in the browser (as before), never during server pre-rendering. */
 const firstSceneReady: Promise<unknown> = typeof window === 'undefined' ? new Promise(() => {}) : firstScene()
 
-export function App() {
+export function App({ landing }: { landing: LandingData }) {
   const { t } = useTranslation()
   const api = useRef<HeroApi | null>(null)
   const [entered, setEntered] = useState(false)
@@ -135,7 +138,7 @@ export function App() {
   }, [])
 
   return (
-    <>
+    <LandingProvider initial={landing}>
       <a
         href="#more"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-50 focus:rounded-full focus:bg-background focus:px-4 focus:py-2"
@@ -151,12 +154,13 @@ export function App() {
         <Film />
         <Reel onMake={(demo) => signup('reel', { demo })} />
         <Tools />
+        <Models />
         <Plans onChoose={(plan) => signup('plan', { plan })} />
         <Faq />
         <Finale onSignup={() => signup('finale')} />
       </main>
       <Footer />
       <StickyCta onSignup={() => signup('sticky')} />
-    </>
+    </LandingProvider>
   )
 }

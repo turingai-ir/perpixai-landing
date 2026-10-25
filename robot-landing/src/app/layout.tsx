@@ -3,13 +3,14 @@ import { config } from '@/config'
 import { i18n } from '@/i18n'
 import { defaultLocale, localeMeta } from '@/i18n/config'
 import { I18nProvider } from '@/i18n/I18nProvider'
+import { getLandingData } from '@/lib/landing/server'
 import { SITE, THEME_COLOR, getSeo } from '@/lib/seo'
 import '@/styles/globals.css'
 
 const locale = defaultLocale
 
-export function generateMetadata(): Metadata {
-  const { title, description, brand, keywords } = getSeo(locale)
+export async function generateMetadata(): Promise<Metadata> {
+  const { title, description, brand, keywords } = getSeo(await getLandingData(), locale)
   const meta = localeMeta[locale]
   const ogImage = { url: '/brand/og.jpg', width: 1200, height: 630, alt: title }
   return {
@@ -43,8 +44,8 @@ export const viewport: Viewport = {
   colorScheme: 'dark',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { jsonLd } = getSeo(locale)
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { jsonLd } = getSeo(await getLandingData(), locale)
   return (
     <html lang={locale} dir={localeMeta[locale].dir}>
       <head>

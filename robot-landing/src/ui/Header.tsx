@@ -4,7 +4,7 @@ import { asset } from '@/lib/asset'
 import { track } from '@/lib/analytics'
 import { scrollToId } from './scroll'
 
-const nav = ['more', 'reel', 'plans', 'faq'] as const
+const nav = ['more', 'reel', 'models', 'plans', 'faq'] as const
 
 /** Login and sign-up stay one tap away no matter where the conversation is. */
 export function Header({ onSignup, onRestart }: { onSignup: () => void; onRestart: () => void }) {

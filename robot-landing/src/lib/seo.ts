@@ -1,7 +1,9 @@
 import { demos } from '@/content/demos'
-import { plans } from '@/content/sections'
 import { defaultLocale, localeMeta, type Locale } from '@/i18n/config'
 import { i18n } from '@/i18n'
+import { formatNumber } from '@/i18n/format'
+import { durationLabels, primaryDuration } from '@/lib/landing/format'
+import type { LandingData } from '@/lib/landing/types'
 
 export const SITE = 'https://perpixai.ir'
 
@@ -15,7 +17,7 @@ const UPLOADED = '2026-10-23'
 const toRial = (toman: number) => String(toman * 10)
 
 /** All SEO copy for a locale, read from the `seo`/`home`/`demos` translation namespaces. */
-export function getSeo(locale: Locale = defaultLocale) {
+export function getSeo(landing: LandingData, locale: Locale = defaultLocale) {
   const t = i18n.getFixedT(locale, 'seo')
   const th = i18n.getFixedT(locale, 'home')
   const td = i18n.getFixedT(locale, 'demos')
@@ -23,8 +25,9 @@ export function getSeo(locale: Locale = defaultLocale) {
 
   const brand = t('siteName')
   const title = t('title')
-  const description = t('description')
-  const faq = th('faq.items', { returnObjects: true })
+  const description = t('description', { models: formatNumber(landing.models.length, locale) })
+  const { noun } = durationLabels(primaryDuration(landing), th)
+  const faq = th('faq.items', { returnObjects: true, noun })
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -68,12 +71,13 @@ export function getSeo(locale: Locale = defaultLocale) {
         inLanguage: meta.hreflang,
         image: `${SITE}/brand/og.jpg`,
         publisher: { '@id': `${SITE}/#org` },
-        offers: plans.map((p) => ({
+        offers: [...(landing.freePlan ? [landing.freePlan] : []), ...landing.plans].map((p) => ({
           '@type': 'Offer',
-          name: th(`plans.items.${p.id}.name`),
-          description: th(`plans.items.${p.id}.tagline`),
-          price: toRial(p.price),
+          name: p.name,
+          description: p.tagline,
+          price: toRial(p.priceToman),
           priceCurrency: 'IRR',
+          eligibleDuration: { '@type': 'QuantitativeValue', value: p.durationDays, unitCode: 'DAY' },
           url: `${SITE}/#plans`,
           availability: 'https://schema.org/InStock',
         })),

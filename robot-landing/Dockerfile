@@ -47,6 +47,16 @@ ARG NEXT_PUBLIC_PERPIX_APP_URL
 ARG NEXT_PUBLIC_PHONE_PARAM
 ARG NEXT_PUBLIC_PHONE_FORMAT
 
+# Plans and models are fetched from the API during the build and baked into the pages; src/data/landing-snapshot.json is the
+# fallback when the API is unreachable (set LANDING_DATA_STRICT=1 to fail the build instead). The browser refreshes them from
+# NEXT_PUBLIC_LANDING_API_URL, a same-origin proxy served by nginx (see nginx.conf).
+ARG LANDING_API_URL
+ARG LANDING_DATA_STRICT
+ARG NEXT_PUBLIC_LANDING_API_URL
+ENV LANDING_API_URL=${LANDING_API_URL} \
+    LANDING_DATA_STRICT=${LANDING_DATA_STRICT} \
+    NEXT_PUBLIC_LANDING_API_URL=${NEXT_PUBLIC_LANDING_API_URL}
+
 ENV NEXT_PUBLIC_PERPIX_APP_URL=${NEXT_PUBLIC_PERPIX_APP_URL} \
     NEXT_PUBLIC_PHONE_PARAM=${NEXT_PUBLIC_PHONE_PARAM} \
     NEXT_PUBLIC_PHONE_FORMAT=${NEXT_PUBLIC_PHONE_FORMAT}
@@ -60,6 +70,7 @@ USER nginx
 WORKDIR /usr/share/nginx/html
 
 COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx landing-proxy.conf /etc/nginx/landing-proxy.conf
 COPY --from=builder --chown=nginx:nginx /app/out .
 
 EXPOSE 8080

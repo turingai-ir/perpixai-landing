@@ -7,7 +7,7 @@ const current = () => (i18n.language in localeMeta ? (i18n.language as Locale) :
 /** 1882800 → "۱,۸۸۲,۸۰۰" in Persian, "1,882,800" in Latin-digit locales. */
 export function formatNumber(n: number, locale: Locale = current()) {
   const s = n.toLocaleString('en-US')
-  return localeMeta[locale].digits === 'fa' ? toFa(s) : s
+  return localeMeta[locale].digits === 'fa' ? toFa(s).replace('.', '٫') : s
 }
 
 /** Digits in the current locale's numeral system (counters, years, step numbers). */
