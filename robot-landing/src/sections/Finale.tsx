@@ -1,16 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
-import { asset } from '@/lib/asset'
 import { track } from '@/lib/analytics'
 import { Icon } from '@/ui/Icon'
 
 /** Closing card: "پایان", the way old Persian films ended — then one last invitation. */
 export function Finale({ onSignup }: { onSignup: () => void }) {
   const { t } = useTranslation('home')
-  const { t: tc } = useTranslation('dialogue')
   const title = t('finale.title', { returnObjects: true })
   return (
-    <section className="relative overflow-hidden px-5 pt-28 md:px-14 md:pt-36 pb-8">
+    <section className="relative overflow-hidden px-5 pt-28 pb-8 md:px-14 md:pt-36">
       <div
         aria-hidden
         className="absolute inset-x-0 bottom-0 h-3/4 bg-radial-[ellipse_55%_70%_at_50%_100%] from-purple/25 to-transparent to-70%"
@@ -46,15 +44,6 @@ export function Finale({ onSignup }: { onSignup: () => void }) {
             {t('finale.login')}
           </a>
         </div>
-        {/* <img
-          src={asset('brand/pixo.webp')}
-          alt={tc('character.label', { name: tc('character.name'), title: tc('character.title') })}
-          width={840}
-          height={1107}
-          loading="lazy"
-          data-reveal
-          className="mt-14 w-[min(90vw,28rem)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_45%,black_55%,transparent)]"
-        /> */}
       </div>
     </section>
   )

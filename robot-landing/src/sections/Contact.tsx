@@ -32,7 +32,7 @@ export function Contact() {
             <p className="mt-6 text-lg leading-8 text-muted-foreground">{t('intro')}</p>
           </header>
 
-          <ul className="grid gap-6 lg:grid-cols-3">
+          <ul className="grid gap-6 md:grid-cols-2">
             <li className={card}>
               <p className={label}>{t('telegram.label')}</p>
               <p dir="ltr" className="mt-3 text-end font-poster text-3xl break-all">
@@ -55,6 +55,16 @@ export function Contact() {
               </p>
               <a href={`tel:${t('phone.value')}`} className={action}>
                 {t('phone.action')}
+                <Icon name="arrow" className="size-4" />
+              </a>
+            </li>
+            <li className={card}>
+              <p className={label}>{t('email.label')}</p>
+              <p dir="ltr" className="mt-3 text-end font-poster text-2xl break-all md:text-3xl">
+                {t('email.value')}
+              </p>
+              <a href={`mailto:${t('email.value')}`} className={action}>
+                {t('email.action')}
                 <Icon name="arrow" className="size-4" />
               </a>
             </li>
