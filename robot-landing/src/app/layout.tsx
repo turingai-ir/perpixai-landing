@@ -10,7 +10,7 @@ import '@/styles/globals.css'
 const locale = defaultLocale
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { title, description, brand, keywords } = getSeo(await getLandingData(), locale)
+  const { title, description, brand, keywords } = getSeo(getLandingData(), locale)
   const meta = localeMeta[locale]
   const ogImage = { url: '/brand/og.jpg', width: 1200, height: 630, alt: title }
   return {
@@ -45,7 +45,7 @@ export const viewport: Viewport = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { jsonLd } = getSeo(await getLandingData(), locale)
+  const { jsonLd } = getSeo(getLandingData(), locale)
   return (
     <html lang={locale} dir={localeMeta[locale].dir}>
       <head>

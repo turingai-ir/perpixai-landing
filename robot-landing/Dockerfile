@@ -47,8 +47,8 @@ ARG NEXT_PUBLIC_PERPIX_APP_URL
 ARG NEXT_PUBLIC_PHONE_PARAM
 ARG NEXT_PUBLIC_PHONE_FORMAT
 
-# Plans and models are fetched from the API during the build and baked into the pages; src/data/landing-snapshot.json is the
-# fallback when the API is unreachable (set LANDING_DATA_STRICT=1 to fail the build instead). The browser refreshes them from
+# `pnpm build` first refreshes src/data/landing-snapshot.json from the API, and the pages bake that in. If the API is unreachable the
+# committed snapshot is kept (LANDING_DATA_STRICT=1 fails the build instead). The browser refreshes prices from
 # NEXT_PUBLIC_LANDING_API_URL, a same-origin proxy served by nginx (see nginx.conf).
 ARG LANDING_API_URL
 ARG LANDING_DATA_STRICT
