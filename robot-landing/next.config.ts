@@ -3,6 +3,8 @@ import type { NextConfig } from 'next'
 const config: NextConfig = {
   // Fully pre-rendered HTML in `out/`, served by nginx. Crawlers get the real content without running JS.
   output: 'export',
+  // /terms/ → out/terms/index.html: nginx serves directories without any rewrite.
+  trailingSlash: true,
   reactStrictMode: true,
   poweredByHeader: false,
   // The year the static HTML was built in; the footer shows it during hydration, then the real current year.

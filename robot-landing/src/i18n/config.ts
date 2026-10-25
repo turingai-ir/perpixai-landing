@@ -10,6 +10,6 @@ export const localeMeta: Record<Locale, { dir: 'rtl' | 'ltr'; ogLocale: string; 
   fa: { dir: 'rtl', ogLocale: 'fa_IR', hreflang: 'fa-IR', digits: 'fa' },
 }
 
-export const namespaces = ['ui', 'home', 'dialogue', 'demos', 'season', 'seo'] as const
+export const namespaces = ['ui', 'home', 'dialogue', 'demos', 'season', 'seo', 'terms', 'privacy', 'contact'] as const
 export type Namespace = (typeof namespaces)[number]
 export const defaultNS: Namespace = 'ui'

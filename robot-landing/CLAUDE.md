@@ -19,7 +19,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 - `src/config.ts` + `src/lib/auth.ts`: shared auth URL and how the phone is handed over (param + format, env-overridable).
   Agreed with the app team: `?phone=09xxxxxxxxx` (local format). Test with `?authDebug=1&phoneParam=…&phoneFormat=…` (see `docs/AUTH-TEST.md`)
 - `src/i18n/`: i18next (+ react-i18next). **All copy lives in `src/i18n/locales/<lang>/*.json`** (namespaces: `ui`, `home`,
-  `dialogue`, `demos`, `season`, `seo`); keys are type-checked (`i18next.d.ts`). Bundled resources + synchronous init, so the
+  `dialogue`, `demos`, `season`, `seo`, `terms`, `privacy`, `contact`); keys are type-checked (`i18next.d.ts`). Bundled resources + synchronous init, so the
   static export and the browser render the same text. Components use `useTranslation(ns)`; non-React code uses
   `i18n.t` / `i18n.getFixedT(locale, ns)`. Numbers go through `i18n/format.ts` (`formatNumber`, `localizeDigits`).
   Only `fa` exists today. To add a language: copy `locales/fa` → `locales/<code>`, register it in `resources.ts` and
@@ -43,6 +43,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
   DemoScreen, Header, StickyCta, `SplitHeading` (accessible word reveal), `LazyVideo` (plays only in view), `Icon` (Solar subset)
 - `src/sections/`: Film (pinned prompt→film scrub), Reel (horizontal film strip of the demo clips), Tools, Plans
   (live prices/credits/features from the API, chrome copy in `home.json`), Models (the cast: every model with what it makes and its starting price; filter + show-all), Faq, Finale, Footer. Page choreography lives in `App.tsx`
+- `/contact/` (`sections/Contact.tsx`, `contact.json`: address, phone, Telegram support) and `/terms/` + `/privacy/`: standalone pages sharing `ui/PageHeader.tsx`. The legal pages, one component (`sections/LegalPage.tsx`, copy in `terms.json` / `privacy.json`, same shape). Their copy is verbatim from the legal text: do not reword it. `terms`/`privacy` are typed by hand in `i18n/resources.ts` (the inferred JSON type hits TS2589).
 - `docs/ASSETS.md`: video prompts and voice-line script for the content team
 - `docs/BACKEND-HANDOFF.md`: the phone-prefill request sent to the app team (`?phone=09xxxxxxxxx` on `/auth/login`)
 
