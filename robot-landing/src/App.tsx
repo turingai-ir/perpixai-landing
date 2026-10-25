@@ -63,6 +63,8 @@ export function App() {
     track('enter', { sound: withSound })
     setEntered(true)
     lenisRef.current?.start()
+    // Starting Lenis un-clips the page: a classic scrollbar appears (−15px), so pinned sections must be re-measured.
+    requestAnimationFrame(() => ScrollTrigger.refresh())
   }
 
   const restart = () => {

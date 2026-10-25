@@ -101,8 +101,12 @@ scenes start at `lg` (1024), not `md`; `md:` is only for spacing/type bumps. Two
   price row wraps instead of overflowing.
 - RTL gotcha: overflow to the LEFT is not scrollable, and mobile Chrome silently widens the layout viewport to fit it (so
   `innerWidth` > the device width). When auditing, compare against the emulated width, not `innerWidth`.
-- Audited 20 viewports (280→2560, portrait/landscape phones, tablets, desktop): 0 horizontal overflow, no sub-44px touch targets
-  except narrow text links (still ≥44 tall), choices visible without scrolling from 568×320 up.
+- **`pnpm build && pnpm audit:responsive`** (`scripts/audit-responsive.mjs`; serves `out/`, drives headless Chrome, no extra deps):
+  20 viewports from 280×653 to 2560×1440 (phones portrait/landscape, tablets, desktop). Fails on horizontal overflow, a gate that is
+  not clickable, text under 12px; reports touch targets under 44px (both sides). `--choices` also waits for Pixo's question and checks
+  the answer buttons are on screen (a real mouse event is used: AudioContext needs a gesture); `--only=ipad,land` filters; `CHROME=…`
+  picks the binary. Not part of `pnpm check` (needs a build and Chrome). Run it after any layout change.
+  `body` has `overflow-x: clip`, so the audit deliberately ignores html/body when deciding whether an element is "clipped".
 
 ## Conventions
 - Brand colours come from the logo (see Theme): `.bg-brand`, `.text-brand`, `.border-brand` use `--gradient-brand(-soft)`.
