@@ -26,8 +26,8 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
   `config.ts` (`locales`, `localeMeta`), record Pixo's lines into `public/audio/<code>/<id>.mp3`. Routing per locale
   (`/en/…`) is not set up yet: the layout still renders `defaultLocale`.
 - `src/content/`: language-neutral data only. `dialogue.ts` = Pixo's line ids + acting directions (id = audio file name;
-  text is `dialogue.json` → `lines.<id>`), `demos.ts` (ids; chip/prompt in `demos.json`), `sections.ts` (plan prices/tokens
-  as numbers, tool icons; copy in `home.json`)
+  text is `dialogue.json` → `lines.<id>`), `demos.ts` (ids; chip/prompt in `demos.json`), `sections.ts` (tool icons;
+  copy in `home.json`; plans/models are live data, see below)
 - `src/flow/useConversation.ts`: the funnel state machine. Every branch calls `begin()` so stale awaits are ignored
 - `src/audio/voice.ts`: plays `public/audio/fa/<id>.mp3`, exposes loudness; simulates speech if a file is missing
 - `src/stage/`: the 3D scene on react-three-fiber (`StageCanvas.tsx`, loaded as a separate chunk; `ui/PixoStage.tsx` lazy-loads it; `StageBoundary` falls back to
@@ -42,7 +42,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 - `src/ui/`: Preloader (leader + gate), FilmFx (grain/vignette), Hero (canvas + conversation, letterbox intro, static `pixo.webp` fallback), Subtitle, Choice, PhoneForm,
   DemoScreen, Header, StickyCta, `SplitHeading` (accessible word reveal), `LazyVideo` (plays only in view), `Icon` (Solar subset)
 - `src/sections/`: Film (pinned prompt→film scrub), Reel (horizontal film strip of the demo clips), Tools, Plans
-  (real prices in `content/sections.ts`, copy in `home.json`), Faq, Finale, Footer. Page choreography lives in `App.tsx`
+  (live prices/credits/features from the API, chrome copy in `home.json`), Models (the cast: every model with what it makes and its starting price; filter + show-all), Faq, Finale, Footer. Page choreography lives in `App.tsx`
 - `docs/ASSETS.md`: video prompts and voice-line script for the content team
 - `docs/BACKEND-HANDOFF.md`: the phone-prefill request sent to the app team (`?phone=09xxxxxxxxx` on `/auth/login`)
 
@@ -64,6 +64,27 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
   modes or animated filters on large layers); merge static meshes with `stage/merge.ts`; no allocation in the
   render loop (Tesla bolts are a pre-built pool); shaders compile via `compileAsync` before the first frame;
   `govern()` in `StageCanvas` steps DPR/bloom down on slow devices; bloom renders at half resolution.
+
+## Plans & models (live data)
+Prices, credits, durations, plan copy (`meta.features`) and the 18 models come from the Perpix API, not from the repo
+(`lib/landing/`). Do not hard-code them: copy that mentions the plan length or the model count takes it from the data
+(`{{adj}}` / `{{noun}}` from `durationLabels()`, `{{models}}`).
+- **Build:** `app/page.tsx`, the layout (JSON-LD, metadata), `manifest`, `llms.txt` call `getLandingData()` (`lib/landing/server.ts`):
+  live API (`LANDING_API_URL`, default https://api.perpixai.ir, 20 s) → else the committed `src/data/landing-snapshot.json` with a
+  loud warning → `LANDING_DATA_STRICT=1` fails the build instead. Refresh the snapshot with `pnpm snapshot:landing`.
+- **Run:** `LandingProvider` (`lib/landing/client.tsx`) shows the baked data at once (no loading state, crawlers see real prices)
+  and refreshes it after hydration from `NEXT_PUBLIC_LANDING_API_URL` (default `/api/landing`; `off` disables). Any failure keeps
+  the baked data. `parseLanding()` validates, and returns null for a malformed/empty answer so bad data never replaces good data.
+- **Why a proxy:** the API's CORS allows only `https://app.perpixai.ir` (verified: `perpixai.ir` gets no `Allow-Origin`, preflight
+  400), so the browser cannot call it. nginx serves `/api/landing/plans|models` (`nginx.conf` + `landing-proxy.conf`): cached 5 min,
+  stale on API errors, GET only, nothing forwarded from the visitor. Local `pnpm dev` has no proxy, so it shows the baked data.
+  Alternative without nginx: have the backend allow `perpixai.ir` for these two public GETs.
+- **Units:** API prices are IRR (÷10 → Toman). Credits = micro-USD ÷ 1000 (plan `balance_gift_amount_usdmicro`, model `min_cost`).
+  `capacity` ("حدود ۱۵۰ تصویر یا ۲۲ ویدیو") = plan credit ÷ the **median** starting price of the models it unlocks, rounded down to 2
+  significant digits; deliberately not the cheapest model (that would promise 2,782 images on the top plan).
+- Analytics keep the legacy plan ids (`economy | creator | pro`, `free`) via `LEGACY_SLUGS`.
+- **Prices in the HTML and JSON-LD are as of the last build**: rebuild/redeploy on a schedule (or when plans change) so crawlers and
+  no-JS visitors do not see stale numbers.
 
 ## Theme (shadcn-style)
 Colours are **semantic CSS variables** in `src/styles/theme.css` (`:root`), exposed to Tailwind with `@theme inline`. Components name a

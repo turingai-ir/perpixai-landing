@@ -1,11 +1,12 @@
 import type { MetadataRoute } from 'next'
 import { defaultLocale, localeMeta } from '@/i18n/config'
+import { getLandingData } from '@/lib/landing/server'
 import { THEME_COLOR, getSeo } from '@/lib/seo'
 
 export const dynamic = 'force-static'
 
-export default function manifest(): MetadataRoute.Manifest {
-  const { brand, manifestName, description } = getSeo()
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const { brand, manifestName, description } = getSeo(await getLandingData())
   return {
     name: manifestName,
     short_name: brand,

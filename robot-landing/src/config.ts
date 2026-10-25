@@ -23,6 +23,11 @@ export const config = {
     return asset(`audio/${i18n.language}`)
   },
   demoDir: asset('demo'),
+  /**
+   * Where the browser refreshes plans/models from after load: a same-origin proxy (nginx `/api/landing`), because the API's CORS
+   * allows only app.perpixai.ir. 'off' keeps the data baked at build time.
+   */
+  landingApiUrl: process.env.NEXT_PUBLIC_LANDING_API_URL || '/api/landing',
   /** Seconds of inactivity before Pixo nudges the visitor. */
   nudgeAfter: 25,
 }

@@ -1,0 +1,316 @@
+{
+  "fetchedAt": "2026-10-25T05:45:39.332Z",
+  "plans": [
+    {
+      "name": "CREATOR_PLUS",
+      "display_name": "حرفه‌ای",
+      "description": "برای تولید مداوم تصویر و ویدیو",
+      "base_price_irr": 44788800,
+      "discounted_price_irr": 42656000,
+      "duration_days": 365,
+      "balance_gift_amount_usdmicro": 13910000,
+      "allowed_models": [
+        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
+        "GOOGLE_NANO_BANANA_2_1",
+        "ALIBABA_WAN_3_0",
+        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
+        "OPENAI_GPT_IMAGE_2_5_FLARE",
+        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
+        "GOOGLE_NANO_BANANA_2",
+        "GOOGLE_NANO_BANANA_2_LITE",
+        "IDEOGRAM_4_0",
+        "OPENAI_GPT_IMAGE_2",
+        "BYTEDANCE_SEEDANCE_2_0",
+        "BYTEDANCE_SEEDANCE_2_POINT_5",
+        "GOOGLE_GEMINI_OMNI_FLASH",
+        "GOOGLE_VEO_3_1_FAST",
+        "KLINGAI_VIDEO_3_0_STANDARD",
+        "RUNWAY_ALEPH_2_0",
+        "GROK_IMAGINE_VIDEO",
+        "GROK_IMAGINE_VIDEO_1_POINT_5"
+      ],
+      "meta": {
+        "features": [
+          "دسترسی کامل به همه مدل‌های تصویر و ویدیو",
+          "۱۳،۹۱۰ اعتبار برای اجرای کمپین‌های بزرگ‌تر",
+          "مناسب برای تولیدکننده‌های فعال و پروژه‌های پرتعداد"
+        ]
+      },
+      "is_active": true,
+      "is_recommended": false,
+      "is_default": false
+    },
+    {
+      "name": "CREATOR",
+      "display_name": "سازنده",
+      "description": "پیشنهادی برای تولید تصویر و ویدیو",
+      "base_price_irr": 21994500,
+      "discounted_price_irr": 21328000,
+      "duration_days": 365,
+      "balance_gift_amount_usdmicro": 6840000,
+      "allowed_models": [
+        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
+        "GOOGLE_NANO_BANANA_2_1",
+        "ALIBABA_WAN_3_0",
+        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
+        "OPENAI_GPT_IMAGE_2_5_FLARE",
+        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
+        "GOOGLE_NANO_BANANA_2",
+        "GOOGLE_NANO_BANANA_2_LITE",
+        "IDEOGRAM_4_0",
+        "OPENAI_GPT_IMAGE_2",
+        "BYTEDANCE_SEEDANCE_2_0",
+        "BYTEDANCE_SEEDANCE_2_POINT_5",
+        "GOOGLE_GEMINI_OMNI_FLASH",
+        "GOOGLE_VEO_3_1_FAST",
+        "KLINGAI_VIDEO_3_0_STANDARD",
+        "RUNWAY_ALEPH_2_0",
+        "GROK_IMAGINE_VIDEO",
+        "GROK_IMAGINE_VIDEO_1_POINT_5"
+      ],
+      "meta": {
+        "features": [
+          "دسترسی کامل به مدل‌های تصویر و ویدیو",
+          "۶،۸۴۰ اعتبار برای تولید محتوای ماهانه",
+          "بهترین تعادل بین قیمت، اعتبار و دسترسی"
+        ]
+      },
+      "is_active": true,
+      "is_recommended": true,
+      "is_default": false
+    },
+    {
+      "name": "LOW_USAGE",
+      "display_name": "اقتصادی",
+      "description": "بهترین انتخاب برای ساخت تصویر و ویدیو با هزینه کم",
+      "base_price_irr": 6398400,
+      "discounted_price_irr": 6398400,
+      "duration_days": 365,
+      "balance_gift_amount_usdmicro": 2000000,
+      "allowed_models": [
+        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
+        "GOOGLE_NANO_BANANA_2_1",
+        "ALIBABA_WAN_3_0",
+        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
+        "OPENAI_GPT_IMAGE_2_5_FLARE",
+        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
+        "GOOGLE_NANO_BANANA_2",
+        "GOOGLE_NANO_BANANA_2_LITE",
+        "IDEOGRAM_4_0",
+        "OPENAI_GPT_IMAGE_2",
+        "BYTEDANCE_SEEDANCE_2_0",
+        "BYTEDANCE_SEEDANCE_2_POINT_5",
+        "GOOGLE_GEMINI_OMNI_FLASH",
+        "GOOGLE_VEO_3_1_FAST",
+        "KLINGAI_VIDEO_3_0_STANDARD",
+        "RUNWAY_ALEPH_2_0",
+        "GROK_IMAGINE_VIDEO",
+        "GROK_IMAGINE_VIDEO_1_POINT_5"
+      ],
+      "meta": {
+        "features": ["دسترسی به همه مدل‌های حرفه‌ای تصویر", "۲،۰۰۰ اعتبار هدیه برای شروع جدی", "گزینه اقتصادی برای تولید تصویر روزمره"]
+      },
+      "is_active": true,
+      "is_recommended": false,
+      "is_default": false
+    },
+    {
+      "name": "BASIC",
+      "display_name": "رایگان",
+      "description": " \"شروع رایگان برای امتحان ساخت تصویر\"",
+      "base_price_irr": 0,
+      "discounted_price_irr": 0,
+      "duration_days": 365,
+      "balance_gift_amount_usdmicro": 40000,
+      "allowed_models": ["GOOGLE_NANO_BANANA_2_LITE"],
+      "meta": {
+        "features": ["شروع رایگان با مدل Nano Banana Lite", "۴۰ توکن هدیه برای اولین خروجی‌ها", "اعتبار یک‌ساله بدون نیاز به پرداخت اولیه"]
+      },
+      "is_active": true,
+      "is_recommended": false,
+      "is_default": true
+    }
+  ],
+  "models": [
+    {
+      "name": "BLACK_FOREST_LABS_FLUX_3_VIDEO",
+      "model_owner": "BLACK_FOREST_LABS",
+      "display_name": "FLUX 3 Video",
+      "description": "مدل FLUX 3 Video از Black Forest Labs از طریق Runware برای تولید ویدیوهای ۵ تا ۲۰ ثانیه‌ای با صدای هماهنگ، از متن، از ۱ تا ۱۰ فریم کلیدی، یا با ادامه دادن یک ویدیوی موجود، در وضوح 720p و 1080p.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 850000,
+      "max_cost": 10800000
+    },
+    {
+      "name": "GOOGLE_NANO_BANANA_2_1",
+      "model_owner": "GOOGLE",
+      "display_name": "Nano Banana 2.1",
+      "description": "مدل Google Nano Banana 2.1 از طریق Runware برای تولید و ویرایش تصویر با ترکیب‌بندی دقیق‌تر، حفظ هماهنگی سوژه، تا ۱۴ تصویر مرجع و امکان جستجوی زنده‌ی وب و تصویر، در وضوح 1K تا 4K.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 40000,
+      "max_cost": 200000
+    },
+    {
+      "name": "ALIBABA_WAN_3_0",
+      "model_owner": "ALIBABA",
+      "display_name": "Wan 3.0",
+      "description": "Wan3.0 is Alibaba's higher-end all-in-one multimodal video model for longer, reference-heavy, production-oriented creation. It combines text-to-video, first- and last-frame image-to-video, reference-driven video generation, localized video editing, and temporal extension in one model, with support for image, video, audio, document, and webpage inputs. It is especially well suited to branded storytelling, product demos, explainers, music-led sequences, and other commercial workflows that need stronger character or product consistency, more impactful audiovisual motion, and tighter control over complex multi-input prompts.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO", "AUDIO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 100000,
+      "max_cost": 6000000
+    },
+    {
+      "name": "OPENAI_GPT_IMAGE_2_5_SUNBURST",
+      "model_owner": "OPEN_AI",
+      "display_name": "GPT Image 2.5 Sunburst",
+      "description": "مدل OpenAI GPT Image 2.5 Sunburst از طریق Runware برای تولید و ویرایش تصویر با تصاویر مرجع، ماسک و پس‌زمینهٔ شفاف.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 200000,
+      "max_cost": 200000
+    },
+    {
+      "name": "OPENAI_GPT_IMAGE_2_5_FLARE",
+      "model_owner": "OPEN_AI",
+      "display_name": "GPT Image 2.5 Flare",
+      "description": "مدل OpenAI GPT Image 2.5 Flare از طریق Runware برای تولید و ویرایش تصویر با تصاویر مرجع، ماسک و پس‌زمینهٔ شفاف.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 50000,
+      "max_cost": 50000
+    },
+    {
+      "name": "GROK_IMAGINE_VIDEO",
+      "model_owner": "X_AI",
+      "display_name": "Grok Imagine Video",
+      "description": "مدل Grok Imagine Video از xAI برای تولید و ویرایش ویدیو با صدای همگام از متن، تصویر یا ویدیوی ورودی.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 50000,
+      "max_cost": 1052000
+    },
+    {
+      "name": "GROK_IMAGINE_VIDEO_1_POINT_5",
+      "model_owner": "X_AI",
+      "display_name": "Grok Imagine Video 1.5",
+      "description": "مدل Grok Imagine Video 1.5 از xAI برای تولید ویدیوهای ۱ تا ۱۵ ثانیه‌ای از متن، یک فریم آغازین یا تا ۷ تصویر مرجع، با کیفیت 480p، 720p و 1080p و انتخاب تا ۳ صدای گوینده.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 80000,
+      "max_cost": 3760000
+    },
+    {
+      "name": "BYTEDANCE_SEEDANCE_2_POINT_5",
+      "model_owner": "BYTE_DANCE",
+      "display_name": "Seedance 2.5",
+      "description": "مدل ByteDance Seedance 2.5 از طریق Runware برای تولید ویدیوی ۴ تا ۳۰ ثانیه، کنترل فریم اول و آخر، ترکیب مراجع تصویر، ویدیو و صدا، ویرایش و تمدید ویدیو با صدای همگام.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO", "AUDIO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 410000,
+      "max_cost": 20412000
+    },
+    {
+      "name": "RUNWAY_ALEPH_2_0",
+      "model_owner": "RUNWAY",
+      "display_name": "Aleph 2.0",
+      "description": "مدل Runway Aleph 2.0 از طریق Runware برای ویرایش ویدیو به ویدیو همراه با اعمال تغییرات موضعی، هدایت بر اساس تصویر فریم، حفظ هماهنگی چندنما و حفظ قوی جزئیات کلیپ اصلی.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 560000,
+      "max_cost": 8400000
+    },
+    {
+      "name": "OPENAI_GPT_IMAGE_2",
+      "model_owner": "OPEN_AI",
+      "display_name": "GPT Image 2",
+      "description": "مدل OpenAI GPT Image 2 از طریق Runware برای تبدیل متن به تصویر، تصویر به تصویر و ویرایش تصویر. این مدل برای انطباق بالا با پرامپت، نمایش متن‌های خوانای جاسازی‌شده، ویرایش‌های دقیق، رندر واقع‌گرایانه، پوسترها، بسته‌بندی‌ها، طرح‌های محصول، نمودارها و تصاویر حساس به چیدمان مناسب است.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 5000,
+      "max_cost": 401000
+    },
+    {
+      "name": "KLINGAI_VIDEO_3_0_STANDARD",
+      "model_owner": "K_LING_AI",
+      "display_name": "Kling 3.0 Standard",
+      "description": "مدل Kling VIDEO 3.0 Standard از طریق Runware برای تبدیل متن به ویدیو، تصویر به ویدیو و تولید ویدیو با کنترل حرکت. این پیکربندی از یک فیلد حالت صریح استفاده می‌کند تا طرح‌واره‌های شرطی Runware را برای فرم‌های فرانت‌اند و ساخت داده‌های بک‌اند ایمن سازد.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO", "AUDIO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 252000,
+      "max_cost": 1890000
+    },
+    {
+      "name": "IDEOGRAM_4_0",
+      "model_owner": "IDEOGRAM",
+      "display_name": "Ideogram 4.0",
+      "description": "مدل Ideogram 4.0 از طریق Runware برای تولید تصاویر باکیفیت بر اساس متن با تایپوگرافی قوی، رندر دقیق متن، ترکیب‌بندی‌های طراحی‌محور، پوسترها، گرافیک‌های برند شده، بسته‌بندی‌ها، تصاویر محصول، خروجی‌های مناسب برای پس‌زمینه شفاف و تولید تصاویر ۲K با وضوح عالی.",
+      "supported_inputs": ["TEXT"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 30000,
+      "max_cost": 100000
+    },
+    {
+      "name": "GOOGLE_VEO_3_1_FAST",
+      "model_owner": "GOOGLE",
+      "display_name": "Veo 3.1 Fast",
+      "description": "مدل Google Veo 3.1 Fast نسخه‌ای با سرعت بالا از Veo 3.1 برای تبدیل متن به ویدیو، تصویر به ویدیو، ویرایش و افزایش طول ویدیو به همراه پشتیبانی از صدای طبیعی است.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 400000,
+      "max_cost": 2800000
+    },
+    {
+      "name": "GOOGLE_NANO_BANANA_2",
+      "model_owner": "GOOGLE",
+      "display_name": "Nano Banana 2",
+      "description": "مدل Google Nano Banana 2 که به طور رسمی با نام Gemini 3.1 Flash Image شناخته می‌شود، برای تبدیل متن به تصویر، تصویر به تصویر و ویرایش تصویر با قابلیت‌های رندر دقیق متن، حفظ هماهنگی چند کاراکتر، تصاویر مرجع و وضوح خروجی انعطاف‌پذیر.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 46570,
+      "max_cost": 292950
+    },
+    {
+      "name": "GOOGLE_NANO_BANANA_2_LITE",
+      "model_owner": "GOOGLE",
+      "display_name": "Nano Banana 2 Lite",
+      "description": "Google Nano Banana 2 Lite model with multiple execution modes and provider-specific configurations.",
+      "supported_inputs": ["TEXT", "IMAGE"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 20000,
+      "max_cost": 33603
+    },
+    {
+      "name": "GOOGLE_GEMINI_OMNI_FLASH",
+      "model_owner": "GOOGLE",
+      "display_name": "Gemini Omni Flash",
+      "description": "مدل Google Gemini Omni Flash از طریق Runware برای تولید و ویرایش ویدیوی چندرسانه‌ای. این مدل از تبدیل متن به ویدیو، عکس به ویدیو، ویدیو به ویدیو، ویرایش ثانویه با استفاده از شناسه ویدیوی قبلی و تولید صدای طبیعی پشتیبانی می‌کند.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 304080,
+      "max_cost": 1013600
+    },
+    {
+      "name": "BYTEDANCE_SEEDANCE_2_0",
+      "model_owner": "BYTE_DANCE",
+      "display_name": "Seedance 2.0",
+      "description": "مدل ByteDance Seedance 2.0 از طریق Runware. از استاندارد حالت محصول ساده‌شده استفاده می‌کند: متن به ویدیو، تصویر به ویدیو، ویرایش ویدیو و ویدیوی مبتنی بر صدا. نمایش بخش‌های رابط کاربری بر اساس حالت انتخاب‌شده تغییر می‌کند تا فیلدهای غیرضروری پنهان بمانند.",
+      "supported_inputs": ["TEXT", "IMAGE", "VIDEO", "AUDIO"],
+      "supported_outputs": ["VIDEO"],
+      "min_cost": 280000,
+      "max_cost": 15750000
+    },
+    {
+      "name": "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
+      "model_owner": "BLACK_FOREST_LABS",
+      "display_name": "FLUX.1.1 Pro Ultra",
+      "description": "مدل FLUX.1.1 Pro Ultra از Black Forest Labs از طریق Runware برای تولید تصاویر با وضوح بالا تا ۴ مگاپیکسل بر اساس متن. حالت Ultra خروجی‌های شفاف و با جزئیات بالا تولید می‌کند، در حالی که حالت raw سبک عکاسی طبیعی‌تری ارائه می‌دهد که به خروجی مستقیم مدل نزدیک‌تر است.",
+      "supported_inputs": ["TEXT"],
+      "supported_outputs": ["IMAGE"],
+      "min_cost": 60000,
+      "max_cost": 60000
+    }
+  ]
+}
