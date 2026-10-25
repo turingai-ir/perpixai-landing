@@ -14,4 +14,4 @@ export const toolItems: { id: 'image' | 'video' | 'edit' | 'models'; icon: IconN
 ]
 
 /** Id of the clip shown in the pinned "prompt → film" section. */
-export const filmDemoId = 'yalda-pomegranate'
+export const filmDemoId = 'paykan-rain'

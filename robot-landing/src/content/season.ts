@@ -11,7 +11,7 @@ export const seasons = {
     /** Demo shown first in the reel and the magic show. */
     featuredDemo: 'yalda-pomegranate',
   },
-  none: { id: 'none' as const, featuredDemo: '' },
+  none: { id: 'none' as const, featuredDemo: 'paykan-rain' },
 }
 
-export const season = seasons.yalda
+export const season: (typeof seasons)[SeasonId] = seasons.none
