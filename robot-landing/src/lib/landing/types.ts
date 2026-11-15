@@ -8,8 +8,8 @@ export type ApiPlan = {
   duration_days: number
   /** micro-USD of wallet credit that comes with the plan */
   balance_gift_amount_usdmicro: number
-  allowed_models: string[]
-  meta?: { features?: string[] }
+  /** IRR the plan saves on a 1,000-credit wallet top-up (0 when it has no top-up discount) */
+  wallet_topup_saving_irr: number
   is_active: boolean
   is_recommended: boolean
   is_default: boolean
@@ -44,11 +44,11 @@ export type Plan = {
   wasToman?: number
   offPercent?: number
   credits: number
+  /** Toman saved on every 1,000 credits of wallet top-up; 0 when the plan has no top-up discount */
+  topupSavingToman: number
   durationDays: number
-  features: string[]
   recommended: boolean
   free: boolean
-  modelCount: number
 }
 
 export type Model = {

@@ -36,9 +36,7 @@ function readPlan(v: unknown): ApiPlan | null {
   const disc = num(v.discounted_price_irr)
   const days = num(v.duration_days)
   const gift = num(v.balance_gift_amount_usdmicro)
-  const allowed = strs(v.allowed_models)
-  if (!name || !display || base === null || disc === null || days === null || gift === null || !allowed) return null
-  const features = isObj(v.meta) ? strs(v.meta.features) : null
+  if (!name || !display || base === null || disc === null || days === null || gift === null) return null
   return {
     name,
     display_name: display,
@@ -47,8 +45,7 @@ function readPlan(v: unknown): ApiPlan | null {
     discounted_price_irr: disc,
     duration_days: days,
     balance_gift_amount_usdmicro: gift,
-    allowed_models: allowed,
-    meta: { features: features ?? [] },
+    wallet_topup_saving_irr: num(v.wallet_topup_saving_irr) ?? 0,
     is_active: v.is_active !== false,
     is_recommended: v.is_recommended === true,
     is_default: v.is_default === true,
@@ -106,11 +103,10 @@ export function parseLanding(
       priceToman,
       ...(discounted ? { wasToman, offPercent: Math.round(((wasToman - priceToman) / wasToman) * 100) } : {}),
       credits: Math.round(p.balance_gift_amount_usdmicro / 1000),
+      topupSavingToman: Math.round(p.wallet_topup_saving_irr / 10),
       durationDays: p.duration_days,
-      features: p.meta?.features ?? [],
       recommended: p.is_recommended,
       free: priceToman === 0,
-      modelCount: p.allowed_models.length,
     }
   }
   const all = apiPlans.map(toPlan)

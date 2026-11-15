@@ -1,119 +1,54 @@
 {
-  "fetchedAt": "2026-10-25T06:16:22.948Z",
+  "fetchedAt": "2026-11-15T21:25:40.595Z",
   "plans": [
     {
-      "name": "CREATOR_PLUS",
-      "display_name": "حرفه‌ای",
-      "description": "برای تولید مداوم تصویر و ویدیو",
-      "base_price_irr": 44788800,
-      "discounted_price_irr": 42656000,
+      "name": "BUSINESS",
+      "display_name": "سازمانی",
+      "description": "مناسب برای سازمان ها و کاربران حرفه ای و پر مصرف",
+      "base_price_irr": 134350000,
+      "discounted_price_irr": 134350000,
       "duration_days": 365,
-      "balance_gift_amount_usdmicro": 13910000,
-      "allowed_models": [
-        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
-        "GOOGLE_NANO_BANANA_2_1",
-        "ALIBABA_WAN_3_0",
-        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
-        "OPENAI_GPT_IMAGE_2_5_FLARE",
-        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
-        "GOOGLE_NANO_BANANA_2",
-        "GOOGLE_NANO_BANANA_2_LITE",
-        "IDEOGRAM_4_0",
-        "OPENAI_GPT_IMAGE_2",
-        "BYTEDANCE_SEEDANCE_2_0",
-        "BYTEDANCE_SEEDANCE_2_POINT_5",
-        "GOOGLE_GEMINI_OMNI_FLASH",
-        "GOOGLE_VEO_3_1_FAST",
-        "KLINGAI_VIDEO_3_0_STANDARD",
-        "RUNWAY_ALEPH_2_0",
-        "GROK_IMAGINE_VIDEO",
-        "GROK_IMAGINE_VIDEO_1_POINT_5"
-      ],
-      "meta": {
-        "features": [
-          "دسترسی کامل به همه مدل‌های تصویر و ویدیو",
-          "۱۳،۹۱۰ اعتبار برای اجرای کمپین‌های بزرگ‌تر",
-          "مناسب برای تولیدکننده‌های فعال و پروژه‌های پرتعداد"
-        ]
-      },
+      "balance_gift_amount_usdmicro": 50000000,
+      "wallet_topup_saving_irr": 0,
       "is_active": true,
       "is_recommended": false,
       "is_default": false
     },
     {
-      "name": "CREATOR",
-      "display_name": "سازنده",
-      "description": "پیشنهادی برای تولید تصویر و ویدیو",
-      "base_price_irr": 21994500,
-      "discounted_price_irr": 21328000,
+      "name": "CREATOR_PLUS",
+      "display_name": "حرفه‌ای",
+      "description": "مناسب برای ساخت عکس و مدل های ویدیو های حرفه ای",
+      "base_price_irr": 26870000,
+      "discounted_price_irr": 26870000,
       "duration_days": 365,
-      "balance_gift_amount_usdmicro": 6840000,
-      "allowed_models": [
-        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
-        "GOOGLE_NANO_BANANA_2_1",
-        "ALIBABA_WAN_3_0",
-        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
-        "OPENAI_GPT_IMAGE_2_5_FLARE",
-        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
-        "GOOGLE_NANO_BANANA_2",
-        "GOOGLE_NANO_BANANA_2_LITE",
-        "IDEOGRAM_4_0",
-        "OPENAI_GPT_IMAGE_2",
-        "BYTEDANCE_SEEDANCE_2_0",
-        "BYTEDANCE_SEEDANCE_2_POINT_5",
-        "GOOGLE_GEMINI_OMNI_FLASH",
-        "GOOGLE_VEO_3_1_FAST",
-        "KLINGAI_VIDEO_3_0_STANDARD",
-        "RUNWAY_ALEPH_2_0",
-        "GROK_IMAGINE_VIDEO",
-        "GROK_IMAGINE_VIDEO_1_POINT_5"
-      ],
-      "meta": {
-        "features": [
-          "دسترسی کامل به مدل‌های تصویر و ویدیو",
-          "۶،۸۴۰ اعتبار برای تولید محتوای ماهانه",
-          "بهترین تعادل بین قیمت، اعتبار و دسترسی"
-        ]
-      },
+      "balance_gift_amount_usdmicro": 10000000,
+      "wallet_topup_saving_irr": 0,
       "is_active": true,
       "is_recommended": true,
       "is_default": false
     },
     {
+      "name": "CREATOR",
+      "display_name": "سازنده",
+      "description": "مناسب برای ساخت عکس و مدل های ویدیویی متوسط",
+      "base_price_irr": 13435000,
+      "discounted_price_irr": 13435000,
+      "duration_days": 365,
+      "balance_gift_amount_usdmicro": 5000000,
+      "wallet_topup_saving_irr": 0,
+      "is_active": true,
+      "is_recommended": false,
+      "is_default": false
+    },
+    {
       "name": "LOW_USAGE",
       "display_name": "اقتصادی",
-      "description": "بهترین انتخاب برای ساخت تصویر و ویدیو با هزینه کم",
-      "base_price_irr": 6398400,
-      "discounted_price_irr": 6398400,
+      "description": "مناسب استفاده برای ساخت عکس و مدل های ویدیویی کم مصرف",
+      "base_price_irr": 5374000,
+      "discounted_price_irr": 5374000,
       "duration_days": 365,
       "balance_gift_amount_usdmicro": 2000000,
-      "allowed_models": [
-        "BLACK_FOREST_LABS_FLUX_3_VIDEO",
-        "GOOGLE_NANO_BANANA_2_1",
-        "ALIBABA_WAN_3_0",
-        "OPENAI_GPT_IMAGE_2_5_SUNBURST",
-        "OPENAI_GPT_IMAGE_2_5_FLARE",
-        "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
-        "GOOGLE_NANO_BANANA_2",
-        "GOOGLE_NANO_BANANA_2_LITE",
-        "IDEOGRAM_4_0",
-        "OPENAI_GPT_IMAGE_2",
-        "BYTEDANCE_SEEDANCE_2_0",
-        "BYTEDANCE_SEEDANCE_2_POINT_5",
-        "GOOGLE_GEMINI_OMNI_FLASH",
-        "GOOGLE_VEO_3_1_FAST",
-        "KLINGAI_VIDEO_3_0_STANDARD",
-        "RUNWAY_ALEPH_2_0",
-        "GROK_IMAGINE_VIDEO",
-        "GROK_IMAGINE_VIDEO_1_POINT_5"
-      ],
-      "meta": {
-        "features": [
-          "دسترسی به همه مدل‌های حرفه‌ای تصویر",
-          "۲،۰۰۰ اعتبار هدیه برای شروع جدی",
-          "گزینه اقتصادی برای تولید تصویر روزمره"
-        ]
-      },
+      "wallet_topup_saving_irr": 0,
       "is_active": true,
       "is_recommended": false,
       "is_default": false
@@ -126,22 +61,28 @@
       "discounted_price_irr": 0,
       "duration_days": 365,
       "balance_gift_amount_usdmicro": 40000,
-      "allowed_models": [
-        "GOOGLE_NANO_BANANA_2_LITE"
-      ],
-      "meta": {
-        "features": [
-          "شروع رایگان با مدل Nano Banana Lite",
-          "۴۰ توکن هدیه برای اولین خروجی‌ها",
-          "اعتبار یک‌ساله بدون نیاز به پرداخت اولیه"
-        ]
-      },
+      "wallet_topup_saving_irr": 0,
       "is_active": true,
       "is_recommended": false,
       "is_default": true
     }
   ],
   "models": [
+    {
+      "name": "GROK_IMAGINE_IMAGE_2_POINT_0",
+      "model_owner": "X_AI",
+      "display_name": "Grok Imagine Image 2.0",
+      "description": "مدل Grok Imagine Image 2.0 از xAI از طریق Runware برای تولید تصاویر با کیفیت و ویرایش تصویر با استفاده از تصاویر مرجع و پشتیبانی از رزولوشن‌های 1K و 2K.",
+      "supported_inputs": [
+        "TEXT",
+        "IMAGE"
+      ],
+      "supported_outputs": [
+        "IMAGE"
+      ],
+      "min_cost": 40000,
+      "max_cost": 80000
+    },
     {
       "name": "BLACK_FOREST_LABS_FLUX_3_VIDEO",
       "model_owner": "BLACK_FOREST_LABS",
@@ -188,7 +129,7 @@
         "VIDEO"
       ],
       "min_cost": 100000,
-      "max_cost": 6000000
+      "max_cost": 3000000
     },
     {
       "name": "OPENAI_GPT_IMAGE_2_5_SUNBURST",
@@ -233,7 +174,7 @@
       "supported_outputs": [
         "VIDEO"
       ],
-      "min_cost": 50000,
+      "min_cost": 300000,
       "max_cost": 1052000
     },
     {
@@ -266,7 +207,7 @@
         "VIDEO"
       ],
       "min_cost": 410000,
-      "max_cost": 20412000
+      "max_cost": 22024500
     },
     {
       "name": "RUNWAY_ALEPH_2_0",
@@ -406,7 +347,7 @@
         "VIDEO"
       ],
       "min_cost": 280000,
-      "max_cost": 15750000
+      "max_cost": 17386650
     },
     {
       "name": "BLACK_FOREST_LABS_FLUX_1_1_PRO_ULTRA",
@@ -421,6 +362,22 @@
       ],
       "min_cost": 60000,
       "max_cost": 60000
+    },
+    {
+      "name": "GOOGLE_GEMINI_OMNI_FLASH_1_2",
+      "model_owner": "GOOGLE",
+      "display_name": "Gemini Omni Flash 1.2",
+      "description": "مدل Gemini Omni Flash 1.2 گوگل از طریق KIE و Runware برای تولید ویدیوی ۳ تا ۱۵ ثانیه‌ای با صدای طبیعی از متن، تصاویر مرجع، فریم آغازین و پایانی، و ویرایش ویدیوی موجود؛ با وضوح ۳۶۰p تا 4K.",
+      "supported_inputs": [
+        "TEXT",
+        "IMAGE",
+        "VIDEO"
+      ],
+      "supported_outputs": [
+        "VIDEO"
+      ],
+      "min_cost": 20000,
+      "max_cost": 3150000
     }
   ]
 }

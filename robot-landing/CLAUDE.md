@@ -42,7 +42,7 @@ returning member → login, newcomer → inline phone sign-up, or a "magic show"
 - `src/ui/`: Preloader (leader + gate), FilmFx (grain/vignette), Hero (canvas + conversation, letterbox intro, static `pixo.webp` fallback), Subtitle, Choice, PhoneForm,
   DemoScreen, Header, StickyCta, `SplitHeading` (accessible word reveal), `LazyVideo` (plays only in view), `Icon` (Solar subset)
 - `src/sections/`: Film (pinned prompt→film scrub), Reel (horizontal film strip of the demo clips), Tools, Plans
-  (live prices/credits/features from the API, chrome copy in `home.json`), Models (the cast: every model with what it makes and its starting price; filter + show-all), Faq, Finale, Footer. Page choreography lives in `App.tsx`
+  (live prices, gift credits and wallet top-up saving from the API, same content as the app's plan cards; chrome copy in `home.json`), Models (the cast: every model with what it makes and its starting price; filter + show-all), Faq, Finale, Footer. Page choreography lives in `App.tsx`
 - `/contact/` (`sections/Contact.tsx`, `contact.json`: address, phone, Telegram support) and `/terms/` + `/privacy/`: standalone pages sharing `ui/PageHeader.tsx`. The legal pages, one component (`sections/LegalPage.tsx`, copy in `terms.json` / `privacy.json`, same shape). Their copy is verbatim from the legal text: do not reword it. `terms`/`privacy` are typed by hand in `i18n/resources.ts` (the inferred JSON type hits TS2589).
 - `docs/ASSETS.md`: video prompts and voice-line script for the content team
 - `docs/BACKEND-HANDOFF.md`: the phone-prefill request sent to the app team (`?phone=09xxxxxxxxx` on `/auth/login`)
@@ -67,7 +67,7 @@ Clicking the logo restarts the show (remounts Preloader + Hero via a `run` key i
   `govern()` in `StageCanvas` steps DPR/bloom down on slow devices; bloom renders at half resolution.
 
 ## Plans & models (live data)
-Prices, credits, durations, plan copy (`meta.features`) and the 18 models come from the Perpix API, not from the repo
+Prices, credits, durations, plan descriptions, the wallet top-up saving (`wallet_topup_saving_irr`) and the models come from the Perpix API, not from the repo
 (`lib/landing/`). Do not hard-code them: copy that mentions the plan length or the model count takes it from the data
 (`{{adj}}` / `{{noun}}` from `durationLabels()`, `{{models}}`).
 - **Dev & build:** `pnpm dev` and `pnpm build` first run `scripts/snapshot-landing.mjs`, which refreshes
